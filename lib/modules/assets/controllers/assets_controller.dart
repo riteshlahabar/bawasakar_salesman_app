@@ -1,41 +1,80 @@
 import 'package:flutter/material.dart';
-import '../../../app/controllers/module_controller.dart';
-import '../../../app/data/models/list_row_model.dart';
+
+import '../../../app/controllers/remote_module_controller.dart';
+import '../../../app/data/module_row_mapper.dart';
+import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
 
-class AssetsController extends ModuleController {
-  AssetsController()
+/// Company assets issued to the signed-in salesman.
+class AssetsController extends RemoteModuleController {
+  AssetsController(this._api)
     : super(
         title: 'Salesman Assets',
         subtitle:
-            'Company assets issued to salesman: laptop, mobile, SIM, bag, ID card, product samples, and return condition.',
-        actionLabel: 'Asset Acknowledgement',
-        actionIcon: Icons.assignment_turned_in,
-        initialRows: const [
-          ListRowModel(
-            title: 'Samsung Mobile',
-            subtitle: 'Serial SM-A556 • Issued 01 Jul • Good condition',
-            trailing: '₹18,500',
-            icon: Icons.phone_android,
-            status: 'Issued',
-            color: AppColors.success,
-          ),
-          ListRowModel(
-            title: 'Company SIM',
-            subtitle: 'Mobile 9876543210 • Active plan',
-            trailing: 'Active',
-            icon: Icons.sim_card,
-            status: 'Issued',
-            color: AppColors.info,
-          ),
-          ListRowModel(
-            title: 'Field Bag',
-            subtitle: 'Marketing kit and product samples',
-            trailing: 'Good',
-            icon: Icons.work_outline,
-            status: 'Issued',
-            color: AppColors.accent,
-          ),
-        ],
+            'Company assets issued to you: laptop, mobile, SIM, bag, ID card and samples, with their return condition.',
       );
+
+  final SalesmanHrService _api;
+
+  @override
+  Future<ModuleData> fetch() async {
+    final assets = ModuleRowMapper.listFrom(await _api.assets(), 'assets');
+
+    final issued = assets.where((a) => a['status'] == 'issued').length;
+    final returned = assets.where((a) => a['status'] == 'returned').length;
+
+    return (
+      rows: assets
+          .map(
+            (asset) => ModuleRowMapper.row(
+              title: asset['asset_name']?.toString() ?? 'Asset',
+              subtitle: [
+                if ((asset['serial_no']?.toString() ?? '').isNotEmpty)
+                  'Serial ${asset['serial_no']}',
+                if ((asset['issued_on']?.toString() ?? '').isNotEmpty)
+                  'Issued ${ModuleRowMapper.date(asset['issued_on'])}',
+                if ((asset['condition']?.toString() ?? '').isNotEmpty)
+                  '${asset['condition']} condition',
+              ].join(' • '),
+              trailing: asset['asset_type']?.toString() ?? '',
+              icon: _iconFor(asset['asset_type']?.toString()),
+              status: asset['status']?.toString(),
+            ),
+          )
+          .toList(),
+      stats: [
+        ModuleRowMapper.stat(
+          title: 'Issued',
+          value: issued.toString(),
+          icon: Icons.inventory_2,
+          color: AppColors.primary,
+          subtitle: 'Assets',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Returned',
+          value: returned.toString(),
+          icon: Icons.keyboard_return,
+          color: AppColors.info,
+          subtitle: 'Assets',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Total',
+          value: assets.length.toString(),
+          icon: Icons.list_alt,
+          color: AppColors.success,
+          subtitle: 'Records',
+        ),
+      ],
+    );
+  }
+
+  IconData _iconFor(String? type) {
+    return switch (type) {
+      'mobile' => Icons.phone_android,
+      'laptop' => Icons.laptop_mac,
+      'sim' => Icons.sim_card,
+      'vehicle' => Icons.two_wheeler,
+      _ => Icons.work_outline,
+    };
+  }
 }

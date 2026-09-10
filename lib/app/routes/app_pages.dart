@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import '../../modules/advances/bindings/advances_binding.dart';
+import '../../modules/advances/views/advances_view.dart';
+import '../../modules/announcements/bindings/announcements_binding.dart';
+import '../../modules/announcements/views/announcements_view.dart';
 import '../../modules/assets/bindings/assets_binding.dart';
 import '../../modules/assets/views/assets_view.dart';
 import '../../modules/attendance/bindings/attendance_binding.dart';
@@ -8,20 +12,32 @@ import '../../modules/auth/bindings/login_binding.dart';
 import '../../modules/auth/views/login_view.dart';
 import '../../modules/delivery/bindings/delivery_binding.dart';
 import '../../modules/delivery/views/delivery_view.dart';
+import '../../modules/documents/bindings/documents_binding.dart';
+import '../../modules/documents/views/documents_view.dart';
 import '../../modules/expenses/bindings/expenses_binding.dart';
 import '../../modules/expenses/views/expenses_view.dart';
+import '../../modules/holidays/bindings/holidays_binding.dart';
+import '../../modules/holidays/views/holidays_view.dart';
+import '../../modules/incentives/bindings/incentives_binding.dart';
+import '../../modules/incentives/views/incentives_view.dart';
 import '../../modules/leave/bindings/leave_binding.dart';
 import '../../modules/leave/views/leave_view.dart';
 import '../../modules/main_shell/bindings/main_shell_binding.dart';
 import '../../modules/main_shell/views/main_shell_view.dart';
 import '../../modules/notifications/bindings/notifications_binding.dart';
 import '../../modules/notifications/views/notifications_view.dart';
+import '../../modules/payslips/bindings/payslips_binding.dart';
+import '../../modules/payslips/views/payslips_view.dart';
+import '../../modules/performance/bindings/performance_binding.dart';
+import '../../modules/performance/views/performance_view.dart';
 import '../../modules/products/bindings/products_binding.dart';
 import '../../modules/products/views/products_view.dart';
 import '../../modules/reports/bindings/reports_binding.dart';
 import '../../modules/reports/views/reports_view.dart';
 import '../../modules/salary/bindings/salary_binding.dart';
 import '../../modules/salary/views/salary_view.dart';
+import '../../modules/shifts/bindings/shifts_binding.dart';
+import '../../modules/shifts/views/shifts_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
 import '../../modules/targets/bindings/targets_binding.dart';
@@ -110,6 +126,46 @@ class AppPages {
       name: AppRoutes.delivery,
       page: () => const DeliveryView(),
       binding: DeliveryBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.payslips,
+      page: () => const PayslipsView(),
+      binding: PayslipsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.advances,
+      page: () => const AdvancesView(),
+      binding: AdvancesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.incentives,
+      page: () => const IncentivesView(),
+      binding: IncentivesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.performance,
+      page: () => const PerformanceView(),
+      binding: PerformanceBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.announcements,
+      page: () => const AnnouncementsView(),
+      binding: AnnouncementsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.documents,
+      page: () => const DocumentsView(),
+      binding: DocumentsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.holidays,
+      page: () => const HolidaysView(),
+      binding: HolidaysBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.shifts,
+      page: () => const ShiftsView(),
+      binding: ShiftsBinding(),
     ),
   ];
 }

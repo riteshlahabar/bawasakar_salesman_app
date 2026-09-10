@@ -1,41 +1,79 @@
 import 'package:flutter/material.dart';
-import '../../../app/controllers/module_controller.dart';
-import '../../../app/data/models/list_row_model.dart';
+
+import '../../../app/controllers/remote_module_controller.dart';
+import '../../../app/data/module_row_mapper.dart';
+import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
 
-class TargetsController extends ModuleController {
-  TargetsController()
+/// Sales targets for the salesman and how far each one has been achieved.
+class TargetsController extends RemoteModuleController {
+  TargetsController(this._api)
     : super(
-        title: 'Targets',
+        title: 'Sales Targets',
         subtitle:
-            'Monthly sales target, dealer activation, collection target, performance and commission tracking.',
-        actionLabel: 'View Target Detail',
-        actionIcon: Icons.flag,
-        initialRows: const [
-          ListRowModel(
-            title: 'Monthly Sales Target',
-            subtitle: 'Achieved ₹8.4L of ₹12L',
-            trailing: '70%',
-            icon: Icons.flag,
-            status: 'On Track',
-            color: AppColors.success,
-          ),
-          ListRowModel(
-            title: 'Collection Target',
-            subtitle: 'Achieved ₹4.8L of ₹7L',
-            trailing: '69%',
-            icon: Icons.payments,
-            status: 'Follow-up',
-            color: AppColors.accent,
-          ),
-          ListRowModel(
-            title: 'New Dealer Activation',
-            subtitle: '3 activated of 5 assigned',
-            trailing: '3/5',
-            icon: Icons.group_add,
-            status: 'Pending',
-            color: AppColors.info,
-          ),
-        ],
+            'Monthly and period targets with achievement, shortfall and the commission rate attached to each.',
       );
+
+  final SalesmanFinanceService _api;
+
+  @override
+  Future<ModuleData> fetch() async {
+    final targets = ModuleRowMapper.listFrom(await _api.targets(), 'targets');
+
+    final targetTotal = targets.fold<double>(
+      0,
+      (sum, row) => sum + ModuleRowMapper.toDouble(row['target_amount']),
+    );
+    final achievedTotal = targets.fold<double>(
+      0,
+      (sum, row) => sum + ModuleRowMapper.toDouble(row['achieved_amount']),
+    );
+    final percent = targetTotal <= 0 ? 0 : (achievedTotal / targetTotal * 100);
+
+    return (
+      rows: targets.map((target) {
+        final goal = ModuleRowMapper.toDouble(target['target_amount']);
+        final done = ModuleRowMapper.toDouble(target['achieved_amount']);
+        final hit = goal > 0 && done >= goal;
+
+        return ModuleRowMapper.row(
+          title:
+              '${ModuleRowMapper.date(target['period_start'])} to ${ModuleRowMapper.date(target['period_end'])}',
+          subtitle:
+              'Achieved ${ModuleRowMapper.money(done)} of ${ModuleRowMapper.money(goal)}'
+              ' • Commission ${ModuleRowMapper.toDouble(target['commission_percent'])}%',
+          trailing: goal <= 0
+              ? '-'
+              : '${(done / goal * 100).toStringAsFixed(0)}%',
+          icon: Icons.track_changes,
+          // Achievement is not a workflow status, so it is phrased as one here
+          // to reuse the shared status colouring.
+          status: hit ? 'approved' : 'pending',
+        );
+      }).toList(),
+      stats: [
+        ModuleRowMapper.stat(
+          title: 'Target',
+          value: ModuleRowMapper.money(targetTotal),
+          icon: Icons.flag,
+          color: AppColors.primary,
+          subtitle: 'All periods',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Achieved',
+          value: ModuleRowMapper.money(achievedTotal),
+          icon: Icons.trending_up,
+          color: AppColors.success,
+          subtitle: 'All periods',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Progress',
+          value: '${percent.toStringAsFixed(0)}%',
+          icon: Icons.donut_large,
+          color: AppColors.info,
+          subtitle: 'Overall',
+        ),
+      ],
+    );
+  }
 }

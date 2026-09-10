@@ -181,6 +181,95 @@ class MainShellController
       color:
           AppColors.info,
     ),
+    ActionItemModel(
+      title: 'Payslips',
+      subtitle:
+          'Released monthly payslips',
+      icon:
+          Icons.description_outlined,
+      route:
+          AppRoutes.payslips,
+      color:
+          AppColors.primary,
+    ),
+    ActionItemModel(
+      title:
+          'Advance & Loan',
+      subtitle:
+          'Request and track recovery',
+      icon:
+          Icons.request_quote_outlined,
+      route:
+          AppRoutes.advances,
+      color:
+          AppColors.orange,
+    ),
+    ActionItemModel(
+      title: 'Incentives',
+      subtitle:
+          'Commission and bonuses',
+      icon:
+          Icons.emoji_events_outlined,
+      route:
+          AppRoutes.incentives,
+      color:
+          AppColors.success,
+    ),
+    ActionItemModel(
+      title: 'Performance',
+      subtitle:
+          'KPI scores and reviews',
+      icon:
+          Icons.insights_outlined,
+      route:
+          AppRoutes.performance,
+      color:
+          AppColors.info,
+    ),
+    ActionItemModel(
+      title: 'Announcements',
+      subtitle:
+          'Company notices and circulars',
+      icon:
+          Icons.campaign_outlined,
+      route:
+          AppRoutes.announcements,
+      color:
+          AppColors.primary,
+    ),
+    ActionItemModel(
+      title: 'My Documents',
+      subtitle:
+          'Identity and employment papers',
+      icon:
+          Icons.folder_shared_outlined,
+      route:
+          AppRoutes.documents,
+      color:
+          AppColors.accent,
+    ),
+    ActionItemModel(
+      title: 'Holidays',
+      subtitle:
+          'Company holiday calendar',
+      icon:
+          Icons.event_available_outlined,
+      route:
+          AppRoutes.holidays,
+      color:
+          AppColors.success,
+    ),
+    ActionItemModel(
+      title: 'My Shift',
+      subtitle:
+          'Working hours and weekly off',
+      icon:
+          Icons.schedule_outlined,
+      route:
+          AppRoutes.shifts,
+      color:
+          AppColors.info,
+    ),
   ];
 
   @override

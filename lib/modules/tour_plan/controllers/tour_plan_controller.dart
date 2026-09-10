@@ -1,41 +1,66 @@
 import 'package:flutter/material.dart';
-import '../../../app/controllers/module_controller.dart';
-import '../../../app/data/models/list_row_model.dart';
+
+import '../../../app/controllers/remote_module_controller.dart';
+import '../../../app/data/module_row_mapper.dart';
+import '../../../app/data/services/salesman_attendance_service.dart';
 import '../../../app/theme/app_colors.dart';
 
-class TourPlanController extends ModuleController {
-  TourPlanController()
+/// Planned field routes and the dealers on each one.
+class TourPlanController extends RemoteModuleController {
+  TourPlanController(this._api)
     : super(
         title: 'Tour Plan',
         subtitle:
-            'Daily route plan, assigned dealers, GPS route, planned visits, and admin approval.',
-        actionLabel: 'Create Tour Plan',
-        actionIcon: Icons.add_road,
-        initialRows: const [
-          ListRowModel(
-            title: 'Ahmednagar Route',
-            subtitle: '6 dealers • 82 km • Approved',
-            trailing: 'Today',
-            icon: Icons.map,
-            status: 'Approved',
-            color: AppColors.success,
-          ),
-          ListRowModel(
-            title: 'Pune Rural Route',
-            subtitle: '9 dealers • 146 km • Pending approval',
-            trailing: 'Tomorrow',
-            icon: Icons.route,
-            status: 'Pending',
-            color: AppColors.accent,
-          ),
-          ListRowModel(
-            title: 'Nashik Follow-up',
-            subtitle: 'High outstanding dealers',
-            trailing: 'Fri',
-            icon: Icons.schedule,
-            status: 'Draft',
-            color: AppColors.info,
-          ),
-        ],
+            'Your planned routes, the dealers on each and the approval state of the plan.',
       );
+
+  final SalesmanAttendanceService _api;
+
+  @override
+  Future<ModuleData> fetch() async {
+    final plans = ModuleRowMapper.listFrom(await _api.tourPlans(), 'tour_plans');
+
+    final planned = plans.where((p) => p['status'] == 'planned').length;
+    final completed = plans.where((p) => p['status'] == 'completed').length;
+
+    return (
+      rows: plans.map((plan) {
+        // `dealer_ids` is a JSON column, so it arrives as a list.
+        final dealerIds = plan['dealer_ids'];
+        final stops = dealerIds is List ? dealerIds.length : 0;
+
+        return ModuleRowMapper.row(
+          title: plan['route_name']?.toString() ?? 'Route',
+          subtitle:
+              '${ModuleRowMapper.date(plan['plan_date'])} • $stops dealer stop${stops == 1 ? '' : 's'}',
+          trailing: '$stops',
+          icon: Icons.map_outlined,
+          status: plan['status']?.toString(),
+        );
+      }).toList(),
+      stats: [
+        ModuleRowMapper.stat(
+          title: 'Planned',
+          value: planned.toString(),
+          icon: Icons.event,
+          color: AppColors.primary,
+          subtitle: 'Routes',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Completed',
+          value: completed.toString(),
+          icon: Icons.done_all,
+          color: AppColors.success,
+          subtitle: 'Routes',
+        ),
+        ModuleRowMapper.stat(
+          title: 'Total',
+          value: plans.length.toString(),
+          icon: Icons.route,
+          color: AppColors.info,
+          subtitle: 'Records',
+        ),
+      ],
+    );
+  }
 }

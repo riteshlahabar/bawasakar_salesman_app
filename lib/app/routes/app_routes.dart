@@ -16,4 +16,14 @@ class AppRoutes {
   static const notifications = '/notifications';
   static const products = '/products';
   static const delivery = '/delivery';
+
+  // Phase 5 HRMS modules from the Phase 1 specification.
+  static const payslips = '/payslips';
+  static const advances = '/advances';
+  static const incentives = '/incentives';
+  static const performance = '/performance';
+  static const announcements = '/announcements';
+  static const documents = '/documents';
+  static const holidays = '/holidays';
+  static const shifts = '/shifts';
 }
