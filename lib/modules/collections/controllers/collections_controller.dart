@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../app/data/models/dealer_model.dart';
+import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
@@ -46,49 +47,17 @@ class CollectionsController
         perPage: 100,
       );
 
-      final rawData =
-          response['data'];
-
-      if (rawData is! Map) {
-        return;
-      }
-
-      final data =
-          Map<String, dynamic>.from(
-        rawData,
-      );
-
-      final rawPaginator =
-          data['dealers'];
-
-      if (rawPaginator is! Map) {
-        return;
-      }
-
-      final paginator =
-          Map<String, dynamic>.from(
-        rawPaginator,
-      );
-
       final rows =
-          paginator['data'];
+          ModuleRowMapper.listFrom(
+        response,
+        'dealers',
+      );
 
-      if (rows is List) {
-        dealers.assignAll(
-          rows
-              .whereType<Map>()
-              .map(
-                (item) =>
-                    DealerModel
-                        .fromJson(
-                  Map<String, dynamic>
-                      .from(
-                    item,
-                  ),
-                ),
-              ),
-        );
-      }
+      dealers.assignAll(
+        rows.map(
+          DealerModel.fromJson,
+        ),
+      );
     } catch (error) {
       Get.snackbar(
         'Dealers',
@@ -145,28 +114,16 @@ class CollectionsController
                 .text,
       );
 
-      final rawData =
-          response['data'];
+      final payment =
+          ModuleRowMapper.mapFrom(
+        response,
+        'payment',
+      );
 
-      String receipt = '';
-
-      if (rawData is Map) {
-        final data =
-            Map<String, dynamic>.from(
-          rawData,
-        );
-
-        final rawPayment =
-            data['payment'];
-
-        if (rawPayment is Map) {
-          receipt =
-              rawPayment[
-                          'payment_no']
-                      ?.toString() ??
-                  '';
-        }
-      }
+      final receipt =
+          payment['payment_no']
+                  ?.toString() ??
+              '';
 
       lastMessage.value =
           receipt.isEmpty

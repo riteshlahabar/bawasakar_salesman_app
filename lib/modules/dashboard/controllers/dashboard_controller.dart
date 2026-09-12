@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../app/data/models/action_item_model.dart';
 import '../../../app/data/models/summary_card_model.dart';
+import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/data/services/auth_storage.dart';
-import '../../../app/routes/app_routes.dart';
-import '../../../app/theme/app_colors.dart';
+import 'dashboard_operations_config.dart';
+import 'dashboard_response_parser.dart';
 
 class DashboardController
     extends GetxController {
@@ -36,43 +36,10 @@ class DashboardController
   final quickStats =
       <String>[].obs;
 
-  final operations = const [
-    ActionItemModel(
-      title: 'Attendance',
-      subtitle: 'GPS',
-      icon: Icons.my_location,
-      route:
-          AppRoutes.attendance,
-      color:
-          AppColors.primary,
-    ),
-    ActionItemModel(
-      title: 'Visit',
-      subtitle: 'Dealer',
-      icon: Icons.route,
-      route: AppRoutes.visits,
-      color:
-          AppColors.orange,
-    ),
-    ActionItemModel(
-      title: 'Products',
-      subtitle: 'Catalog',
-      icon:
-          Icons.inventory_2_outlined,
-      route: AppRoutes.products,
-      color:
-          AppColors.success,
-    ),
-    ActionItemModel(
-      title: 'Expense',
-      subtitle: 'Claim',
-      icon: Icons
-          .account_balance_wallet_outlined,
-      route: AppRoutes.expenses,
-      color:
-          AppColors.info,
-    ),
-  ].obs;
+  final operations =
+      <ActionItemModel>[
+        ...DashboardOperationsConfig.operations,
+      ].obs;
 
   @override
   void onReady() {
@@ -92,78 +59,47 @@ class DashboardController
       final response =
           await _api.dashboard();
 
-      final rawData =
-          response['data'];
-
-      if (rawData is! Map) {
-        throw const FormatException(
-          'Invalid dashboard response.',
-        );
-      }
-
       final data =
-          Map<String, dynamic>.from(
-        rawData,
+          DashboardResponseParser.data(
+        response,
       );
 
       assignedDealers.value =
-          _asInt(
+          ModuleRowMapper.toInt(
         data['assigned_dealers'],
       );
 
       pendingOrders.value =
-          _asInt(
+          ModuleRowMapper.toInt(
         data['pending_orders'],
       );
 
       todayCollections.value =
-          _asDouble(
+          ModuleRowMapper.toDouble(
         data['today_collections'],
       );
 
-      final rawProfile =
-          data['profile'];
+      final profile =
+          DashboardResponseParser
+              .parseProfile(
+        data,
+      );
 
-      if (rawProfile is Map) {
-        final profile =
-            Map<String, dynamic>.from(
-          rawProfile,
-        );
+      if (profile.name.isNotEmpty) {
+        salesmanName.value =
+            profile.name;
+      }
 
-        final name =
-            profile['name']
-                    ?.toString()
-                    .trim() ??
-                '';
+      if (profile.employeeCode
+          .isNotEmpty) {
+        employeeCode.value =
+            profile.employeeCode;
+      }
 
-        if (name.isNotEmpty) {
-          salesmanName.value =
-              name;
-        }
-
-        final rawSalesmanProfile =
-            profile[
-                'salesman_profile'];
-
-        if (rawSalesmanProfile
-            is Map) {
-          final salesmanProfile =
-              Map<String, dynamic>.from(
-            rawSalesmanProfile,
-          );
-
-          employeeCode.value =
-              salesmanProfile[
-                          'employee_code']
-                      ?.toString() ??
-                  '';
-
-          territory.value =
-              salesmanProfile[
-                          'territory']
-                      ?.toString() ??
-                  '';
-        }
+      if (profile.territory
+          .isNotEmpty) {
+        territory.value =
+            profile.territory;
       }
 
       // Save fallback profile data if
@@ -197,7 +133,8 @@ class DashboardController
     } catch (error) {
       Get.snackbar(
         'Dashboard',
-        _message(
+        DashboardResponseParser
+            .errorMessage(
           error,
         ),
       );
@@ -207,92 +144,29 @@ class DashboardController
   }
 
   void _buildCards() {
-    summaries.assignAll([
-      SummaryCardModel(
-        title:
-            'Assigned Dealers',
-        value:
-            assignedDealers.value
-                .toString(),
-        icon:
-            Icons.storefront_outlined,
-        color:
-            AppColors.primary,
-        subtitle:
-            'Active assignment',
+    summaries.assignAll(
+      DashboardResponseParser
+          .buildSummaries(
+        assignedDealers:
+            assignedDealers.value,
+        pendingOrders:
+            pendingOrders.value,
+        todayCollections:
+            todayCollections.value,
       ),
-      SummaryCardModel(
-        title:
-            'Pending Orders',
-        value:
-            pendingOrders.value
-                .toString(),
-        icon:
-            Icons.pending_actions_outlined,
-        color:
-            AppColors.accent,
-        subtitle:
-            'Need review',
+    );
+
+    quickStats.assignAll(
+      DashboardResponseParser
+          .buildQuickStats(
+        assignedDealers:
+            assignedDealers.value,
+        pendingOrders:
+            pendingOrders.value,
+        todayCollections:
+            todayCollections.value,
+        territory: territory.value,
       ),
-      SummaryCardModel(
-        title:
-            'Today Collection',
-        value:
-            _money(
-          todayCollections.value,
-        ),
-        icon:
-            Icons.payments_outlined,
-        color:
-            AppColors.success,
-        subtitle:
-            'Collected today',
-      ),
-    ]);
-
-    quickStats.assignAll([
-      'Assigned Dealers: ${assignedDealers.value}',
-      'Orders waiting for review: ${pendingOrders.value}',
-      'Today Collection: ${_money(todayCollections.value)}',
-      if (territory.value
-          .trim()
-          .isNotEmpty)
-        'Territory: ${territory.value}',
-    ]);
-  }
-
-  String _money(
-    double value,
-  ) {
-    return '₹${value.toStringAsFixed(0)}';
-  }
-
-  int _asInt(
-    dynamic value,
-  ) {
-    return int.tryParse(
-          value?.toString() ?? '',
-        ) ??
-        0;
-  }
-
-  double _asDouble(
-    dynamic value,
-  ) {
-    return double.tryParse(
-          value?.toString() ?? '',
-        ) ??
-        0;
-  }
-
-  String _message(
-    Object error,
-  ) {
-    return error
-        .toString()
-        .replaceFirst(
-          'Exception: ',
-          '',
-        );
+    );
   }
 }
