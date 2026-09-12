@@ -32,6 +32,8 @@ import '../../modules/performance/bindings/performance_binding.dart';
 import '../../modules/performance/views/performance_view.dart';
 import '../../modules/products/bindings/products_binding.dart';
 import '../../modules/products/views/products_view.dart';
+import '../../modules/profile/bindings/profile_binding.dart';
+import '../../modules/profile/views/profile_view.dart';
 import '../../modules/reports/bindings/reports_binding.dart';
 import '../../modules/reports/views/reports_view.dart';
 import '../../modules/salary/bindings/salary_binding.dart';
@@ -40,6 +42,8 @@ import '../../modules/shifts/bindings/shifts_binding.dart';
 import '../../modules/shifts/views/shifts_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
+import '../../modules/support/bindings/support_binding.dart';
+import '../../modules/support/views/support_view.dart';
 import '../../modules/targets/bindings/targets_binding.dart';
 import '../../modules/targets/views/targets_view.dart';
 import '../../modules/tour_plan/bindings/tour_plan_binding.dart';
@@ -166,6 +170,16 @@ class AppPages {
       name: AppRoutes.shifts,
       page: () => const ShiftsView(),
       binding: ShiftsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.support,
+      page: () => const SupportView(),
+      binding: SupportBinding(),
     ),
   ];
 }

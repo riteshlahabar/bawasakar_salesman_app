@@ -26,4 +26,6 @@ class AppRoutes {
   static const documents = '/documents';
   static const holidays = '/holidays';
   static const shifts = '/shifts';
+  static const profile = '/profile';
+  static const support = '/support';
 }

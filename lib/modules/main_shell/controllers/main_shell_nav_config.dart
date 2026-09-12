@@ -167,5 +167,19 @@ class MainShellNavConfig {
       route: AppRoutes.shifts,
       color: AppColors.info,
     ),
+    ActionItemModel(
+      title: 'My Profile',
+      subtitle: 'Employee code, territory and contact',
+      icon: Icons.person_outline_rounded,
+      route: AppRoutes.profile,
+      color: AppColors.primaryDark,
+    ),
+    ActionItemModel(
+      title: 'Help & Support',
+      subtitle: 'Raise a support ticket',
+      icon: Icons.support_agent_rounded,
+      route: AppRoutes.support,
+      color: AppColors.info,
+    ),
   ];
 }

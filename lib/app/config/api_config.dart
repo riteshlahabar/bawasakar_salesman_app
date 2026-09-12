@@ -72,6 +72,7 @@ class ApiConfig {
   static const String documents = '/salesman/documents';
   static const String performance = '/salesman/performance';
   static const String profile = '/salesman/profile';
+  static const String support = '/salesman/support';
 
   // --- Notifications --------------------------------------------------------
   static const String notifications = '/salesman/notifications';

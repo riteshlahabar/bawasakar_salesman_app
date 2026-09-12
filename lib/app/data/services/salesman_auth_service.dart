@@ -32,4 +32,14 @@ class SalesmanAuthService {
 
   Future<Map<String, dynamic>> profile() =>
       _client.getJson(ApiConfig.profile);
+
+  Future<Map<String, dynamic>> support({
+    required String subject,
+    required String message,
+  }) {
+    return _client.postJson(ApiConfig.support, {
+      'subject': subject,
+      'message': message,
+    });
+  }
 }
