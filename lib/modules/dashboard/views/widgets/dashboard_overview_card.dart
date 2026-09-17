@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// "Today Collection" gradient hero card at the top of [DashboardView].
 class DashboardOverviewCard extends StatelessWidget {
@@ -39,7 +40,7 @@ class DashboardOverviewCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Today Collection',
+            t('dashboard.today_collection'),
             style: TextStyle(
               color: Colors.white.withValues(alpha: .80),
               fontSize: 12,
@@ -60,7 +61,7 @@ class DashboardOverviewCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  territory.trim().isEmpty ? 'Sales Territory' : territory,
+                  territory.trim().isEmpty ? t('dashboard.sales_territory') : territory,
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: .82),
                     fontWeight: FontWeight.w700,
@@ -68,7 +69,7 @@ class DashboardOverviewCard extends StatelessWidget {
                 ),
               ),
               Text(
-                employeeCode.trim().isEmpty ? 'Salesman' : employeeCode,
+                employeeCode.trim().isEmpty ? t('common.salesman') : employeeCode,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: .82),
                   fontWeight: FontWeight.w700,

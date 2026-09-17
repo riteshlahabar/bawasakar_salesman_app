@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/advances_controller.dart';
+import '../../../app/localization/t.dart';
 
 class AdvancesView extends GetView<AdvancesController> {
   const AdvancesView({super.key});
@@ -11,7 +12,7 @@ class AdvancesView extends GetView<AdvancesController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Advances & Loans',
+      recordsTitle: t('advances.advances_and_loans'),
     );
   }
 }

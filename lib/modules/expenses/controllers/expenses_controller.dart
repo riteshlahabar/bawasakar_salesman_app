@@ -5,15 +5,16 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Expense claims raised by the salesman and their approval state.
 class ExpensesController extends RemoteModuleController {
   ExpensesController(this._api)
     : super(
-        title: 'Expense Management',
+        title: t('expenses.expense_management'),
         subtitle:
-            'Travel, fuel, food and other field expenses, with approval and reimbursement status.',
-        actionLabel: 'Add Expense',
+            t('expenses.travel_fuel_food_and_other_field'),
+        actionLabel: t('expenses.add_expense'),
         actionIcon: Icons.add_card,
       );
 
@@ -45,25 +46,25 @@ class ExpensesController extends RemoteModuleController {
           .toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Claimed',
+          title: t('common.claimed'),
           value: ModuleRowMapper.money(sumWhere((_) => true)),
           icon: Icons.summarize,
           color: AppColors.primary,
-          subtitle: 'Total',
+          subtitle: t('common.total'),
         ),
         ModuleRowMapper.stat(
-          title: 'Approved',
+          title: t('common.approved'),
           value: ModuleRowMapper.money(sumWhere((e) => e['status'] == 'approved')),
           icon: Icons.verified,
           color: AppColors.success,
-          subtitle: 'Reimbursable',
+          subtitle: t('expenses.reimbursable'),
         ),
         ModuleRowMapper.stat(
-          title: 'Pending',
+          title: t('common.pending'),
           value: ModuleRowMapper.money(sumWhere((e) => e['status'] == 'pending')),
           icon: Icons.hourglass_bottom,
           color: AppColors.orange,
-          subtitle: 'Awaiting',
+          subtitle: t('expenses.awaiting'),
         ),
       ],
     );
@@ -85,7 +86,7 @@ class ExpensesController extends RemoteModuleController {
           'remarks': remarks.trim(),
       });
       await load();
-      Get.snackbar(title, 'Expense submitted for approval.');
+      Get.snackbar(title, t('expenses.expense_submitted_for_approval'));
     } catch (failure) {
       Get.snackbar(title, failure.toString());
     } finally {

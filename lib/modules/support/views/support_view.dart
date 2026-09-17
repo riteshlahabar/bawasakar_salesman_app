@@ -5,6 +5,7 @@ import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/app_decorations.dart';
 import '../../../app/widgets/app_text_field.dart';
 import '../controllers/support_controller.dart';
+import '../../../app/localization/t.dart';
 
 class SupportView extends GetView<SupportController> {
   const SupportView({super.key});
@@ -12,7 +13,7 @@ class SupportView extends GetView<SupportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Help & Support')),
+      appBar: AppBar(title: Text(t('common.help_and_support'))),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -22,7 +23,7 @@ class SupportView extends GetView<SupportController> {
             child: Column(
               children: [
                 AppTextField(
-                  label: 'Subject',
+                  label: t('support.subject'),
                   icon: Icons.subject_rounded,
                   controller: controller.subject,
                 ),
@@ -31,8 +32,8 @@ class SupportView extends GetView<SupportController> {
                   controller: controller.message,
                   minLines: 5,
                   maxLines: 7,
-                  decoration: const InputDecoration(
-                    hintText: 'Message',
+                  decoration: InputDecoration(
+                    hintText: t('support.message'),
                     prefixIcon: Icon(Icons.message_outlined, color: AppColors.primary),
                   ),
                 ),
@@ -42,7 +43,7 @@ class SupportView extends GetView<SupportController> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: controller.isLoading.value ? null : controller.submit,
-                      child: Text(controller.isLoading.value ? 'Sending...' : 'Create Ticket'),
+                      child: Text(controller.isLoading.value ? t('support.sending') : t('support.create_ticket')),
                     ),
                   ),
                 ),

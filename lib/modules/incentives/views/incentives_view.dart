@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/incentives_controller.dart';
+import '../../../app/localization/t.dart';
 
 class IncentivesView extends GetView<IncentivesController> {
   const IncentivesView({super.key});
@@ -11,7 +12,7 @@ class IncentivesView extends GetView<IncentivesController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Monthly Earnings',
+      recordsTitle: t('incentives.monthly_earnings'),
     );
   }
 }

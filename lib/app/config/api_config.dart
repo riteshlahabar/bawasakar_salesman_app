@@ -40,6 +40,10 @@ class ApiConfig {
   static String forwardOrder(int orderId) =>
       '/salesman/orders/$orderId/forward-to-admin';
 
+  // --- Translations -------------------------------------------------------
+  static const String appTranslations = '/app-translations';
+  static const String appTranslationsRegister = '/app-translations/register';
+
   // --- Catalogue ------------------------------------------------------------
   static const String products = '/catalog/products';
   static const String homepage = '/catalog/homepage';

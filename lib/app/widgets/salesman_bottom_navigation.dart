@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../modules/main_shell/controllers/main_shell_controller.dart';
 import '../routes/app_routes.dart';
 import '../theme/app_colors.dart';
+import '../localization/t.dart';
 
 class SalesmanBottomNavigation extends StatelessWidget {
   const SalesmanBottomNavigation({
@@ -43,7 +44,7 @@ class SalesmanBottomNavigation extends StatelessWidget {
               selectedIndex: selectedIndex,
               icon: Icons.home_outlined,
               activeIcon: Icons.home,
-              tooltip: 'Home',
+              tooltip: t('common.home'),
               onTap: onTap ?? openMainTab,
             ),
           ),
@@ -53,7 +54,7 @@ class SalesmanBottomNavigation extends StatelessWidget {
               selectedIndex: selectedIndex,
               icon: Icons.storefront_outlined,
               activeIcon: Icons.storefront,
-              tooltip: 'Dealers',
+              tooltip: t('common.dealers'),
               onTap: onTap ?? openMainTab,
             ),
           ),
@@ -64,7 +65,7 @@ class SalesmanBottomNavigation extends StatelessWidget {
               selectedIndex: selectedIndex,
               icon: Icons.receipt_long_outlined,
               activeIcon: Icons.receipt_long,
-              tooltip: 'Orders',
+              tooltip: t('common.orders'),
               onTap: onTap ?? openMainTab,
             ),
           ),
@@ -74,7 +75,7 @@ class SalesmanBottomNavigation extends StatelessWidget {
               selectedIndex: selectedIndex,
               icon: Icons.payments_outlined,
               activeIcon: Icons.payments,
-              tooltip: 'Collections',
+              tooltip: t('common.collections'),
               onTap: onTap ?? openMainTab,
             ),
           ),

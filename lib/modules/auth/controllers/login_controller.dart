@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../app/data/services/salesman_auth_service.dart';
 import '../../../app/data/services/auth_storage.dart';
 import '../../../app/routes/app_routes.dart';
+import '../../../app/localization/t.dart';
 
 class LoginController
     extends GetxController {
@@ -41,16 +42,16 @@ class LoginController
       email,
     )) {
       Get.snackbar(
-        'Invalid Email',
-        'Enter a valid salesman email address.',
+        t('auth.invalid_email'),
+        t('auth.enter_a_valid_salesman_email_address'),
       );
       return;
     }
 
     if (password.trim().isEmpty) {
       Get.snackbar(
-        'Password Required',
-        'Enter your password.',
+        t('auth.password_required'),
+        t('auth.enter_your_password'),
       );
       return;
     }
@@ -68,8 +69,8 @@ class LoginController
           response['data'];
 
       if (rawData is! Map) {
-        throw const FormatException(
-          'Invalid login response.',
+        throw FormatException(
+          t('auth.invalid_login_response'),
         );
       }
 
@@ -89,8 +90,8 @@ class LoginController
 
       if (token.isEmpty ||
           rawUser is! Map) {
-        throw const FormatException(
-          'Login token or salesman information missing.',
+        throw FormatException(
+          t('auth.login_token_or_salesman_information_missing'),
         );
       }
 
@@ -111,7 +112,7 @@ class LoginController
       );
     } catch (error) {
       Get.snackbar(
-        'Login Failed',
+        t('auth.login_failed'),
         _message(
           error,
         ),

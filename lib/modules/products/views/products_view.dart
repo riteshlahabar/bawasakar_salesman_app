@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../app/theme/app_colors.dart';
 import '../controllers/products_controller.dart';
 import 'widgets/product_card.dart';
+import '../../../app/localization/t.dart';
 
 class ProductsView extends GetView<ProductsController> {
   const ProductsView({super.key});
@@ -11,7 +12,7 @@ class ProductsView extends GetView<ProductsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dealer Products')),
+      appBar: AppBar(title: Text(t('products.dealer_products'))),
       body: Obx(() {
         final products = controller.filteredProducts;
 
@@ -23,17 +24,17 @@ class ProductsView extends GetView<ProductsController> {
             children: [
               TextField(
                 onChanged: (value) => controller.search.value = value,
-                decoration: const InputDecoration(
-                  hintText: 'Search product, SKU, category...',
+                decoration: InputDecoration(
+                  hintText: t('products.search_product_sku_category'),
                   prefixIcon: Icon(Icons.search_rounded),
                 ),
               ),
               const SizedBox(height: 16),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Dealer Price Catalog',
+                      t('products.dealer_price_catalog'),
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w900,
@@ -56,9 +57,9 @@ class ProductsView extends GetView<ProductsController> {
                   child: Center(child: CircularProgressIndicator()),
                 )
               else if (products.isEmpty)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(40),
-                  child: Center(child: Text('No products available.')),
+                  child: Center(child: Text(t('products.no_products_available'))),
                 )
               else
                 GridView.builder(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/data/models/dealer_model.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// Dealer/amount/payment-mode form card for [CollectionsView].
 class CollectionFormCard extends StatelessWidget {
@@ -40,15 +41,15 @@ class CollectionFormCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Dealer',
+          Text(
+            t('common.dealer'),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 7),
           DropdownButtonFormField<int>(
             value: selectedDealerId > 0 ? selectedDealerId : null,
             isExpanded: true,
-            hint: const Text('Select dealer'),
+            hint: Text(t('collections.select_dealer')),
             items: dealers
                 .map(
                   (dealer) => DropdownMenuItem<int>(
@@ -64,8 +65,8 @@ class CollectionFormCard extends StatelessWidget {
             onChanged: onDealerChanged,
           ),
           const SizedBox(height: 15),
-          const Text(
-            'Amount',
+          Text(
+            t('collections.amount'),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 7),
@@ -74,40 +75,40 @@ class CollectionFormCard extends StatelessWidget {
             keyboardType: const TextInputType.numberWithOptions(
               decimal: true,
             ),
-            decoration: const InputDecoration(
-              hintText: 'Enter amount',
+            decoration: InputDecoration(
+              hintText: t('collections.enter_amount'),
               prefixText: '₹ ',
             ),
           ),
           const SizedBox(height: 15),
-          const Text(
-            'Payment Mode',
+          Text(
+            t('collections.payment_mode'),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 7),
           DropdownButtonFormField<String>(
             value: paymentMode,
-            items: const [
-              DropdownMenuItem(value: 'cash', child: Text('Cash')),
-              DropdownMenuItem(value: 'upi', child: Text('UPI')),
+            items: [
+              DropdownMenuItem(value: 'cash', child: Text(t('collections.cash'))),
+              DropdownMenuItem(value: 'upi', child: Text(t('collections.upi'))),
               DropdownMenuItem(
                 value: 'bank_transfer',
-                child: Text('Bank Transfer'),
+                child: Text(t('collections.bank_transfer')),
               ),
-              DropdownMenuItem(value: 'cheque', child: Text('Cheque')),
+              DropdownMenuItem(value: 'cheque', child: Text(t('collections.cheque'))),
             ],
             onChanged: onPaymentModeChanged,
           ),
           const SizedBox(height: 15),
-          const Text(
-            'Transaction Reference',
+          Text(
+            t('collections.transaction_reference'),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 7),
           TextField(
             controller: transactionController,
-            decoration: const InputDecoration(
-              hintText: 'Optional UPI / bank / cheque reference',
+            decoration: InputDecoration(
+              hintText: t('collections.optional_upi_bank_cheque_reference'),
             ),
           ),
           const SizedBox(height: 20),
@@ -123,7 +124,7 @@ class CollectionFormCard extends StatelessWidget {
                     ),
                   )
                 : const Icon(Icons.payments_outlined),
-            label: Text(isLoading ? 'Saving...' : 'Collect Payment'),
+            label: Text(isLoading ? t('collections.saving') : t('collections.collect_payment')),
           ),
         ],
       ),

@@ -7,6 +7,7 @@ import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/data/services/auth_storage.dart';
 import 'dashboard_operations_config.dart';
 import 'dashboard_response_parser.dart';
+import '../../../app/localization/t.dart';
 
 class DashboardController
     extends GetxController {
@@ -32,9 +33,6 @@ class DashboardController
 
   final summaries =
       <SummaryCardModel>[].obs;
-
-  final quickStats =
-      <String>[].obs;
 
   final operations =
       <ActionItemModel>[
@@ -132,7 +130,7 @@ class DashboardController
       _buildCards();
     } catch (error) {
       Get.snackbar(
-        'Dashboard',
+        t('common.dashboard'),
         DashboardResponseParser
             .errorMessage(
           error,
@@ -153,19 +151,6 @@ class DashboardController
             pendingOrders.value,
         todayCollections:
             todayCollections.value,
-      ),
-    );
-
-    quickStats.assignAll(
-      DashboardResponseParser
-          .buildQuickStats(
-        assignedDealers:
-            assignedDealers.value,
-        pendingOrders:
-            pendingOrders.value,
-        todayCollections:
-            todayCollections.value,
-        territory: territory.value,
       ),
     );
   }

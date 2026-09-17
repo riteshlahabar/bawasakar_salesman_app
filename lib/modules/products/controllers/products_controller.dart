@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../app/data/models/product_model.dart';
 import '../../../app/data/services/salesman_order_service.dart';
+import '../../../app/localization/t.dart';
 
 class ProductsController
     extends GetxController {
@@ -122,7 +123,7 @@ class ProductsController
       products.clear();
 
       Get.snackbar(
-        'Products',
+        t('common.products'),
         error
             .toString()
             .replaceFirst(

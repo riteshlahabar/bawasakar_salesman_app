@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../app/data/models/salesman_order_model.dart';
 import '../../../app/data/services/salesman_order_service.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
+import '../../../app/localization/t.dart';
 
 class OrdersController
     extends GetxController {
@@ -113,13 +114,8 @@ class OrdersController
       orders.clear();
 
       Get.snackbar(
-        'Orders',
-        error
-            .toString()
-            .replaceFirst(
-              'Exception: ',
-              '',
-            ),
+        t('common.orders'),
+        error.toString().replaceFirst('Exception: ', ''),
       );
     } finally {
       isLoading.value = false;
@@ -145,8 +141,8 @@ class OrdersController
       );
 
       Get.snackbar(
-        'Order Forwarded',
-        '${order.orderNo} sent to Admin for review.',
+        t('orders.order_forwarded'),
+        t('orders.sent_to_admin', {'order': order.orderNo}),
       );
 
       await loadOrders();
@@ -159,13 +155,8 @@ class OrdersController
       }
     } catch (error) {
       Get.snackbar(
-        'Unable to Forward',
-        error
-            .toString()
-            .replaceFirst(
-              'Exception: ',
-              '',
-            ),
+        t('orders.unable_to_forward'),
+        error.toString().replaceFirst('Exception: ', ''),
       );
     } finally {
       forwardingOrderId.value =

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/documents_controller.dart';
+import '../../../app/localization/t.dart';
 
 class DocumentsView extends GetView<DocumentsController> {
   const DocumentsView({super.key});
@@ -11,7 +12,7 @@ class DocumentsView extends GetView<DocumentsController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Documents On File',
+      recordsTitle: t('documents.documents_on_file'),
     );
   }
 }

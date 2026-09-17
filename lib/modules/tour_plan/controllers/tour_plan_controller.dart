@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_attendance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Planned field routes and the dealers on each one.
 class TourPlanController extends RemoteModuleController {
   TourPlanController(this._api)
     : super(
-        title: 'Tour Plan',
+        title: t('common.tour_plan'),
         subtitle:
-            'Your planned routes, the dealers on each and the approval state of the plan.',
+            t('tour_plan.your_planned_routes_the_dealers_on'),
       );
 
   final SalesmanAttendanceService _api;
@@ -30,7 +31,7 @@ class TourPlanController extends RemoteModuleController {
         final stops = dealerIds is List ? dealerIds.length : 0;
 
         return ModuleRowMapper.row(
-          title: plan['route_name']?.toString() ?? 'Route',
+          title: plan['route_name']?.toString() ?? t('common.route'),
           subtitle:
               '${ModuleRowMapper.date(plan['plan_date'])} • $stops dealer stop${stops == 1 ? '' : 's'}',
           trailing: '$stops',
@@ -40,25 +41,25 @@ class TourPlanController extends RemoteModuleController {
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Planned',
+          title: t('tour_plan.planned'),
           value: planned.toString(),
           icon: Icons.event,
           color: AppColors.primary,
-          subtitle: 'Routes',
+          subtitle: t('tour_plan.routes'),
         ),
         ModuleRowMapper.stat(
-          title: 'Completed',
+          title: t('common.completed'),
           value: completed.toString(),
           icon: Icons.done_all,
           color: AppColors.success,
-          subtitle: 'Routes',
+          subtitle: t('tour_plan.routes'),
         ),
         ModuleRowMapper.stat(
-          title: 'Total',
+          title: t('common.total'),
           value: plans.length.toString(),
           icon: Icons.route,
           color: AppColors.info,
-          subtitle: 'Records',
+          subtitle: t('common.records'),
         ),
       ],
     );

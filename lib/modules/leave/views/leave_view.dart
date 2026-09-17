@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/leave_controller.dart';
+import '../../../app/localization/t.dart';
 
 class LeaveView extends GetView<LeaveController> {
   const LeaveView({super.key});
@@ -11,7 +12,7 @@ class LeaveView extends GetView<LeaveController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Leave Applications',
+      recordsTitle: t('leave.leave_applications'),
     );
   }
 }

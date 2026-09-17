@@ -10,6 +10,10 @@ import '../data/services/salesman_dashboard_service.dart';
 import '../data/services/salesman_finance_service.dart';
 import '../data/services/salesman_hr_service.dart';
 import '../data/services/salesman_order_service.dart';
+import '../localization/locale_storage.dart';
+import '../localization/translation_api_service.dart';
+import '../localization/translation_cache.dart';
+import '../localization/translation_service.dart';
 
 /// Wires the app-wide singletons.
 ///
@@ -57,5 +61,22 @@ class CoreBinding extends Bindings {
       () => SalesmanHrService(Get.find<ApiClient>()),
       fenix: true,
     );
+
+    // Language: registered permanent so every screen and the ApiClient can
+    // read the active locale without re-creating the map.
+    Get.lazyPut<TranslationApiService>(
+      () => TranslationApiService(Get.find<ApiClient>()),
+      fenix: true,
+    );
+    if (!Get.isRegistered<TranslationService>()) {
+      Get.put<TranslationService>(
+        TranslationService(
+          Get.find<TranslationApiService>(),
+          Get.find<LocaleStorage>(),
+          TranslationCache(),
+        ),
+        permanent: true,
+      );
+    }
   }
 }

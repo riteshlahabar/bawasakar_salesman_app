@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/models/summary_card_model.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Parses the `/dashboard` API payload and builds the summary/quick-stat
 /// tiles for [DashboardController], keeping that plumbing out of the
@@ -14,7 +15,7 @@ class DashboardResponseParser {
     final rawData = response['data'];
 
     if (rawData is! Map) {
-      throw const FormatException('Invalid dashboard response.');
+      throw FormatException(t('dashboard.invalid_dashboard_response'));
     }
 
     return Map<String, dynamic>.from(rawData);
@@ -57,40 +58,26 @@ class DashboardResponseParser {
   }) {
     return [
       SummaryCardModel(
-        title: 'Assigned Dealers',
+        title: t('common.assigned_dealers'),
         value: assignedDealers.toString(),
         icon: Icons.storefront_outlined,
         color: AppColors.primary,
-        subtitle: 'Active assignment',
+        subtitle: t('dashboard.active_assignment'),
       ),
       SummaryCardModel(
-        title: 'Pending Orders',
+        title: t('dashboard.pending_orders'),
         value: pendingOrders.toString(),
         icon: Icons.pending_actions_outlined,
         color: AppColors.accent,
-        subtitle: 'Need review',
+        subtitle: t('dashboard.need_review'),
       ),
       SummaryCardModel(
-        title: 'Today Collection',
+        title: t('dashboard.today_collection'),
         value: ModuleRowMapper.money(todayCollections),
         icon: Icons.payments_outlined,
         color: AppColors.success,
-        subtitle: 'Collected today',
+        subtitle: t('dashboard.collected_today'),
       ),
-    ];
-  }
-
-  static List<String> buildQuickStats({
-    required int assignedDealers,
-    required int pendingOrders,
-    required double todayCollections,
-    required String territory,
-  }) {
-    return [
-      'Assigned Dealers: $assignedDealers',
-      'Orders waiting for review: $pendingOrders',
-      'Today Collection: ${ModuleRowMapper.money(todayCollections)}',
-      if (territory.trim().isNotEmpty) 'Territory: $territory',
     ];
   }
 

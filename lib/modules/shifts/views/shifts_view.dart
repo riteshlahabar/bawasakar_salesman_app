@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/shifts_controller.dart';
+import '../../../app/localization/t.dart';
 
 class ShiftsView extends GetView<ShiftsController> {
   const ShiftsView({super.key});
@@ -11,7 +12,7 @@ class ShiftsView extends GetView<ShiftsController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Shift Details',
+      recordsTitle: t('shifts.shift_details'),
     );
   }
 }

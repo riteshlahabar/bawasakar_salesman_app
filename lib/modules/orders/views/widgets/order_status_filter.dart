@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// Horizontal scrollable row of status choice chips for [OrdersView].
 class OrderStatusFilter extends StatelessWidget {
@@ -13,15 +14,15 @@ class OrderStatusFilter extends StatelessWidget {
   final String selectedStatus;
   final ValueChanged<String> onSelected;
 
-  static const statuses = <String, String>{
-    'all': 'All',
-    'salesman_review': 'My Review',
-    'admin_review': 'Admin Review',
-    'approved': 'Approved',
-    'packing': 'Packing',
-    'dispatched': 'Dispatched',
-    'delivered': 'Delivered',
-    'cancelled': 'Cancelled',
+  static Map<String, String> get statuses => <String, String>{
+    'all': t('orders.all'),
+    'salesman_review': t('orders.my_review'),
+    'admin_review': t('orders.admin_review'),
+    'approved': t('common.approved'),
+    'packing': t('orders.packing'),
+    'dispatched': t('orders.dispatched'),
+    'delivered': t('common.delivered'),
+    'cancelled': t('orders.cancelled'),
   };
 
   @override

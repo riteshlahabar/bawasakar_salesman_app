@@ -4,22 +4,23 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Salary structure and the most recent finalised slips.
 class SalaryController extends RemoteModuleController {
   SalaryController(this._api)
     : super(
-        title: 'Salary',
+        title: t('common.salary'),
         subtitle:
-            'Your salary structure, monthly earnings, allowances and deductions.',
+            t('salary.your_salary_structure_monthly_earnings_allowances'),
       );
 
   final SalesmanFinanceService _api;
 
-  static const _months = <String>[
+  static List<String> get _months => <String>[
     '',
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    t('salary.january'), t('salary.february'), t('salary.march'), t('salary.april'), t('common.may'), t('salary.june'),
+    t('salary.july'), t('salary.august'), t('salary.september'), t('salary.october'), t('salary.november'), t('salary.december'),
   ];
 
   @override
@@ -45,25 +46,25 @@ class SalaryController extends RemoteModuleController {
           .toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Latest net',
+          title: t('salary.latest_net'),
           value: ModuleRowMapper.money(latest['net_salary']),
           icon: Icons.payments,
           color: AppColors.primary,
           subtitle: _monthName(latest['salary_month']),
         ),
         ModuleRowMapper.stat(
-          title: 'Incentives',
+          title: t('common.incentives'),
           value: ModuleRowMapper.money(latest['incentives']),
           icon: Icons.emoji_events,
           color: AppColors.success,
-          subtitle: 'This slip',
+          subtitle: t('salary.this_slip'),
         ),
         ModuleRowMapper.stat(
-          title: 'Deductions',
+          title: t('common.deductions'),
           value: ModuleRowMapper.money(latest['deductions']),
           icon: Icons.remove_circle_outline,
           color: AppColors.orange,
-          subtitle: 'This slip',
+          subtitle: t('salary.this_slip'),
         ),
       ],
     );

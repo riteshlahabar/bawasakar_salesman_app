@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../app/data/models/dealer_model.dart';
 import '../../../../app/routes/app_routes.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// Single assigned-dealer card for [DealersView], showing contact info,
 /// credit/outstanding amounts and the "Dealer Visit" shortcut.
@@ -78,7 +79,7 @@ class DealerCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  hasOutstanding ? 'Due' : 'Clear',
+                  hasOutstanding ? t('dealers.due') : t('dealers.clear'),
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
@@ -102,14 +103,14 @@ class DealerCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _amount(
-                  'Credit',
+                  t('dealers.credit'),
                   dealer.creditLimit,
                   AppColors.primary,
                 ),
               ),
               Expanded(
                 child: _amount(
-                  'Outstanding',
+                  t('common.outstanding'),
                   dealer.outstandingBalance,
                   hasOutstanding ? AppColors.danger : AppColors.primary,
                 ),
@@ -122,7 +123,7 @@ class DealerCard extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () => Get.toNamed(AppRoutes.visits),
               icon: const Icon(Icons.route_outlined),
-              label: const Text('Dealer Visit'),
+              label: Text(t('dealers.dealer_visit')),
             ),
           ),
         ],

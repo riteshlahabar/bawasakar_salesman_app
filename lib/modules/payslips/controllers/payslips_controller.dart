@@ -4,6 +4,7 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Finalised payslips for one year.
 ///
@@ -12,17 +13,17 @@ import '../../../app/theme/app_colors.dart';
 class PayslipsController extends RemoteModuleController {
   PayslipsController(this._api)
     : super(
-        title: 'Payslips',
+        title: t('common.payslips'),
         subtitle:
-            'Your released payslips with net pay, incentives and deductions for each month.',
+            t('payslips.your_released_payslips_with_net_pay'),
       );
 
   final SalesmanFinanceService _api;
 
-  static const _months = <String>[
+  static List<String> get _months => <String>[
     '',
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    t('common.jan'), t('common.feb'), t('common.mar'), t('common.apr'), t('common.may'), t('common.jun'),
+    t('common.jul'), t('common.aug'), t('common.sep'), t('common.oct'), t('common.nov'), t('common.dec'),
   ];
 
   @override
@@ -49,25 +50,25 @@ class PayslipsController extends RemoteModuleController {
           .toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Net paid',
+          title: t('payslips.net_paid'),
           value: ModuleRowMapper.money(totals['net_paid']),
           icon: Icons.account_balance_wallet,
           color: AppColors.primary,
-          subtitle: 'This year',
+          subtitle: t('common.this_year'),
         ),
         ModuleRowMapper.stat(
-          title: 'Incentives',
+          title: t('common.incentives'),
           value: ModuleRowMapper.money(totals['incentives']),
           icon: Icons.emoji_events,
           color: AppColors.success,
-          subtitle: 'This year',
+          subtitle: t('common.this_year'),
         ),
         ModuleRowMapper.stat(
-          title: 'Deductions',
+          title: t('common.deductions'),
           value: ModuleRowMapper.money(totals['deductions']),
           icon: Icons.remove_circle_outline,
           color: AppColors.orange,
-          subtitle: 'This year',
+          subtitle: t('common.this_year'),
         ),
       ],
     );

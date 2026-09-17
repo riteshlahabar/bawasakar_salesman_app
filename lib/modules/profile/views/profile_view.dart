@@ -7,6 +7,7 @@ import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/action_tile.dart';
 import '../../../app/widgets/app_decorations.dart';
 import '../controllers/profile_controller.dart';
+import '../../../app/localization/t.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -14,7 +15,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Profile')),
+      appBar: AppBar(title: Text(t('common.my_profile'))),
       body: Obx(
         () => ListView(
           padding: const EdgeInsets.all(16),
@@ -54,15 +55,15 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             const SizedBox(height: 14),
-            _InfoRow(icon: Icons.badge_outlined, label: 'Employee Code', value: controller.employeeCode),
-            _InfoRow(icon: Icons.map_outlined, label: 'Territory', value: controller.territory),
-            _InfoRow(icon: Icons.phone_outlined, label: 'Mobile', value: controller.mobile),
-            _InfoRow(icon: Icons.email_outlined, label: 'Email', value: controller.email),
+            _InfoRow(icon: Icons.badge_outlined, label: t('profile.employee_code'), value: controller.employeeCode),
+            _InfoRow(icon: Icons.map_outlined, label: t('profile.territory'), value: controller.territory),
+            _InfoRow(icon: Icons.phone_outlined, label: t('profile.mobile'), value: controller.mobile),
+            _InfoRow(icon: Icons.email_outlined, label: t('common.email'), value: controller.email),
             const SizedBox(height: 14),
             ActionTile(
-              item: const ActionItemModel(
-                title: 'Help & Support',
-                subtitle: 'Raise a support ticket',
+              item: ActionItemModel(
+                title: t('common.help_and_support'),
+                subtitle: t('common.raise_a_support_ticket'),
                 icon: Icons.support_agent_rounded,
                 route: AppRoutes.support,
                 color: AppColors.info,
@@ -71,9 +72,9 @@ class ProfileView extends GetView<ProfileController> {
             ),
             const SizedBox(height: 10),
             ActionTile(
-              item: const ActionItemModel(
-                title: 'Logout',
-                subtitle: 'Sign out from the salesman app',
+              item: ActionItemModel(
+                title: t('common.logout'),
+                subtitle: t('profile.sign_out_from_the_salesman_app'),
                 icon: Icons.logout_rounded,
                 route: AppRoutes.login,
                 color: AppColors.danger,

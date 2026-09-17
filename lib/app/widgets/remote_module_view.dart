@@ -7,6 +7,7 @@ import '../theme/app_colors.dart';
 import 'empty_state.dart';
 import 'field_module_view.dart';
 import 'salesman_bottom_navigation.dart';
+import '../localization/t.dart';
 
 /// Renders any [RemoteModuleController] as a standard module screen.
 ///
@@ -18,7 +19,7 @@ class RemoteModuleView extends StatelessWidget {
     super.key,
     required this.controller,
     this.featured,
-    this.recordsTitle = 'Records',
+    this.recordsTitle = 'common.records',
     this.onPrimaryAction,
   });
 
@@ -44,7 +45,7 @@ class RemoteModuleView extends StatelessWidget {
       if (controller.error.value.isNotEmpty && controller.rows.isEmpty) {
         return _chrome(
           EmptyState(
-            title: 'Could not load',
+            title: t('common.could_not_load'),
             message: controller.error.value,
             icon: Icons.cloud_off,
           ),
@@ -54,7 +55,7 @@ class RemoteModuleView extends StatelessWidget {
       if (controller.isEmpty) {
         return _chrome(
           EmptyState(
-            title: 'Nothing here yet',
+            title: t('common.nothing_here_yet'),
             message: controller.subtitle,
             icon: Icons.inbox_outlined,
           ),
@@ -75,7 +76,7 @@ class RemoteModuleView extends StatelessWidget {
               ? null
               : (onPrimaryAction ?? controller.primaryAction),
           featured: featured,
-          recordsTitle: recordsTitle,
+          recordsTitle: t(recordsTitle),
         ),
       );
     });

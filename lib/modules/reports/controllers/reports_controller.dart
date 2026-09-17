@@ -5,6 +5,7 @@ import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// A single roll-up across the salesman's own modules.
 ///
@@ -15,9 +16,9 @@ import '../../../app/theme/app_colors.dart';
 class ReportsController extends RemoteModuleController {
   ReportsController(this._dashboard, this._finance)
     : super(
-        title: 'Reports',
+        title: t('reports.reports'),
         subtitle:
-            'Your field performance at a glance: dealers, targets, expenses and earnings.',
+            t('reports.your_field_performance_at_a_glance'),
       );
 
   final SalesmanDashboardService _dashboard;
@@ -57,9 +58,9 @@ class ReportsController extends RemoteModuleController {
     return (
       rows: [
         ModuleRowMapper.row(
-          title: 'Target achievement',
+          title: t('reports.target_achievement'),
           subtitle:
-              'Achieved ${ModuleRowMapper.money(achievedTotal)} against ${ModuleRowMapper.money(targetTotal)}',
+              t('reports.achieved_against', {'achieved': ModuleRowMapper.money(achievedTotal), 'target': ModuleRowMapper.money(targetTotal)}),
           trailing: targetTotal <= 0
               ? '-'
               : '${(achievedTotal / targetTotal * 100).toStringAsFixed(0)}%',
@@ -69,17 +70,17 @@ class ReportsController extends RemoteModuleController {
               : 'pending',
         ),
         ModuleRowMapper.row(
-          title: 'Expense claims',
+          title: t('reports.expense_claims'),
           subtitle:
-              '${expenses.length} claims worth ${ModuleRowMapper.money(expenseTotal)}'
-              ' • $pendingExpenses awaiting approval',
+              '${t('reports.claims_worth', {'n': '${expenses.length}', 'amount': ModuleRowMapper.money(expenseTotal)})}'
+              ' • ${t('reports.awaiting_approval', {'n': '$pendingExpenses'})}',
           trailing: ModuleRowMapper.money(expenseTotal),
           icon: Icons.receipt_long,
           status: pendingExpenses == 0 ? 'approved' : 'pending',
         ),
         ModuleRowMapper.row(
-          title: 'Assigned dealers',
-          subtitle: 'Dealers currently mapped to your territory',
+          title: t('reports.assigned_dealers'),
+          subtitle: t('reports.dealers_currently_mapped_to_your_territory'),
           trailing: ModuleRowMapper.toInt(summaryMap['assigned_dealers']).toString(),
           icon: Icons.storefront,
           status: 'active',
@@ -87,32 +88,32 @@ class ReportsController extends RemoteModuleController {
       ],
       stats: [
         ModuleRowMapper.stat(
-          title: 'Pending',
+          title: t('common.pending'),
           value: ModuleRowMapper.toInt(summaryMap['pending_orders']).toString(),
           icon: Icons.shopping_bag,
           color: AppColors.primary,
-          subtitle: 'Orders',
+          subtitle: t('common.orders'),
         ),
         ModuleRowMapper.stat(
-          title: 'Dealers',
+          title: t('common.dealers'),
           value: ModuleRowMapper.toInt(summaryMap['assigned_dealers']).toString(),
           icon: Icons.groups,
           color: AppColors.info,
-          subtitle: 'Assigned',
+          subtitle: t('reports.assigned'),
         ),
         ModuleRowMapper.stat(
-          title: 'Achieved',
+          title: t('common.achieved'),
           value: ModuleRowMapper.money(achievedTotal),
           icon: Icons.trending_up,
           color: AppColors.success,
-          subtitle: 'Sales',
+          subtitle: t('common.sales'),
         ),
         ModuleRowMapper.stat(
-          title: 'Expenses',
+          title: t('common.expenses'),
           value: ModuleRowMapper.money(expenseTotal),
           icon: Icons.payments,
           color: AppColors.orange,
-          subtitle: 'Claimed',
+          subtitle: t('common.claimed'),
         ),
       ],
     );

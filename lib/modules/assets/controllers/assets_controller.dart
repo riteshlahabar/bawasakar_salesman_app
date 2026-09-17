@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Company assets issued to the signed-in salesman.
 class AssetsController extends RemoteModuleController {
   AssetsController(this._api)
     : super(
-        title: 'Salesman Assets',
+        title: t('assets.salesman_assets'),
         subtitle:
-            'Company assets issued to you: laptop, mobile, SIM, bag, ID card and samples, with their return condition.',
+            t('assets.company_assets_issued_to_you_laptop'),
       );
 
   final SalesmanHrService _api;
@@ -27,7 +28,7 @@ class AssetsController extends RemoteModuleController {
       rows: assets
           .map(
             (asset) => ModuleRowMapper.row(
-              title: asset['asset_name']?.toString() ?? 'Asset',
+              title: asset['asset_name']?.toString() ?? t('common.asset'),
               subtitle: [
                 if ((asset['serial_no']?.toString() ?? '').isNotEmpty)
                   'Serial ${asset['serial_no']}',
@@ -44,25 +45,25 @@ class AssetsController extends RemoteModuleController {
           .toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Issued',
+          title: t('assets.issued'),
           value: issued.toString(),
           icon: Icons.inventory_2,
           color: AppColors.primary,
-          subtitle: 'Assets',
+          subtitle: t('common.assets'),
         ),
         ModuleRowMapper.stat(
-          title: 'Returned',
+          title: t('assets.returned'),
           value: returned.toString(),
           icon: Icons.keyboard_return,
           color: AppColors.info,
-          subtitle: 'Assets',
+          subtitle: t('common.assets'),
         ),
         ModuleRowMapper.stat(
-          title: 'Total',
+          title: t('common.total'),
           value: assets.length.toString(),
           icon: Icons.list_alt,
           color: AppColors.success,
-          subtitle: 'Records',
+          subtitle: t('common.records'),
         ),
       ],
     );

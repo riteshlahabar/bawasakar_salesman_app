@@ -1,6 +1,8 @@
 class AppAssets {
   AppAssets._();
 
+  static const appLogo = 'assets/images/app_logo.png';
+
   static const walletBackground = 'assets/images/walletApp/wa_bg.jpg';
   static const walletLogo = 'assets/images/walletApp/wa_app_logo.png';
   static const walletVisa = 'assets/images/walletApp/wa_visa.png';

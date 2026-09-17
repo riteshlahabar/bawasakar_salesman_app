@@ -5,15 +5,16 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// The salesman's notification inbox.
 class NotificationsController extends RemoteModuleController {
   NotificationsController(this._api)
     : super(
-        title: 'Notifications',
+        title: t('common.notifications'),
         subtitle:
-            'Order approvals, dispatch updates, leave decisions and company notices.',
-        actionLabel: 'Mark all read',
+            t('notifications.order_approvals_dispatch_updates_leave_decisions'),
+        actionLabel: t('notifications.mark_all_read'),
         actionIcon: Icons.mark_email_read_outlined,
       );
 
@@ -46,18 +47,18 @@ class NotificationsController extends RemoteModuleController {
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Unread',
+          title: t('notifications.unread'),
           value: unreadCount.value.toString(),
           icon: Icons.notifications_active,
           color: AppColors.orange,
-          subtitle: 'Messages',
+          subtitle: t('notifications.messages'),
         ),
         ModuleRowMapper.stat(
-          title: 'Total',
+          title: t('common.total'),
           value: items.length.toString(),
           icon: Icons.inbox,
           color: AppColors.primary,
-          subtitle: 'In inbox',
+          subtitle: t('notifications.in_inbox'),
         ),
       ],
     );

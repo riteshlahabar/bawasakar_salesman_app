@@ -5,6 +5,7 @@ import '../../../app/theme/app_colors.dart';
 import '../controllers/orders_controller.dart';
 import 'widgets/order_card.dart';
 import 'widgets/order_status_filter.dart';
+import '../../../app/localization/t.dart';
 
 class OrdersView extends GetView<OrdersController> {
   const OrdersView({super.key});
@@ -28,9 +29,9 @@ class OrdersView extends GetView<OrdersController> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Dealer Orders',
+                    t('orders.dealer_orders'),
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w900,
@@ -69,7 +70,7 @@ class OrdersView extends GetView<OrdersController> {
   }
 
   Widget _empty() {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(vertical: 60),
       child: Column(
         children: [
@@ -80,12 +81,12 @@ class OrdersView extends GetView<OrdersController> {
           ),
           SizedBox(height: 12),
           Text(
-            'No Orders Found',
+            t('orders.no_orders_found'),
             style: TextStyle(fontWeight: FontWeight.w800),
           ),
           SizedBox(height: 5),
           Text(
-            'Orders from dealers assigned to you will appear here.',
+            t('orders.orders_from_dealers_assigned_to_you'),
             textAlign: TextAlign.center,
             style: TextStyle(color: AppColors.textSecondary, fontSize: 11.5),
           ),

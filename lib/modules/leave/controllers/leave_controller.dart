@@ -5,15 +5,16 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Leave applications and the remaining balance per leave type.
 class LeaveController extends RemoteModuleController {
   LeaveController(this._api)
     : super(
-        title: 'Leave Management',
+        title: t('leave.leave_management'),
         subtitle:
-            'Apply for leave, track approvals and see how much of each entitlement you have left this year.',
-        actionLabel: 'Apply for Leave',
+            t('leave.apply_for_leave_track_approvals_and'),
+        actionLabel: t('leave.apply_for_leave'),
         actionIcon: Icons.event_available,
       );
 
@@ -75,7 +76,7 @@ class LeaveController extends RemoteModuleController {
         if (reason != null && reason.trim().isNotEmpty) 'reason': reason.trim(),
       });
       await load();
-      Get.snackbar(title, 'Leave application submitted for approval.');
+      Get.snackbar(title, t('leave.leave_application_submitted_for_approval'));
     } catch (failure) {
       Get.snackbar(title, failure.toString());
     } finally {

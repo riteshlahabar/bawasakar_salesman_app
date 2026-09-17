@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// The company holiday calendar for the current year.
 class HolidaysController extends RemoteModuleController {
   HolidaysController(this._api)
     : super(
-        title: 'Holiday Calendar',
+        title: t('holidays.holiday_calendar'),
         subtitle:
-            'National, company and festival holidays declared for this year.',
+            t('holidays.national_company_and_festival_holidays_declared'),
       );
 
   final SalesmanHrService _api;
@@ -38,7 +39,7 @@ class HolidaysController extends RemoteModuleController {
             if ((holiday['description']?.toString() ?? '').isNotEmpty)
               holiday['description'].toString(),
           ].join(' • '),
-          trailing: isPast ? '' : 'Upcoming',
+          trailing: isPast ? '' : t('holidays.upcoming'),
           icon: Icons.event_available_outlined,
           // Past holidays are greyed to "completed" so the upcoming ones stand
           // out in a year-long list.
@@ -47,18 +48,18 @@ class HolidaysController extends RemoteModuleController {
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Total',
+          title: t('common.total'),
           value: holidays.length.toString(),
           icon: Icons.calendar_month,
           color: AppColors.primary,
-          subtitle: 'This year',
+          subtitle: t('common.this_year'),
         ),
         ModuleRowMapper.stat(
-          title: 'Upcoming',
+          title: t('holidays.upcoming'),
           value: upcoming.toString(),
           icon: Icons.upcoming,
           color: AppColors.success,
-          subtitle: 'Remaining',
+          subtitle: t('common.remaining'),
         ),
       ],
     );

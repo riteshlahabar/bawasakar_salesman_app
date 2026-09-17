@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/notifications_controller.dart';
+import '../../../app/localization/t.dart';
 
 class NotificationsView extends GetView<NotificationsController> {
   const NotificationsView({super.key});
@@ -11,7 +12,7 @@ class NotificationsView extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Inbox',
+      recordsTitle: t('notifications.inbox'),
     );
   }
 }

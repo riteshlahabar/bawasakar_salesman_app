@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/reports_controller.dart';
+import '../../../app/localization/t.dart';
 
 class ReportsView extends GetView<ReportsController> {
   const ReportsView({super.key});
@@ -11,7 +12,7 @@ class ReportsView extends GetView<ReportsController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Summary',
+      recordsTitle: t('reports.summary'),
     );
   }
 }

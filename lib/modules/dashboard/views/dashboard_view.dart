@@ -7,7 +7,7 @@ import '../../../app/widgets/summary_card.dart';
 import '../controllers/dashboard_controller.dart';
 import 'widgets/dashboard_overview_card.dart';
 import 'widgets/operation_button.dart';
-import 'widgets/quick_status_card.dart';
+import '../../../app/localization/t.dart';
 
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({super.key});
@@ -22,7 +22,7 @@ class DashboardView extends GetView<DashboardController> {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 110),
           children: [
             Text(
-              'Hey ${controller.salesmanName.value},',
+              t('dashboard.hey', {'name': controller.salesmanName.value}),
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 13,
@@ -30,8 +30,8 @@ class DashboardView extends GetView<DashboardController> {
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Welcome Back',
+            Text(
+              t('dashboard.welcome_back'),
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 19,
@@ -45,7 +45,7 @@ class DashboardView extends GetView<DashboardController> {
               employeeCode: controller.employeeCode.value,
             ),
             const SizedBox(height: 22),
-            const SectionHeader(title: 'Operations'),
+            SectionHeader(title: t('dashboard.operations')),
             const SizedBox(height: 14),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -56,7 +56,7 @@ class DashboardView extends GetView<DashboardController> {
               ),
             ),
             const SizedBox(height: 22),
-            const SectionHeader(title: 'Performance'),
+            SectionHeader(title: t('common.performance')),
             const SizedBox(height: 14),
             if (controller.isLoading.value)
               const Padding(
@@ -79,8 +79,6 @@ class DashboardView extends GetView<DashboardController> {
                   return SummaryCard(item: controller.summaries[index]);
                 },
               ),
-            const SizedBox(height: 18),
-            QuickStatusCard(items: controller.quickStats.toList()),
           ],
         ),
       ),

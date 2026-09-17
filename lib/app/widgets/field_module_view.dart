@@ -10,6 +10,7 @@ import 'module_list_view.dart';
 import 'salesman_bottom_navigation.dart';
 import 'section_header.dart';
 import 'summary_card.dart';
+import '../localization/t.dart';
 
 class FieldModuleView extends StatelessWidget {
   const FieldModuleView({
@@ -25,7 +26,7 @@ class FieldModuleView extends StatelessWidget {
     this.secondaryActionIcon,
     this.onSecondaryAction,
     this.featured,
-    this.recordsTitle = 'Recent Records',
+    this.recordsTitle = 'common.recent_records',
   });
 
   final String title;
@@ -105,7 +106,8 @@ class FieldModuleView extends StatelessWidget {
           ],
           const SizedBox(height: 18),
           Text(
-            recordsTitle,
+            // A key or already-translated text; t() returns the latter unchanged.
+            t(recordsTitle),
             style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 14,

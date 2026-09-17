@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../controllers/login_controller.dart';
+import '../../../../app/localization/t.dart';
 
 /// Email/password card with the login button, for [LoginView].
 class LoginFormCard extends StatelessWidget {
@@ -30,22 +31,22 @@ class LoginFormCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Email',
+          Text(
+            t('common.email'),
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 8),
           TextField(
             controller: controller.emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: 'Salesman email',
+            decoration: InputDecoration(
+              hintText: t('auth.salesman_email'),
               prefixIcon: Icon(Icons.email_outlined),
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Password',
+          Text(
+            t('auth.password'),
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 8),
@@ -55,7 +56,7 @@ class LoginFormCard extends StatelessWidget {
               obscureText: controller.obscurePassword.value,
               onSubmitted: (_) => controller.login(),
               decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: t('auth.password'),
                 prefixIcon: const Icon(Icons.lock_outline),
                 suffixIcon: IconButton(
                   onPressed: controller.togglePassword,
@@ -81,7 +82,7 @@ class LoginFormCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Login'),
+                  : Text(t('auth.login')),
             ),
           ),
         ],

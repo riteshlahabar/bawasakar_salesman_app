@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/performance_controller.dart';
+import '../../../app/localization/t.dart';
 
 class PerformanceView extends GetView<PerformanceController> {
   const PerformanceView({super.key});
@@ -11,7 +12,7 @@ class PerformanceView extends GetView<PerformanceController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Review History',
+      recordsTitle: t('performance.review_history'),
     );
   }
 }

@@ -20,6 +20,8 @@ import '../../modules/holidays/bindings/holidays_binding.dart';
 import '../../modules/holidays/views/holidays_view.dart';
 import '../../modules/incentives/bindings/incentives_binding.dart';
 import '../../modules/incentives/views/incentives_view.dart';
+import '../../modules/language/bindings/language_binding.dart';
+import '../../modules/language/views/language_view.dart';
 import '../../modules/leave/bindings/leave_binding.dart';
 import '../../modules/leave/views/leave_view.dart';
 import '../../modules/main_shell/bindings/main_shell_binding.dart';
@@ -180,6 +182,11 @@ class AppPages {
       name: AppRoutes.support,
       page: () => const SupportView(),
       binding: SupportBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.language,
+      page: () => const LanguageView(),
+      binding: LanguageBinding(),
     ),
   ];
 }

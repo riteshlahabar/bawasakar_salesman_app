@@ -5,6 +5,7 @@ import '../../../../app/routes/app_routes.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/widgets/action_tile.dart';
 import '../../controllers/main_shell_controller.dart';
+import '../../../../app/localization/t.dart';
 
 /// Navigation drawer for [MainShellView] — profile header plus the
 /// scrollable list of HR/ops shortcuts and logout.
@@ -56,7 +57,7 @@ class SalesmanDrawer extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               controller.employeeCode.value.isEmpty
-                                  ? 'Salesman'
+                                  ? t('common.salesman')
                                   : controller.employeeCode.value,
                               style: const TextStyle(
                                 color: Colors.white70,
@@ -76,8 +77,8 @@ class SalesmanDrawer extends StatelessWidget {
                                 ),
                               ),
                             const SizedBox(height: 6),
-                            const Text(
-                              'Tap to view profile',
+                            Text(
+                              t('main_shell.tap_to_view_profile'),
                               style: TextStyle(
                                 color: Colors.white70,
                                 fontSize: 9.5,
@@ -114,7 +115,7 @@ class SalesmanDrawer extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: controller.logout,
                   icon: const Icon(Icons.logout),
-                  label: const Text('Logout'),
+                  label: Text(t('common.logout')),
                 ),
               ),
             ),

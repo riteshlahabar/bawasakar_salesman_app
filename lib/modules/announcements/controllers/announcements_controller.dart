@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Company announcements, circulars and notices.
 class AnnouncementsController extends RemoteModuleController {
   AnnouncementsController(this._api)
     : super(
-        title: 'Announcements',
+        title: t('common.announcements'),
         subtitle:
-            'Company announcements, circulars and notices published for field staff.',
+            t('announcements.company_announcements_circulars_and_notices_published'),
       );
 
   final SalesmanHrService _api;
@@ -41,18 +42,18 @@ class AnnouncementsController extends RemoteModuleController {
           .toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Notices',
+          title: t('announcements.notices'),
           value: announcements.length.toString(),
           icon: Icons.campaign,
           color: AppColors.primary,
-          subtitle: 'Published',
+          subtitle: t('announcements.published'),
         ),
         ModuleRowMapper.stat(
-          title: 'Circulars',
+          title: t('announcements.circulars'),
           value: circulars.toString(),
           icon: Icons.article_outlined,
           color: AppColors.info,
-          subtitle: 'Official',
+          subtitle: t('announcements.official'),
         ),
       ],
     );

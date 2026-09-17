@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_attendance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Dealer visits logged by the salesman in the field.
 class VisitsController extends RemoteModuleController {
   VisitsController(this._api)
     : super(
-        title: 'Daily Visits',
+        title: t('visits.daily_visits'),
         subtitle:
-            'Dealer visits logged with GPS location, purpose and the remarks you captured on site.',
+            t('visits.dealer_visits_logged_with_gps_location'),
       );
 
   final SalesmanAttendanceService _api;
@@ -30,7 +31,7 @@ class VisitsController extends RemoteModuleController {
       rows: visits.map((visit) {
         final dealer = visit['dealer'];
         final dealerName = dealer is Map
-            ? dealer['name']?.toString() ?? 'Dealer'
+            ? dealer['name']?.toString() ?? t('common.dealer')
             : 'Dealer #${visit['dealer_id']}';
 
         return ModuleRowMapper.row(
@@ -42,32 +43,32 @@ class VisitsController extends RemoteModuleController {
             if ((visit['remarks']?.toString() ?? '').isNotEmpty)
               visit['remarks'].toString(),
           ].join(' • '),
-          trailing: visit['latitude'] == null ? 'No GPS' : 'GPS',
+          trailing: visit['latitude'] == null ? t('common.no_gps') : t('common.gps'),
           icon: Icons.storefront,
           status: visit['latitude'] == null ? 'pending' : 'completed',
         );
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Today',
+          title: t('visits.today'),
           value: todayCount.toString(),
           icon: Icons.today,
           color: AppColors.primary,
-          subtitle: 'Visits',
+          subtitle: t('common.visits'),
         ),
         ModuleRowMapper.stat(
-          title: 'Total',
+          title: t('common.total'),
           value: visits.length.toString(),
           icon: Icons.route,
           color: AppColors.info,
-          subtitle: 'Logged',
+          subtitle: t('visits.logged'),
         ),
         ModuleRowMapper.stat(
-          title: 'GPS tagged',
+          title: t('visits.gps_tagged'),
           value: located.toString(),
           icon: Icons.location_on,
           color: AppColors.success,
-          subtitle: 'Verified',
+          subtitle: t('common.verified'),
         ),
       ],
     );

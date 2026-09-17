@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../app/data/models/dealer_model.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
+import '../../../app/localization/t.dart';
 
 class DealersController
     extends GetxController {
@@ -130,7 +131,7 @@ class DealersController
       dealers.clear();
 
       Get.snackbar(
-        'Dealers',
+        t('common.dealers'),
         error
             .toString()
             .replaceFirst(

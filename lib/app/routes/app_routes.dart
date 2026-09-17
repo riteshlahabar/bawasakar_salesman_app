@@ -28,4 +28,5 @@ class AppRoutes {
   static const shifts = '/shifts';
   static const profile = '/profile';
   static const support = '/support';
+  static const language = '/language';
 }

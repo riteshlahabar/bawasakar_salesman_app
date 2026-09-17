@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/visits_controller.dart';
+import '../../../app/localization/t.dart';
 
 class VisitsView extends GetView<VisitsController> {
   const VisitsView({super.key});
@@ -11,7 +12,7 @@ class VisitsView extends GetView<VisitsController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Visit Log',
+      recordsTitle: t('visits.visit_log'),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../data/models/list_row_model.dart';
 import '../data/models/summary_card_model.dart';
+import '../localization/t.dart';
 
 /// What one module screen needs to render: the record rows and the stat tiles
 /// above them.
@@ -69,6 +70,6 @@ abstract class RemoteModuleController extends GetxController {
 
   /// Default primary action: modules that submit something override this.
   void primaryAction() {
-    Get.snackbar(title, 'This action is not available yet.');
+    Get.snackbar(title, t('common.this_action_is_not_available_yet'));
   }
 }

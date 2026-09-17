@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// App icon badge plus title/subtitle shown above the login form.
 class LoginHeader extends StatelessWidget {
@@ -31,8 +32,8 @@ class LoginHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 22),
-        const Text(
-          'Bawaskar Salesman',
+        Text(
+          t('auth.bawaskar_salesman'),
           style: TextStyle(
             color: AppColors.textPrimary,
             fontSize: 25,
@@ -40,8 +41,8 @@ class LoginHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 7),
-        const Text(
-          'Salesman ERP Login',
+        Text(
+          t('auth.salesman_erp_login'),
           style: TextStyle(
             color: AppColors.textSecondary,
             fontSize: 13,

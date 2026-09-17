@@ -5,6 +5,7 @@ import '../../../app/theme/app_colors.dart';
 import '../controllers/login_controller.dart';
 import 'widgets/login_form_card.dart';
 import 'widgets/login_header.dart';
+import '../../../app/localization/t.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
@@ -31,8 +32,8 @@ class LoginView extends GetView<LoginController> {
                 const SizedBox(height: 32),
                 LoginFormCard(controller: controller),
                 const SizedBox(height: 24),
-                const Text(
-                  'Use the Salesman account created by Admin.',
+                Text(
+                  t('auth.use_the_salesman_account_created_by'),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.textSecondary,

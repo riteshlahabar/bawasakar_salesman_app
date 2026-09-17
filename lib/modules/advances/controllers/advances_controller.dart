@@ -5,15 +5,16 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Salary advances and employee loans, with their EMI recovery schedule.
 class AdvancesController extends RemoteModuleController {
   AdvancesController(this._api)
     : super(
-        title: 'Advance & Loan',
+        title: t('common.advance_and_loan'),
         subtitle:
-            'Request a salary advance or a loan, and track how much has been recovered from your salary.',
-        actionLabel: 'Request Advance',
+            t('advances.request_a_salary_advance_or_a'),
+        actionLabel: t('advances.request_advance'),
         actionIcon: Icons.request_quote_outlined,
       );
 
@@ -51,8 +52,8 @@ class AdvancesController extends RemoteModuleController {
           subtitle:
               '${record['advance_type']?.toString().toUpperCase()}'
               ' • ${ModuleRowMapper.money(amount)}'
-              '${installments > 1 ? ' over $installments EMIs of ${ModuleRowMapper.money(record['emi_amount'])}' : ''}'
-              ' • Recovered ${ModuleRowMapper.money(done)}',
+              '${installments > 1 ? ' ${t('advances.over_emis', {'n': '$installments', 'amount': ModuleRowMapper.money(record['emi_amount'])})}' : ''}'
+              ' • ${t('advances.recovered_amount', {'amount': ModuleRowMapper.money(done)})}',
           trailing: ModuleRowMapper.money(amount - done),
           icon: record['advance_type'] == 'loan'
               ? Icons.account_balance
@@ -62,25 +63,25 @@ class AdvancesController extends RemoteModuleController {
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Sanctioned',
+          title: t('advances.sanctioned'),
           value: ModuleRowMapper.money(sanctioned),
           icon: Icons.request_quote,
           color: AppColors.primary,
-          subtitle: 'Total',
+          subtitle: t('common.total'),
         ),
         ModuleRowMapper.stat(
-          title: 'Recovered',
+          title: t('advances.recovered'),
           value: ModuleRowMapper.money(recovered),
           icon: Icons.done_all,
           color: AppColors.success,
-          subtitle: 'Repaid',
+          subtitle: t('advances.repaid'),
         ),
         ModuleRowMapper.stat(
-          title: 'Outstanding',
+          title: t('common.outstanding'),
           value: ModuleRowMapper.money(sanctioned - recovered),
           icon: Icons.pending_actions,
           color: AppColors.orange,
-          subtitle: 'Remaining',
+          subtitle: t('common.remaining'),
         ),
       ],
     );
@@ -103,7 +104,7 @@ class AdvancesController extends RemoteModuleController {
         if (reason != null && reason.trim().isNotEmpty) 'reason': reason.trim(),
       });
       await load();
-      Get.snackbar(title, 'Request submitted for approval.');
+      Get.snackbar(title, t('advances.request_submitted_for_approval'));
     } catch (failure) {
       Get.snackbar(title, failure.toString());
     } finally {

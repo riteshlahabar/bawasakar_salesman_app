@@ -5,6 +5,7 @@ import '../../../app/theme/app_colors.dart';
 import '../controllers/collections_controller.dart';
 import 'widgets/collection_form_card.dart';
 import 'widgets/collection_success_banner.dart';
+import '../../../app/localization/t.dart';
 
 class CollectionsView extends GetView<CollectionsController> {
   const CollectionsView({super.key});
@@ -18,8 +19,8 @@ class CollectionsView extends GetView<CollectionsController> {
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 110),
           children: [
-            const Text(
-              'Payment Collection',
+            Text(
+              t('common.payment_collection'),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
@@ -27,8 +28,8 @@ class CollectionsView extends GetView<CollectionsController> {
               ),
             ),
             const SizedBox(height: 5),
-            const Text(
-              'Record a payment received from an assigned dealer.',
+            Text(
+              t('collections.record_a_payment_received_from_an'),
               style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 18),

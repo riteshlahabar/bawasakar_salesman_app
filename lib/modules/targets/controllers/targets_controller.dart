@@ -4,14 +4,15 @@ import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// Sales targets for the salesman and how far each one has been achieved.
 class TargetsController extends RemoteModuleController {
   TargetsController(this._api)
     : super(
-        title: 'Sales Targets',
+        title: t('targets.sales_targets'),
         subtitle:
-            'Monthly and period targets with achievement, shortfall and the commission rate attached to each.',
+            t('targets.monthly_and_period_targets_with_achievement'),
       );
 
   final SalesmanFinanceService _api;
@@ -38,10 +39,10 @@ class TargetsController extends RemoteModuleController {
 
         return ModuleRowMapper.row(
           title:
-              '${ModuleRowMapper.date(target['period_start'])} to ${ModuleRowMapper.date(target['period_end'])}',
+              t('common.date_range', {'from': ModuleRowMapper.date(target['period_start']), 'to': ModuleRowMapper.date(target['period_end'])}),
           subtitle:
-              'Achieved ${ModuleRowMapper.money(done)} of ${ModuleRowMapper.money(goal)}'
-              ' • Commission ${ModuleRowMapper.toDouble(target['commission_percent'])}%',
+              '${t('targets.achieved_of', {'done': ModuleRowMapper.money(done), 'goal': ModuleRowMapper.money(goal)})}'
+              ' • ${t('targets.commission_percent', {'n': '${ModuleRowMapper.toDouble(target['commission_percent'])}'})}',
           trailing: goal <= 0
               ? '-'
               : '${(done / goal * 100).toStringAsFixed(0)}%',
@@ -53,25 +54,25 @@ class TargetsController extends RemoteModuleController {
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
-          title: 'Target',
+          title: t('targets.target'),
           value: ModuleRowMapper.money(targetTotal),
           icon: Icons.flag,
           color: AppColors.primary,
-          subtitle: 'All periods',
+          subtitle: t('targets.all_periods'),
         ),
         ModuleRowMapper.stat(
-          title: 'Achieved',
+          title: t('common.achieved'),
           value: ModuleRowMapper.money(achievedTotal),
           icon: Icons.trending_up,
           color: AppColors.success,
-          subtitle: 'All periods',
+          subtitle: t('targets.all_periods'),
         ),
         ModuleRowMapper.stat(
-          title: 'Progress',
+          title: t('targets.progress'),
           value: '${percent.toStringAsFixed(0)}%',
           icon: Icons.donut_large,
           color: AppColors.info,
-          subtitle: 'Overall',
+          subtitle: t('common.overall'),
         ),
       ],
     );

@@ -10,6 +10,7 @@ import '../../dealers/views/dealers_view.dart';
 import '../../orders/views/orders_view.dart';
 import '../controllers/main_shell_controller.dart';
 import 'widgets/salesman_drawer.dart';
+import '../../../app/localization/t.dart';
 
 class MainShellView extends GetView<MainShellController> {
   const MainShellView({super.key});
@@ -30,13 +31,13 @@ class MainShellView extends GetView<MainShellController> {
           title: Text(controller.currentTitle),
           actions: [
             IconButton(
-              tooltip: 'Refresh',
+              tooltip: t('main_shell.refresh'),
               onPressed: () =>
                   controller.changeTab(controller.selectedIndex.value),
               icon: const Icon(Icons.refresh_rounded),
             ),
             IconButton(
-              tooltip: 'Notifications',
+              tooltip: t('common.notifications'),
               onPressed: () => Get.toNamed(AppRoutes.notifications),
               icon: const Icon(Icons.notifications_outlined),
             ),

@@ -6,26 +6,27 @@ import '../../../app/data/models/summary_card_model.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_hr_service.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../app/localization/t.dart';
 
 /// The shift currently assigned to the salesman.
 class ShiftsController extends RemoteModuleController {
   ShiftsController(this._api)
     : super(
-        title: 'My Shift',
+        title: t('common.my_shift'),
         subtitle:
-            'Your working hours, grace period and weekly offs under the shift you are assigned to.',
+            t('shifts.your_working_hours_grace_period_and'),
       );
 
   final SalesmanHrService _api;
 
-  static const _dayNames = <int, String>{
-    1: 'Mon',
-    2: 'Tue',
-    3: 'Wed',
-    4: 'Thu',
-    5: 'Fri',
-    6: 'Sat',
-    7: 'Sun',
+  static Map<int, String> get _dayNames => <int, String>{
+    1: t('shifts.mon'),
+    2: t('shifts.tue'),
+    3: t('shifts.wed'),
+    4: t('shifts.thu'),
+    5: t('shifts.fri'),
+    6: t('shifts.sat'),
+    7: t('shifts.sun'),
   };
 
   @override
@@ -51,16 +52,16 @@ class ShiftsController extends RemoteModuleController {
     return (
       rows: [
         ModuleRowMapper.row(
-          title: shift['name']?.toString() ?? 'Shift',
+          title: shift['name']?.toString() ?? t('common.shift'),
           subtitle:
-              '${_time(shift['starts_at'])} to ${_time(shift['ends_at'])}'
-              '${offDays.isEmpty ? '' : ' • Weekly off: $offDays'}',
+              t('common.date_range', {'from': _time(shift['starts_at']), 'to': _time(shift['ends_at'])}) +
+              (offDays.isEmpty ? '' : ' • ${t('shifts.weekly_off', {'days': offDays})}'),
           trailing: '',
           icon: Icons.schedule,
           status: 'active',
         ),
         ModuleRowMapper.row(
-          title: 'Assignment period',
+          title: t('shifts.assignment_period'),
           subtitle:
               'From ${ModuleRowMapper.date(assignment['effective_from'])}'
               '${assignment['effective_to'] == null ? ' (ongoing)' : ' to ${ModuleRowMapper.date(assignment['effective_to'])}'}',
@@ -71,25 +72,25 @@ class ShiftsController extends RemoteModuleController {
       ],
       stats: [
         ModuleRowMapper.stat(
-          title: 'Starts',
+          title: t('shifts.starts'),
           value: _time(shift['starts_at']),
           icon: Icons.login,
           color: AppColors.primary,
-          subtitle: 'Shift in',
+          subtitle: t('shifts.shift_in'),
         ),
         ModuleRowMapper.stat(
-          title: 'Ends',
+          title: t('shifts.ends'),
           value: _time(shift['ends_at']),
           icon: Icons.logout,
           color: AppColors.info,
-          subtitle: 'Shift out',
+          subtitle: t('shifts.shift_out'),
         ),
         ModuleRowMapper.stat(
-          title: 'Grace',
+          title: t('shifts.grace'),
           value: '${ModuleRowMapper.toInt(shift['grace_minutes'])} m',
           icon: Icons.timer_outlined,
           color: AppColors.orange,
-          subtitle: 'Allowed',
+          subtitle: t('shifts.allowed'),
         ),
       ],
     );

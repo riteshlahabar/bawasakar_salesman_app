@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../app/data/models/salesman_order_model.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../app/localization/t.dart';
 
 /// Single dealer order card for [OrdersView], including the
 /// "Forward to Admin" action for orders awaiting salesman review.
@@ -89,7 +90,7 @@ class OrderCard extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                '${order.itemCount} items',
+                t('orders.item_count', {'n': '${order.itemCount}'}),
                 style: const TextStyle(
                   fontSize: 11,
                   color: AppColors.textSecondary,
@@ -135,7 +136,7 @@ class OrderCard extends StatelessWidget {
                           ),
                         )
                       : const Icon(Icons.forward_to_inbox_outlined),
-                  label: Text(loading ? 'Forwarding...' : 'Forward to Admin'),
+                  label: Text(loading ? t('orders.forwarding') : t('orders.forward_to_admin')),
                 ),
               );
             }),

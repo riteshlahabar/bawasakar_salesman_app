@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
 import '../controllers/tour_plan_controller.dart';
+import '../../../app/localization/t.dart';
 
 class TourPlanView extends GetView<TourPlanController> {
   const TourPlanView({super.key});
@@ -11,7 +12,7 @@ class TourPlanView extends GetView<TourPlanController> {
   Widget build(BuildContext context) {
     return RemoteModuleView(
       controller: controller,
-      recordsTitle: 'Planned Routes',
+      recordsTitle: t('tour_plan.planned_routes'),
     );
   }
 }

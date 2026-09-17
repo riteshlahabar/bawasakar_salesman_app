@@ -6,6 +6,7 @@ import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_dashboard_service.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
+import '../../../app/localization/t.dart';
 
 class CollectionsController
     extends GetxController {
@@ -60,7 +61,7 @@ class CollectionsController
       );
     } catch (error) {
       Get.snackbar(
-        'Dealers',
+        t('common.dealers'),
         error
             .toString()
             .replaceFirst(
@@ -79,8 +80,8 @@ class CollectionsController
     if (selectedDealerId.value <=
         0) {
       Get.snackbar(
-        'Dealer Required',
-        'Select the dealer who made the payment.',
+        t('collections.dealer_required'),
+        t('collections.select_the_dealer_who_made_the'),
       );
       return;
     }
@@ -93,8 +94,8 @@ class CollectionsController
     if (amount == null ||
         amount <= 0) {
       Get.snackbar(
-        'Amount Required',
-        'Enter a valid payment amount.',
+        t('collections.amount_required'),
+        t('collections.enter_a_valid_payment_amount'),
       );
       return;
     }
@@ -127,8 +128,8 @@ class CollectionsController
 
       lastMessage.value =
           receipt.isEmpty
-              ? 'Payment collected successfully.'
-              : 'Payment collected: $receipt';
+              ? t('collections.payment_collected_successfully')
+              : t('collections.payment_collected_receipt', {'receipt': receipt});
 
       amountController.clear();
 
@@ -136,7 +137,7 @@ class CollectionsController
           .clear();
 
       Get.snackbar(
-        'Payment Collected',
+        t('collections.payment_collected'),
         lastMessage.value,
       );
 
@@ -148,7 +149,7 @@ class CollectionsController
       }
     } catch (error) {
       Get.snackbar(
-        'Collection Failed',
+        t('collections.collection_failed'),
         error
             .toString()
             .replaceFirst(
