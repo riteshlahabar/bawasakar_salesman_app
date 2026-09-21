@@ -17,6 +17,8 @@ class OrdersController
   final forwardingOrderId =
       0.obs;
 
+  final rejectingOrderId = 0.obs;
+
   final selectedStatus =
       'all'.obs;
 
@@ -161,6 +163,30 @@ class OrdersController
     } finally {
       forwardingOrderId.value =
           0;
+    }
+  }
+
+  Future<void> rejectOrder(SalesmanOrderModel order, String reason) async {
+    if (!order.canReject || rejectingOrderId.value != 0) {
+      return;
+    }
+
+    rejectingOrderId.value = order.id;
+
+    try {
+      await _api.rejectOrder(order.id, reason);
+
+      Get.snackbar(t('orders.order_rejected'), t('orders.order_rejected_message', {'order': order.orderNo}));
+
+      await loadOrders();
+
+      if (Get.isRegistered<DashboardController>()) {
+        await Get.find<DashboardController>().loadDashboard();
+      }
+    } catch (error) {
+      Get.snackbar(t('orders.unable_to_reject'), error.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      rejectingOrderId.value = 0;
     }
   }
 

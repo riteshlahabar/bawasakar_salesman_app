@@ -33,4 +33,28 @@ class SalesmanHrService {
 
   Future<Map<String, dynamic>> performance() =>
       _client.getJson(ApiConfig.performance);
+
+  Future<Map<String, dynamic>> tasks({String? status}) => _client.getJson(
+        ApiConfig.tasks,
+        query: {if (status != null && status.isNotEmpty) 'status': status},
+      );
+
+  Future<Map<String, dynamic>> updateTask(
+    int id,
+    Map<String, dynamic> payload,
+  ) =>
+      _client.postJson(ApiConfig.taskUpdate(id), payload);
+
+  Future<Map<String, dynamic>> skills() => _client.getJson(ApiConfig.skills);
+
+  Future<Map<String, dynamic>> trainings() =>
+      _client.getJson(ApiConfig.trainings);
+
+  Future<Map<String, dynamic>> resignation() =>
+      _client.getJson(ApiConfig.resignation);
+
+  Future<Map<String, dynamic>> submitResignation(
+    Map<String, dynamic> payload,
+  ) =>
+      _client.postJson(ApiConfig.resignation, payload);
 }

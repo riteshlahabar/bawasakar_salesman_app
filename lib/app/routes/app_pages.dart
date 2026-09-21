@@ -20,6 +20,8 @@ import '../../modules/holidays/bindings/holidays_binding.dart';
 import '../../modules/holidays/views/holidays_view.dart';
 import '../../modules/incentives/bindings/incentives_binding.dart';
 import '../../modules/incentives/views/incentives_view.dart';
+import '../../modules/invoices/bindings/invoices_binding.dart';
+import '../../modules/invoices/views/invoices_view.dart';
 import '../../modules/language/bindings/language_binding.dart';
 import '../../modules/language/views/language_view.dart';
 import '../../modules/leave/bindings/leave_binding.dart';
@@ -28,7 +30,9 @@ import '../../modules/main_shell/bindings/main_shell_binding.dart';
 import '../../modules/main_shell/views/main_shell_view.dart';
 import '../../modules/notifications/bindings/notifications_binding.dart';
 import '../../modules/notifications/views/notifications_view.dart';
+import '../../modules/payslips/bindings/payslip_detail_binding.dart';
 import '../../modules/payslips/bindings/payslips_binding.dart';
+import '../../modules/payslips/views/payslip_detail_view.dart';
 import '../../modules/payslips/views/payslips_view.dart';
 import '../../modules/performance/bindings/performance_binding.dart';
 import '../../modules/performance/views/performance_view.dart';
@@ -38,18 +42,28 @@ import '../../modules/profile/bindings/profile_binding.dart';
 import '../../modules/profile/views/profile_view.dart';
 import '../../modules/reports/bindings/reports_binding.dart';
 import '../../modules/reports/views/reports_view.dart';
+import '../../modules/resignation/bindings/resignation_binding.dart';
+import '../../modules/resignation/views/resignation_view.dart';
 import '../../modules/salary/bindings/salary_binding.dart';
 import '../../modules/salary/views/salary_view.dart';
+import '../../modules/salary_revisions/bindings/salary_revisions_binding.dart';
+import '../../modules/salary_revisions/views/salary_revisions_view.dart';
 import '../../modules/shifts/bindings/shifts_binding.dart';
 import '../../modules/shifts/views/shifts_view.dart';
+import '../../modules/skills/bindings/skills_binding.dart';
+import '../../modules/skills/views/skills_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
 import '../../modules/support/bindings/support_binding.dart';
 import '../../modules/support/views/support_view.dart';
 import '../../modules/targets/bindings/targets_binding.dart';
 import '../../modules/targets/views/targets_view.dart';
+import '../../modules/tasks/bindings/tasks_binding.dart';
+import '../../modules/tasks/views/tasks_view.dart';
 import '../../modules/tour_plan/bindings/tour_plan_binding.dart';
 import '../../modules/tour_plan/views/tour_plan_view.dart';
+import '../../modules/training/bindings/training_binding.dart';
+import '../../modules/training/views/training_view.dart';
 import '../../modules/visits/bindings/visits_binding.dart';
 import '../../modules/visits/views/visits_view.dart';
 import 'app_routes.dart';
@@ -187,6 +201,41 @@ class AppPages {
       name: AppRoutes.language,
       page: () => const LanguageView(),
       binding: LanguageBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.payslipDetail,
+      page: () => const PayslipDetailView(),
+      binding: PayslipDetailBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.invoices,
+      page: () => const InvoicesView(),
+      binding: InvoicesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.salaryRevisions,
+      page: () => const SalaryRevisionsView(),
+      binding: SalaryRevisionsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.tasks,
+      page: () => const TasksView(),
+      binding: TasksBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.skills,
+      page: () => const SkillsView(),
+      binding: SkillsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.training,
+      page: () => const TrainingView(),
+      binding: TrainingBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.resignation,
+      page: () => const ResignationView(),
+      binding: ResignationBinding(),
     ),
   ];
 }

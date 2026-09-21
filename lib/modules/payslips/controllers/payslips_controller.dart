@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../app/controllers/remote_module_controller.dart';
 import '../../../app/data/module_row_mapper.dart';
@@ -20,6 +21,10 @@ class PayslipsController extends RemoteModuleController {
 
   final SalesmanFinanceService _api;
 
+  /// Kept alongside the display rows so a tap can open the matching payslip's
+  /// breakdown — [ListRowModel] carries no id, only what is shown.
+  final slips = <Map<String, dynamic>>[].obs;
+
   static List<String> get _months => <String>[
     '',
     t('common.jan'), t('common.feb'), t('common.mar'), t('common.apr'), t('common.may'), t('common.jun'),
@@ -29,11 +34,13 @@ class PayslipsController extends RemoteModuleController {
   @override
   Future<ModuleData> fetch() async {
     final response = await _api.payslips();
-    final slips = ModuleRowMapper.listFrom(response, 'payslips');
+    final slipRows = ModuleRowMapper.listFrom(response, 'payslips');
     final totals = ModuleRowMapper.mapFrom(response, 'totals');
 
+    slips.assignAll(slipRows);
+
     return (
-      rows: slips
+      rows: slipRows
           .map(
             (slip) => ModuleRowMapper.row(
               title:

@@ -19,6 +19,7 @@ class AppRoutes {
 
   // Phase 5 HRMS modules from the Phase 1 specification.
   static const payslips = '/payslips';
+  static const payslipDetail = '/payslips/detail';
   static const advances = '/advances';
   static const incentives = '/incentives';
   static const performance = '/performance';
@@ -29,4 +30,12 @@ class AppRoutes {
   static const profile = '/profile';
   static const support = '/support';
   static const language = '/language';
+
+  // Phase 5-7 HRMS gaps closed 2026-09-19.
+  static const invoices = '/invoices';
+  static const salaryRevisions = '/salary-revisions';
+  static const tasks = '/tasks';
+  static const skills = '/skills';
+  static const training = '/training';
+  static const resignation = '/resignation';
 }

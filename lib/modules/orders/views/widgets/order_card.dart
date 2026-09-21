@@ -13,11 +13,15 @@ class OrderCard extends StatelessWidget {
     required this.order,
     required this.forwardingOrderId,
     required this.onForward,
+    required this.rejectingOrderId,
+    required this.onReject,
   });
 
   final SalesmanOrderModel order;
   final RxInt forwardingOrderId;
   final void Function(SalesmanOrderModel order) onForward;
+  final RxInt rejectingOrderId;
+  final void Function(SalesmanOrderModel order) onReject;
 
   @override
   Widget build(BuildContext context) {
@@ -120,24 +124,44 @@ class OrderCard extends StatelessWidget {
           if (order.canForwardToAdmin) ...[
             const SizedBox(height: 14),
             Obx(() {
-              final loading = forwardingOrderId.value == order.id;
+              final forwarding = forwardingOrderId.value == order.id;
+              final rejecting = rejectingOrderId.value == order.id;
+              final busy = forwarding || rejecting;
 
-              return SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: loading ? null : () => onForward(order),
-                  icon: loading
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.forward_to_inbox_outlined),
-                  label: Text(loading ? t('orders.forwarding') : t('orders.forward_to_admin')),
-                ),
+              return Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: busy ? null : () => onReject(order),
+                      style: OutlinedButton.styleFrom(foregroundColor: AppColors.danger),
+                      icon: rejecting
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.danger),
+                            )
+                          : const Icon(Icons.close_rounded, size: 18),
+                      label: Text(rejecting ? t('orders.rejecting') : t('orders.reject')),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: busy ? null : () => onForward(order),
+                      icon: forwarding
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(Icons.forward_to_inbox_outlined, size: 18),
+                      label: Text(forwarding ? t('orders.forwarding') : t('orders.forward_to_admin')),
+                    ),
+                  ),
+                ],
               );
             }),
           ],

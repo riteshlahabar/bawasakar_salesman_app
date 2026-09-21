@@ -26,6 +26,9 @@ class SalesmanOrderModel {
   bool get canForwardToAdmin =>
       status == 'salesman_review';
 
+  bool get canReject =>
+      status == 'salesman_review';
+
   factory SalesmanOrderModel.fromJson(
     Map<String, dynamic> json,
   ) {

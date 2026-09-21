@@ -53,4 +53,10 @@ class SalesmanFinanceService {
 
   Future<Map<String, dynamic>> incentives() =>
       _client.getJson(ApiConfig.incentives);
+
+  Future<Map<String, dynamic>> salaryRevisions() =>
+      _client.getJson(ApiConfig.salaryRevisions);
+
+  Future<Map<String, dynamic>> invoices() =>
+      _client.getJson(ApiConfig.invoices);
 }

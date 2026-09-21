@@ -39,6 +39,7 @@ class ApiConfig {
 
   static String forwardOrder(int orderId) =>
       '/salesman/orders/$orderId/forward-to-admin';
+  static String rejectOrder(int orderId) => '/salesman/orders/$orderId/reject';
 
   // --- Translations -------------------------------------------------------
   static const String appTranslations = '/app-translations';
@@ -66,6 +67,8 @@ class ApiConfig {
 
   static String payslip(int id) => '/salesman/payslips/$id';
 
+  static const String salaryRevisions = '/salesman/salary-revisions';
+
   // --- HR -------------------------------------------------------------------
   static const String leaves = '/salesman/leaves';
   static const String leaveBalance = '/salesman/leaves/balance';
@@ -77,6 +80,21 @@ class ApiConfig {
   static const String performance = '/salesman/performance';
   static const String profile = '/salesman/profile';
   static const String support = '/salesman/support';
+
+  static const String tasks = '/salesman/tasks';
+  static String taskUpdate(int id) => '/salesman/tasks/$id';
+
+  static const String skills = '/salesman/skills';
+
+  static const String trainings = '/salesman/trainings';
+  static String trainingCertificate(int id) =>
+      '/salesman/trainings/$id/certificate';
+
+  static const String resignation = '/salesman/resignation';
+
+  // --- Invoices ---------------------------------------------------------------
+  static const String invoices = '/salesman/invoices';
+  static String invoicePdf(int id) => '/salesman/invoices/$id/pdf';
 
   // --- Notifications --------------------------------------------------------
   static const String notifications = '/salesman/notifications';

@@ -4,6 +4,8 @@ import '../core/security/get_session_expiry_handler.dart';
 import '../core/security/session_expiry_handler.dart';
 import '../data/services/api_client.dart';
 import '../data/services/auth_storage.dart';
+import '../data/services/file_download_service.dart';
+import '../data/services/file_opener.dart';
 import '../data/services/salesman_attendance_service.dart';
 import '../data/services/salesman_auth_service.dart';
 import '../data/services/salesman_dashboard_service.dart';
@@ -59,6 +61,15 @@ class CoreBinding extends Bindings {
     );
     Get.lazyPut<SalesmanHrService>(
       () => SalesmanHrService(Get.find<ApiClient>()),
+      fenix: true,
+    );
+
+    Get.lazyPut<FileDownloadService>(
+      () => FileDownloadService(Get.find<AuthStorage>()),
+      fenix: true,
+    );
+    Get.lazyPut<FileOpener>(
+      () => FileOpener(Get.find<FileDownloadService>()),
       fenix: true,
     );
 

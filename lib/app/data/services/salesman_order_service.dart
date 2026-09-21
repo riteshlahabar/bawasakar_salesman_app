@@ -32,6 +32,9 @@ class SalesmanOrderService {
   Future<Map<String, dynamic>> forwardOrderToAdmin(int orderId) =>
       _client.postJson(ApiConfig.forwardOrder(orderId), const {});
 
+  Future<Map<String, dynamic>> rejectOrder(int orderId, String reason) =>
+      _client.postJson(ApiConfig.rejectOrder(orderId), {'reason': reason});
+
   Future<Map<String, dynamic>> deliveries() =>
       _client.getJson(ApiConfig.deliveries);
 
