@@ -29,9 +29,22 @@ class MainShellController
   List<String> get tabTitles =>
       MainShellNavConfig.tabTitles;
 
-  String get currentTitle =>
-      tabTitles[
-          selectedIndex.value];
+  /// The Home tab shows the salesman's name instead of a generic "Dashboard"
+  /// title; every other tab keeps its plain title.
+  String get currentTitle {
+    if (selectedIndex.value != 0) {
+      return tabTitles[selectedIndex.value];
+    }
+
+    if (Get.isRegistered<DashboardController>()) {
+      final dashboardName =
+          Get.find<DashboardController>().salesmanName.value;
+
+      if (dashboardName.isNotEmpty) return dashboardName;
+    }
+
+    return salesmanName.value;
+  }
 
   List<BottomNavigationBarItem> get navItems =>
       MainShellNavConfig.navItems;

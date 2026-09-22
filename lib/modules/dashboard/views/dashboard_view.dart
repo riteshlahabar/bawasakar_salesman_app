@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/section_header.dart';
 import '../../../app/widgets/summary_card.dart';
 import '../controllers/dashboard_controller.dart';
-import 'widgets/dashboard_overview_card.dart';
-import 'widgets/operation_button.dart';
+import 'widgets/attendance_quick_actions.dart';
+import 'widgets/current_orders_section.dart';
 import '../../../app/localization/t.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -21,40 +20,7 @@ class DashboardView extends GetView<DashboardController> {
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 110),
           children: [
-            Text(
-              t('dashboard.hey', {'name': controller.salesmanName.value}),
-              style: const TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              t('dashboard.welcome_back'),
-              style: TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 19,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            const SizedBox(height: 16),
-            DashboardOverviewCard(
-              todayCollection: controller.todayCollections.value,
-              territory: controller.territory.value,
-              employeeCode: controller.employeeCode.value,
-            ),
-            const SizedBox(height: 22),
-            SectionHeader(title: t('dashboard.operations')),
-            const SizedBox(height: 14),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: controller.operations
-                    .map((item) => OperationButton(item: item))
-                    .toList(),
-              ),
-            ),
+            const AttendanceQuickActions(),
             const SizedBox(height: 22),
             SectionHeader(title: t('common.performance')),
             const SizedBox(height: 14),
@@ -73,12 +39,13 @@ class DashboardView extends GetView<DashboardController> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
-                      mainAxisExtent: 144,
+                      mainAxisExtent: 84,
                     ),
                 itemBuilder: (context, index) {
                   return SummaryCard(item: controller.summaries[index]);
                 },
               ),
+            const CurrentOrdersSection(),
           ],
         ),
       ),

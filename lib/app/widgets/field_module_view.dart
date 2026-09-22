@@ -73,7 +73,7 @@ class FieldModuleView extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                mainAxisExtent: 144,
+                mainAxisExtent: 84,
               ),
               itemBuilder: (context, index) => SummaryCard(item: stats[index]),
             ),

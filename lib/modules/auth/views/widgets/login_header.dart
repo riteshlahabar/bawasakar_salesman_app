@@ -14,9 +14,10 @@ class LoginHeader extends StatelessWidget {
         Container(
           width: 92,
           height: 92,
+          padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(26),
+            color: Colors.white,
+            shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: .22),
@@ -25,28 +26,15 @@ class LoginHeader extends StatelessWidget {
               ),
             ],
           ),
-          child: const Icon(
-            Icons.business_center_rounded,
-            size: 46,
-            color: Colors.white,
-          ),
+          child: Image.asset('assets/images/app_logo.png'),
         ),
         const SizedBox(height: 22),
         Text(
-          t('auth.bawaskar_salesman'),
+          t('auth.welcome_salesman'),
           style: TextStyle(
             color: AppColors.textPrimary,
             fontSize: 25,
             fontWeight: FontWeight.w900,
-          ),
-        ),
-        const SizedBox(height: 7),
-        Text(
-          t('auth.salesman_erp_login'),
-          style: TextStyle(
-            color: AppColors.textSecondary,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
           ),
         ),
       ],

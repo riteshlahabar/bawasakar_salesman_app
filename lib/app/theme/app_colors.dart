@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Same Bawaskar green used by Customer / Dealer apps.
-  static const primary = Color(0xFF005D30);
-  static const primaryDark = Color(0xFF004222);
-  static const primarySoft = Color(0xFFE6F2EA);
+  // Same teal-green used by Customer / Dealer apps (--theme-color: #0da487).
+  static const primary = Color(0xFF0DA487);
+  static const primaryDark = Color(0xFF097460);
+  static const primarySoft = Color(0xFFE2F4F1);
 
   static const accent = Color(0xFFFFB321);
   static const orange = Color(0xFFFF7426);
 
-  static const success = Color(0xFF005D30);
+  static const success = Color(0xFF0DA487);
   static const danger = Color(0xFFE5484D);
   static const info = Color(0xFF2972FF);
 

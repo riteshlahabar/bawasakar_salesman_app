@@ -7,21 +7,27 @@ import '../../../../app/localization/t.dart';
 
 /// Single dealer order card for [OrdersView], including the
 /// "Forward to Admin" action for orders awaiting salesman review.
+///
+/// Also reused as a read-only preview on the dashboard's Current Orders
+/// section via `showActions: false`, which skips the action row (and its
+/// otherwise-required callbacks) regardless of [SalesmanOrderModel.canForwardToAdmin].
 class OrderCard extends StatelessWidget {
   const OrderCard({
     super.key,
     required this.order,
-    required this.forwardingOrderId,
-    required this.onForward,
-    required this.rejectingOrderId,
-    required this.onReject,
+    this.showActions = true,
+    this.forwardingOrderId,
+    this.onForward,
+    this.rejectingOrderId,
+    this.onReject,
   });
 
   final SalesmanOrderModel order;
-  final RxInt forwardingOrderId;
-  final void Function(SalesmanOrderModel order) onForward;
-  final RxInt rejectingOrderId;
-  final void Function(SalesmanOrderModel order) onReject;
+  final bool showActions;
+  final RxInt? forwardingOrderId;
+  final void Function(SalesmanOrderModel order)? onForward;
+  final RxInt? rejectingOrderId;
+  final void Function(SalesmanOrderModel order)? onReject;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +69,9 @@ class OrderCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      order.dealerName,
+                      order.dealerAddress.isEmpty
+                          ? order.dealerName
+                          : '${order.dealerName} • ${order.dealerAddress}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -93,14 +101,20 @@ class OrderCard extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
               const SizedBox(width: 6),
-              Text(
-                t('orders.item_count', {'n': '${order.itemCount}'}),
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: AppColors.textSecondary,
+              Expanded(
+                child: Text(
+                  order.productSummary.isEmpty
+                      ? t('orders.item_count', {'n': '${order.itemCount}'})
+                      : order.productSummary,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 9,
@@ -121,18 +135,18 @@ class OrderCard extends StatelessWidget {
               ),
             ],
           ),
-          if (order.canForwardToAdmin) ...[
+          if (showActions && order.canForwardToAdmin) ...[
             const SizedBox(height: 14),
             Obx(() {
-              final forwarding = forwardingOrderId.value == order.id;
-              final rejecting = rejectingOrderId.value == order.id;
+              final forwarding = forwardingOrderId!.value == order.id;
+              final rejecting = rejectingOrderId!.value == order.id;
               final busy = forwarding || rejecting;
 
               return Row(
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: busy ? null : () => onReject(order),
+                      onPressed: busy ? null : () => onReject!(order),
                       style: OutlinedButton.styleFrom(foregroundColor: AppColors.danger),
                       icon: rejecting
                           ? const SizedBox(
@@ -147,7 +161,7 @@ class OrderCard extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: busy ? null : () => onForward(order),
+                      onPressed: busy ? null : () => onForward!(order),
                       icon: forwarding
                           ? const SizedBox(
                               width: 18,

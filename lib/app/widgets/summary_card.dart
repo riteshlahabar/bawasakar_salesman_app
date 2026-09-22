@@ -13,34 +13,34 @@ class SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: AppDecorations.softCard(radius: 16),
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 32,
+                height: 32,
                 decoration: AppDecorations.iconBox(item.color),
-                child: Icon(item.icon, color: item.color, size: 20),
+                child: Icon(item.icon, color: item.color, size: 16),
               ),
               const Spacer(),
-              Icon(Icons.more_horiz, color: Colors.grey.shade500),
+              Flexible(
+                child: Text(
+                  item.value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
             ],
           ),
-          const Spacer(),
-          Text(
-            item.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 15,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 6),
           Text(
             item.title,
             maxLines: 1,
@@ -51,19 +51,6 @@ class SummaryCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          if (item.subtitle != null) ...[
-            const SizedBox(height: 5),
-            Text(
-              item.subtitle!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: item.color,
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ],
         ],
       ),
     );
