@@ -40,18 +40,23 @@ class ApiConfig {
   static String forwardOrder(int orderId) =>
       '/salesman/orders/$orderId/forward-to-admin';
   static String rejectOrder(int orderId) => '/salesman/orders/$orderId/reject';
+  static String orderAvailability(int orderId) =>
+      '/salesman/orders/$orderId/availability';
 
   // --- Translations -------------------------------------------------------
   static const String appTranslations = '/app-translations';
   static const String appTranslationsRegister = '/app-translations/register';
 
   // --- Catalogue ------------------------------------------------------------
+  static const String categories = '/catalog/categories';
   static const String products = '/catalog/products';
   static const String homepage = '/catalog/homepage';
 
   // --- Attendance & visits --------------------------------------------------
   static const String checkIn = '/salesman/attendance/check-in';
   static const String checkOut = '/salesman/attendance/check-out';
+  static const String startBreak = '/salesman/attendance/break';
+  static const String resumeBreak = '/salesman/attendance/resume';
   static const String attendance = '/salesman/attendance';
   static const String visits = '/salesman/visits';
   static const String tourPlans = '/salesman/tour-plans';

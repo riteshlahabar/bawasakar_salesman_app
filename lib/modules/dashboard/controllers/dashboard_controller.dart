@@ -12,8 +12,7 @@ import '../../../app/data/services/auth_storage.dart';
 import 'dashboard_response_parser.dart';
 import '../../../app/localization/t.dart';
 
-class DashboardController
-    extends GetxController {
+class DashboardController extends GetxController {
   final SalesmanDashboardService _api = Get.find<SalesmanDashboardService>();
 
   final SalesmanAttendanceService _attendanceApi =
@@ -23,8 +22,7 @@ class DashboardController
 
   final isLoading = false.obs;
 
-  final salesmanName =
-      'Sales Executive'.obs;
+  final salesmanName = 'Sales Executive'.obs;
 
   final employeeCode = ''.obs;
 
@@ -34,8 +32,7 @@ class DashboardController
 
   final pendingOrders = 0.obs;
 
-  final todayCollections =
-      0.0.obs;
+  final todayCollections = 0.0.obs;
 
   final totalOutstanding = 0.0.obs;
 
@@ -49,8 +46,7 @@ class DashboardController
 
   final pendingTasks = 0.obs;
 
-  final summaries =
-      <SummaryCardModel>[].obs;
+  final summaries = <SummaryCardModel>[].obs;
 
   final isPunching = false.obs;
 
@@ -61,6 +57,13 @@ class DashboardController
   final checkInAddress = ''.obs;
 
   final onBreak = false.obs;
+
+  /// Today's finished break time, as returned by the dashboard API.
+  final breakMinutes = 0.obs;
+
+  /// Set while a break/resume call is in flight, so the button can't be
+  /// double-tapped into two open breaks.
+  final isBreakBusy = false.obs;
 
   bool get hasCheckedInToday => checkedInAt.value.isNotEmpty;
 
@@ -81,31 +84,21 @@ class DashboardController
     isLoading.value = true;
 
     try {
-      final response =
-          await _api.dashboard();
+      final response = await _api.dashboard();
 
-      final data =
-          DashboardResponseParser.data(
-        response,
-      );
+      final data = DashboardResponseParser.data(response);
 
-      assignedDealers.value =
-          ModuleRowMapper.toInt(
-        data['assigned_dealers'],
-      );
+      assignedDealers.value = ModuleRowMapper.toInt(data['assigned_dealers']);
 
-      pendingOrders.value =
-          ModuleRowMapper.toInt(
-        data['pending_orders'],
-      );
+      pendingOrders.value = ModuleRowMapper.toInt(data['pending_orders']);
 
-      todayCollections.value =
-          ModuleRowMapper.toDouble(
+      todayCollections.value = ModuleRowMapper.toDouble(
         data['today_collections'],
       );
 
-      totalOutstanding.value =
-          ModuleRowMapper.toDouble(data['total_outstanding']);
+      totalOutstanding.value = ModuleRowMapper.toDouble(
+        data['total_outstanding'],
+      );
 
       monthTarget.value = data['month_target'] == null
           ? null
@@ -123,77 +116,61 @@ class DashboardController
 
       pendingTasks.value = ModuleRowMapper.toInt(data['pending_tasks']);
 
-      final profile =
-          DashboardResponseParser
-              .parseProfile(
-        data,
-      );
+      final profile = DashboardResponseParser.parseProfile(data);
 
       if (profile.name.isNotEmpty) {
-        salesmanName.value =
-            profile.name;
+        salesmanName.value = profile.name;
       }
 
-      if (profile.employeeCode
-          .isNotEmpty) {
-        employeeCode.value =
-            profile.employeeCode;
+      if (profile.employeeCode.isNotEmpty) {
+        employeeCode.value = profile.employeeCode;
       }
 
-      if (profile.territory
-          .isNotEmpty) {
-        territory.value =
-            profile.territory;
+      if (profile.territory.isNotEmpty) {
+        territory.value = profile.territory;
       }
 
       // Save fallback profile data if
       // dashboard relation is absent.
-      if (salesmanName.value ==
-          'Sales Executive') {
-        final storedName =
-            _storage.name;
+      if (salesmanName.value == 'Sales Executive') {
+        final storedName = _storage.name;
 
-        if (storedName
-            .trim()
-            .isNotEmpty) {
-          salesmanName.value =
-              storedName;
+        if (storedName.trim().isNotEmpty) {
+          salesmanName.value = storedName;
         }
       }
 
-      if (employeeCode
-          .value.isEmpty) {
-        employeeCode.value =
-            _storage.employeeCode;
+      if (employeeCode.value.isEmpty) {
+        employeeCode.value = _storage.employeeCode;
       }
 
-      if (territory
-          .value.isEmpty) {
-        territory.value =
-            _storage.territory;
+      if (territory.value.isEmpty) {
+        territory.value = _storage.territory;
       }
 
-      final todayAttendance =
-          DashboardResponseParser.parseTodayAttendance(data);
+      final todayAttendance = DashboardResponseParser.parseTodayAttendance(
+        data,
+      );
 
       checkedInAt.value = todayAttendance.checkInAt;
       checkedOutAt.value = todayAttendance.checkOutAt;
+      onBreak.value = todayAttendance.onBreak;
+      breakMinutes.value = todayAttendance.breakMinutes;
 
       if (hasCheckedInToday) {
-        unawaited(_resolveAddress(
-          todayAttendance.checkInLatitude,
-          todayAttendance.checkInLongitude,
-        ));
+        unawaited(
+          _resolveAddress(
+            todayAttendance.checkInLatitude,
+            todayAttendance.checkInLongitude,
+          ),
+        );
       }
 
       _buildCards();
     } catch (error) {
       Get.snackbar(
         t('common.dashboard'),
-        DashboardResponseParser
-            .errorMessage(
-          error,
-        ),
+        DashboardResponseParser.errorMessage(error),
       );
     } finally {
       isLoading.value = false;
@@ -228,11 +205,11 @@ class DashboardController
         longitude: position.longitude,
       );
 
-      final attendance =
-          ModuleRowMapper.mapFrom(response, 'attendance');
+      final attendance = ModuleRowMapper.mapFrom(response, 'attendance');
 
       checkedInAt.value =
-          attendance['check_in_at']?.toString() ?? DateTime.now().toIso8601String();
+          attendance['check_in_at']?.toString() ??
+          DateTime.now().toIso8601String();
 
       await _resolveAddress(position.latitude, position.longitude);
     } catch (error) {
@@ -257,11 +234,11 @@ class DashboardController
         longitude: position.longitude,
       );
 
-      final attendance =
-          ModuleRowMapper.mapFrom(response, 'attendance');
+      final attendance = ModuleRowMapper.mapFrom(response, 'attendance');
 
       checkedOutAt.value =
-          attendance['check_out_at']?.toString() ?? DateTime.now().toIso8601String();
+          attendance['check_out_at']?.toString() ??
+          DateTime.now().toIso8601String();
     } catch (error) {
       Get.snackbar(
         t('common.attendance'),
@@ -272,11 +249,50 @@ class DashboardController
     }
   }
 
-  /// Break/Resume is a local-only toggle — there is no backend concept of a
-  /// break, so nothing is sent to the API here.
-  void toggleBreak() {
-    if (!hasCheckedInToday || hasCheckedOutToday) return;
-    onBreak.value = !onBreak.value;
+  /// Starts or ends a break on today's attendance log. Each break is a real
+  /// row on the server, so it shows up in the admin attendance record and is
+  /// deducted from the day's working minutes at check-out.
+  Future<void> toggleBreak() async {
+    if (isBreakBusy.value || !hasCheckedInToday || hasCheckedOutToday) return;
+
+    isBreakBusy.value = true;
+    final wasOnBreak = onBreak.value;
+
+    try {
+      // GPS is optional for a break, so a failed lookup should not block it.
+      Position? position;
+      try {
+        position = await _currentPosition();
+      } catch (_) {
+        position = null;
+      }
+
+      final response = wasOnBreak
+          ? await _attendanceApi.resumeBreak(
+              latitude: position?.latitude,
+              longitude: position?.longitude,
+            )
+          : await _attendanceApi.startBreak(
+              latitude: position?.latitude,
+              longitude: position?.longitude,
+            );
+
+      onBreak.value = !wasOnBreak;
+
+      if (wasOnBreak) {
+        final minutes = ModuleRowMapper.toDouble(
+          (response['data'] as Map?)?['break_minutes'],
+        ).round();
+        if (minutes > 0) breakMinutes.value = minutes;
+      }
+    } catch (error) {
+      Get.snackbar(
+        t('common.attendance'),
+        DashboardResponseParser.errorMessage(error),
+      );
+    } finally {
+      isBreakBusy.value = false;
+    }
   }
 
   Future<Position> _currentPosition() async {
@@ -304,8 +320,10 @@ class DashboardController
     if (latitude == 0 && longitude == 0) return;
 
     try {
-      final placemarks =
-          await Geocoding().placemarkFromCoordinates(latitude, longitude);
+      final placemarks = await Geocoding().placemarkFromCoordinates(
+        latitude,
+        longitude,
+      );
       if (placemarks.isEmpty) return;
 
       final place = placemarks.first;

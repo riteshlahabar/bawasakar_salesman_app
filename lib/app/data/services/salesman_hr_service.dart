@@ -8,7 +8,8 @@ class SalesmanHrService {
 
   final ApiClient _client;
 
-  Future<Map<String, dynamic>> leaves() => _client.getJson(ApiConfig.leaves);
+  Future<Map<String, dynamic>> leaves({int page = 1}) =>
+      _client.getJson(ApiConfig.leaves, query: {'page': page});
 
   Future<Map<String, dynamic>> applyLeave(Map<String, dynamic> payload) =>
       _client.postJson(ApiConfig.leaves, payload);
@@ -19,9 +20,9 @@ class SalesmanHrService {
   Future<Map<String, dynamic>> assets() => _client.getJson(ApiConfig.assets);
 
   Future<Map<String, dynamic>> holidays({String? year}) => _client.getJson(
-        ApiConfig.holidays,
-        query: {if (year != null && year.isNotEmpty) 'year': year},
-      );
+    ApiConfig.holidays,
+    query: {if (year != null && year.isNotEmpty) 'year': year},
+  );
 
   Future<Map<String, dynamic>> shifts() => _client.getJson(ApiConfig.shifts);
 
@@ -35,15 +36,14 @@ class SalesmanHrService {
       _client.getJson(ApiConfig.performance);
 
   Future<Map<String, dynamic>> tasks({String? status}) => _client.getJson(
-        ApiConfig.tasks,
-        query: {if (status != null && status.isNotEmpty) 'status': status},
-      );
+    ApiConfig.tasks,
+    query: {if (status != null && status.isNotEmpty) 'status': status},
+  );
 
   Future<Map<String, dynamic>> updateTask(
     int id,
     Map<String, dynamic> payload,
-  ) =>
-      _client.postJson(ApiConfig.taskUpdate(id), payload);
+  ) => _client.postJson(ApiConfig.taskUpdate(id), payload);
 
   Future<Map<String, dynamic>> skills() => _client.getJson(ApiConfig.skills);
 
@@ -55,6 +55,5 @@ class SalesmanHrService {
 
   Future<Map<String, dynamic>> submitResignation(
     Map<String, dynamic> payload,
-  ) =>
-      _client.postJson(ApiConfig.resignation, payload);
+  ) => _client.postJson(ApiConfig.resignation, payload);
 }

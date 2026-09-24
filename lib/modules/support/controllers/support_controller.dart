@@ -14,14 +14,23 @@ class SupportController extends GetxController {
 
   Future<void> submit() async {
     if (subject.text.trim().isEmpty || message.text.trim().isEmpty) {
-      Get.snackbar(t('support.required'), t('support.enter_subject_and_message'));
+      Get.snackbar(
+        t('support.required'),
+        t('support.enter_subject_and_message'),
+      );
       return;
     }
     isLoading.value = true;
     try {
-      await _api.support(subject: subject.text.trim(), message: message.text.trim());
+      await _api.support(
+        subject: subject.text.trim(),
+        message: message.text.trim(),
+      );
       Get.back<void>();
-      Get.snackbar(t('support.support_sent'), t('support.your_support_ticket_has_been_created'));
+      Get.snackbar(
+        t('support.support_sent'),
+        t('support.your_support_ticket_has_been_created'),
+      );
     } catch (error) {
       Get.snackbar(t('support.support_failed'), error.toString());
     } finally {

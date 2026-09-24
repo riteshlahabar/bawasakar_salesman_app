@@ -11,14 +11,16 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'advances.recovered': 'Recovered',
   'advances.recovered_amount': 'Recovered {amount}',
   'advances.repaid': 'Repaid',
-  'advances.request_a_salary_advance_or_a': 'Request a salary advance or a loan, and track how much has been recovered from your salary.',
+  'advances.request_a_salary_advance_or_a':
+      'Request a salary advance or a loan, and track how much has been recovered from your salary.',
   'advances.request_advance': 'Request Advance',
   'advances.request_submitted_for_approval': 'Request submitted for approval.',
   'advances.sanctioned': 'Sanctioned',
 
   // --- announcements -----------------------------------------------------------
   'announcements.circulars': 'Circulars',
-  'announcements.company_announcements_circulars_and_notices_published': 'Company announcements, circulars and notices published for field staff.',
+  'announcements.company_announcements_circulars_and_notices_published':
+      'Company announcements, circulars and notices published for field staff.',
   'announcements.company_notices': 'Company Notices',
   'announcements.notices': 'Notices',
   'announcements.official': 'Official',
@@ -26,7 +28,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
 
   // --- assets ------------------------------------------------------------------
   'assets.assigned_assets': 'Assigned Assets',
-  'assets.company_assets_issued_to_you_laptop': 'Company assets issued to you: laptop, mobile, SIM, bag, ID card and samples, with their return condition.',
+  'assets.company_assets_issued_to_you_laptop':
+      'Company assets issued to you: laptop, mobile, SIM, bag, ID card and samples, with their return condition.',
   'assets.issued': 'Issued',
   'assets.returned': 'Returned',
   'assets.salesman_assets': 'Salesman Assets',
@@ -34,28 +37,38 @@ const Map<String, String> kAppStringsEn = <String, String>{
   // --- attendance --------------------------------------------------------------
   'attendance.absent': 'Absent',
   'attendance.attendance_sheet': 'Attendance Sheet',
+  'attendance.current_month': 'Current Month',
   'attendance.days': 'Days',
+  'attendance.from_date': 'From Date',
   'attendance.half_day': 'Half day',
   'attendance.hours': '{n} h',
+  'attendance.in': 'In',
   'attendance.in_out': 'In {in} • Out {out}',
+  'attendance.out': 'Out',
+  'attendance.month': 'Month',
   'attendance.present': 'Present',
   'attendance.this_month': 'This month',
+  'attendance.to_date': 'To Date',
   'attendance.worked': 'Worked',
-  'attendance.your_gps_check_in_and_check': 'Your GPS check-in and check-out history for the month, with present, half day and absent days.',
+  'attendance.your_gps_check_in_and_check':
+      'Your GPS check-in and check-out history for the month, with present, half day and absent days.',
 
   // --- auth --------------------------------------------------------------------
   'auth.welcome_salesman': 'Welcome Salesman',
-  'auth.enter_a_valid_salesman_email_address': 'Enter a valid salesman email address.',
+  'auth.enter_a_valid_salesman_email_address':
+      'Enter a valid salesman email address.',
   'auth.enter_your_password': 'Enter your password.',
   'auth.invalid_email': 'Invalid Email',
   'auth.invalid_login_response': 'Invalid login response.',
   'auth.login': 'Login',
   'auth.login_failed': 'Login Failed',
-  'auth.login_token_or_salesman_information_missing': 'Login token or salesman information missing.',
+  'auth.login_token_or_salesman_information_missing':
+      'Login token or salesman information missing.',
   'auth.password': 'Password',
   'auth.password_required': 'Password Required',
   'auth.salesman_email': 'Salesman email',
-  'auth.use_the_salesman_account_created_by': 'For login credentials, please contact your Admin.',
+  'auth.use_the_salesman_account_created_by':
+      'For login credentials, please contact your Admin.',
 
   // --- collections -------------------------------------------------------------
   'collections.amount': 'Amount',
@@ -68,15 +81,19 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'collections.dealer_required': 'Dealer Required',
   'collections.enter_a_valid_payment_amount': 'Enter a valid payment amount.',
   'collections.enter_amount': 'Enter amount',
-  'collections.optional_upi_bank_cheque_reference': 'Optional UPI / bank / cheque reference',
+  'collections.optional_upi_bank_cheque_reference':
+      'Optional UPI / bank / cheque reference',
   'collections.payment_collected': 'Payment Collected',
   'collections.payment_collected_receipt': 'Payment collected: {receipt}',
-  'collections.payment_collected_successfully': 'Payment collected successfully.',
+  'collections.payment_collected_successfully':
+      'Payment collected successfully.',
   'collections.payment_mode': 'Payment Mode',
-  'collections.record_a_payment_received_from_an': 'Record a payment received from an assigned dealer.',
+  'collections.record_a_payment_received_from_an':
+      'Record a payment received from an assigned dealer.',
   'collections.saving': 'Saving...',
   'collections.select_dealer': 'Select dealer',
-  'collections.select_the_dealer_who_made_the': 'Select the dealer who made the payment.',
+  'collections.select_the_dealer_who_made_the':
+      'Select the dealer who made the payment.',
   'collections.transaction_reference': 'Transaction Reference',
   'collections.upi': 'UPI',
 
@@ -111,6 +128,7 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'common.expenses': 'Expenses',
   'common.feb': 'Feb',
   'common.file_not_found': 'File not found.',
+  'common.filter': 'Filter',
   'common.gps': 'GPS',
   'common.help_and_support': 'Help & Support',
   'common.home': 'Home',
@@ -121,6 +139,7 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'common.logout': 'Logout',
   'common.mar': 'Mar',
   'common.may': 'May',
+  'common.menu': 'Menu',
   'common.my_documents': 'My Documents',
   'common.my_profile': 'My Profile',
   'common.my_shift': 'My Shift',
@@ -153,8 +172,10 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'common.saved_as': 'Saved as',
   'common.sep': 'Sep',
   'common.shift': 'Shift',
-  'common.this_action_is_not_available_yet': 'This action is not available yet.',
+  'common.this_action_is_not_available_yet':
+      'This action is not available yet.',
   'common.this_year': 'This year',
+  'common.today': 'Today',
   'common.total': 'Total',
   'common.tour_plan': 'Tour Plan',
   'common.verified': 'Verified',
@@ -173,7 +194,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'dashboard.incentive_and_commission': 'Incentive + commission',
   'dashboard.invalid_dashboard_response': 'Invalid dashboard response.',
   'dashboard.locating_address': 'Locating address...',
-  'dashboard.location_permission_is_required': 'Location permission is required.',
+  'dashboard.location_permission_is_required':
+      'Location permission is required.',
   'dashboard.location_services_are_disabled': 'Location services are disabled.',
   'dashboard.monthly_incentive': 'Monthly Incentive',
   'dashboard.monthly_target': 'Monthly Target',
@@ -190,7 +212,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'dashboard.view_all': 'View All',
 
   // --- dealers -----------------------------------------------------------------
-  'dealers.admin_has_not_assigned_any_dealer': 'Admin has not assigned any dealer to this salesman yet.',
+  'dealers.admin_has_not_assigned_any_dealer':
+      'Admin has not assigned any dealer to this salesman yet.',
   'dealers.clear': 'Clear',
   'dealers.credit': 'Credit',
   'dealers.dealer_visit': 'Dealer Visit',
@@ -201,7 +224,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
   // --- delivery ----------------------------------------------------------------
   'delivery.delivery': 'Delivery',
   'delivery.dispatches': 'Dispatches',
-  'delivery.dispatches_for_your_dealers_with_courier': 'Dispatches for your dealers, with courier, tracking number and delivery state.',
+  'delivery.dispatches_for_your_dealers_with_courier':
+      'Dispatches for your dealers, with courier, tracking number and delivery state.',
   'delivery.in_transit': 'In transit',
 
   // --- documents ---------------------------------------------------------------
@@ -213,7 +237,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'documents.documents_on_file': 'Documents On File',
   'documents.driving_licence': 'Driving Licence',
   'documents.id_card': 'ID Card',
-  'documents.identity_bank_and_employment_documents_held': 'Identity, bank and employment documents held by HR, with their verification status.',
+  'documents.identity_bank_and_employment_documents_held':
+      'Identity, bank and employment documents held by HR, with their verification status.',
   'documents.in_review': 'In review',
   'documents.missing': 'Missing',
   'documents.on_file': 'On file',
@@ -221,17 +246,35 @@ const Map<String, String> kAppStringsEn = <String, String>{
 
   // --- expenses ----------------------------------------------------------------
   'expenses.add_expense': 'Add Expense',
+  'expenses.amount': 'Amount',
+  'expenses.amount_hint': 'e.g. 450',
+  'expenses.amount_required': 'Enter the amount you spent.',
   'expenses.awaiting': 'Awaiting',
   'expenses.expense_claims': 'Expense Claims',
+  'expenses.expense_date': 'Expense Date',
   'expenses.expense_management': 'Expense Management',
+  'expenses.expense_not_saved': 'Expense not saved',
   'expenses.expense_submitted_for_approval': 'Expense submitted for approval.',
+  'expenses.expense_type': 'Expense Type',
   'expenses.reimbursable': 'Reimbursable',
-  'expenses.travel_fuel_food_and_other_field': 'Travel, fuel, food and other field expenses, with approval and reimbursement status.',
+  'expenses.remarks_hint': 'What was it for',
+  'expenses.save_expense': 'Save Expense',
+  'expenses.select_expense_type': 'Select expense type',
+  'expenses.type_food': 'Food',
+  'expenses.type_fuel': 'Fuel',
+  'expenses.type_hotel': 'Hotel',
+  'expenses.type_mobile': 'Mobile',
+  'expenses.type_other': 'Other',
+  'expenses.type_required': 'Choose the kind of expense.',
+  'expenses.type_travel': 'Travel',
+  'expenses.travel_fuel_food_and_other_field':
+      'Travel, fuel, food and other field expenses, with approval and reimbursement status.',
 
   // --- holidays ----------------------------------------------------------------
   'holidays.holiday_calendar': 'Holiday Calendar',
   'holidays.holiday_list': 'Holiday List',
-  'holidays.national_company_and_festival_holidays_declared': 'National, company and festival holidays declared for this year.',
+  'holidays.national_company_and_festival_holidays_declared':
+      'National, company and festival holidays declared for this year.',
   'holidays.upcoming': 'Upcoming',
 
   // --- incentives --------------------------------------------------------------
@@ -239,24 +282,47 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'incentives.commission': 'Commission',
   'incentives.incentive_and_commission': 'Incentive & Commission',
   'incentives.monthly_earnings': 'Monthly Earnings',
-  'incentives.row': 'Incentive {incentive} • Commission {commission} • Bonus {bonus}',
-  'incentives.what_you_earned_beyond_basic_salary': 'What you earned beyond basic salary each month: incentives, commission and bonuses.',
+  'incentives.row':
+      'Incentive {incentive} • Commission {commission} • Bonus {bonus}',
+  'incentives.what_you_earned_beyond_basic_salary':
+      'What you earned beyond basic salary each month: incentives, commission and bonuses.',
 
   // --- invoices ----------------------------------------------------------------
   'invoices.download_pdf': 'Download PDF',
   'invoices.invoices': 'Invoices',
   'invoices.no_invoices_yet': 'No invoices yet.',
-  'invoices.your_invoices_for_billed_orders_with': 'Your invoices for billed orders, with a PDF you can download or share.',
+  'invoices.your_invoices_for_billed_orders_with':
+      'Your invoices for billed orders, with a PDF you can download or share.',
 
   // --- language ----------------------------------------------------------------
-  'language.subtitle': 'Product names and app text will be shown in this language.',
+  'language.subtitle':
+      'Product names and app text will be shown in this language.',
   'language.title': 'Choose your language',
   'language.updating': 'Applying language...',
 
   // --- leave -------------------------------------------------------------------
   'leave.apply_for_leave': 'Apply for Leave',
-  'leave.apply_for_leave_track_approvals_and': 'Apply for leave, track approvals and see how much of each entitlement you have left this year.',
-  'leave.leave_application_submitted_for_approval': 'Leave application submitted for approval.',
+  'leave.dates_required': 'Choose the days you will be away.',
+  'leave.days': '{n} days',
+  'leave.from_date': 'From Date',
+  'leave.leave_not_saved': 'Leave not applied',
+  'leave.leave_type': 'Leave Type',
+  'leave.of_entitled_left': 'of {n} left',
+  'leave.reason': 'Reason',
+  'leave.reason_hint': 'Why you need the leave',
+  'leave.select_leave_type': 'Select leave type',
+  'leave.submit_application': 'Submit Application',
+  'leave.to_date': 'To Date',
+  'leave.type_casual': 'Casual',
+  'leave.type_half_day': 'Half Day',
+  'leave.type_paid': 'Paid',
+  'leave.type_required': 'Choose the kind of leave.',
+  'leave.type_sick': 'Sick',
+  'leave.type_unpaid': 'Unpaid',
+  'leave.apply_for_leave_track_approvals_and':
+      'Apply for leave, track approvals and see how much of each entitlement you have left this year.',
+  'leave.leave_application_submitted_for_approval':
+      'Leave application submitted for approval.',
   'leave.leave_applications': 'Leave Applications',
   'leave.leave_management': 'Leave Management',
 
@@ -272,7 +338,8 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'main_shell.dealer_visits': 'Dealer Visits',
   'main_shell.delivery_tracking': 'Delivery Tracking',
   'main_shell.dispatch_and_delivery': 'Dispatch and delivery',
-  'main_shell.employee_code_territory_and_contact': 'Employee code, territory and contact',
+  'main_shell.employee_code_territory_and_contact':
+      'Employee code, territory and contact',
   'main_shell.gps_check_in_and_working_hours': 'GPS check in and working hours',
   'main_shell.assigned_tasks': 'Tasks assigned to you',
   'main_shell.basic_salary_change_history': 'Basic salary change history',
@@ -286,11 +353,13 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'main_shell.refresh': 'Refresh',
   'main_shell.released_monthly_payslips': 'Released monthly payslips',
   'main_shell.request_and_track_recovery': 'Request and track recovery',
-  'main_shell.resignation_and_full_final_settlement': 'Resignation and full & final settlement',
+  'main_shell.resignation_and_full_final_settlement':
+      'Resignation and full & final settlement',
   'main_shell.skills_and_certifications': 'Skills and certifications',
   'main_shell.tap_to_view_profile': 'Tap to view profile',
   'main_shell.targets': 'Targets',
-  'main_shell.training_programs_and_certificates': 'Training programs and certificates',
+  'main_shell.training_programs_and_certificates':
+      'Training programs and certificates',
   'main_shell.travel_fuel_and_other_claims': 'Travel, fuel and other claims',
   'main_shell.visit_assigned_dealers': 'Visit assigned dealers',
   'main_shell.working_hours_and_weekly_off': 'Working hours and weekly off',
@@ -300,35 +369,80 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'menu.language_subtitle': 'App language and product names',
 
   // --- notifications -----------------------------------------------------------
+  'months.1': 'January',
+  'months.2': 'February',
+  'months.3': 'March',
+  'months.4': 'April',
+  'months.5': 'May',
+  'months.6': 'June',
+  'months.7': 'July',
+  'months.8': 'August',
+  'months.9': 'September',
+  'months.10': 'October',
+  'months.11': 'November',
+  'months.12': 'December',
   'notifications.in_inbox': 'In inbox',
   'notifications.inbox': 'Inbox',
   'notifications.mark_all_read': 'Mark all read',
   'notifications.messages': 'Messages',
-  'notifications.order_approvals_dispatch_updates_leave_decisions': 'Order approvals, dispatch updates, leave decisions and company notices.',
+  'notifications.order_approvals_dispatch_updates_leave_decisions':
+      'Order approvals, dispatch updates, leave decisions and company notices.',
   'notifications.unread': 'Unread',
 
   // --- orders ------------------------------------------------------------------
   'orders.admin_review': 'Admin Review',
   'orders.all': 'All',
+  'orders.approved': 'Approved',
+  'orders.approving': 'Approving...',
+  'orders.availability_updated': 'Availability Updated',
+  'orders.available_on': 'Available On',
+  'orders.available_on_must_be_future': 'Pick a date and time in the future.',
+  'orders.cancel_order': 'Cancel Order',
   'orders.cancelled': 'Cancelled',
+  'orders.cancelling': 'Cancelling...',
+  'orders.cash_upi_collection': 'Cash / UPI Collection',
+  'orders.contact_number': 'Contact Number',
+  'orders.contact_person': 'Contact Person',
   'orders.dealer_orders': 'Dealer Orders',
+  'orders.delivery_address': 'Delivery Address',
+  'orders.discount': 'Discount',
   'orders.dispatched': 'Dispatched',
+  'orders.firm_and_contact': 'Firm & Contact',
+  'orders.firm_name': 'Firm Name',
   'orders.forward_to_admin': 'Forward to Admin',
   'orders.forwarding': 'Forwarding...',
+  'orders.grand_total': 'Grand Total',
+  'orders.gst': 'GST',
   'orders.item_count': '{n} items',
+  'orders.marked_available_on': '{order} marked available on {date}.',
+  'orders.marked_available_on_short': 'Stock available on {date}',
+  'orders.marked_not_available': '{order} marked not available right now.',
+  'orders.marked_not_available_short': 'Stock not available right now',
   'orders.my_review': 'My Review',
   'orders.no_orders_found': 'No Orders Found',
+  'orders.not_available_now': 'Not Available Now',
+  'orders.order_details': 'Order Details',
   'orders.order_forwarded': 'Order Forwarded',
+  'orders.order_items': 'Order Items',
+  'orders.order_notes': 'Order Notes',
   'orders.order_rejected': 'Order Rejected',
   'orders.order_rejected_message': '{order} has been rejected.',
-  'orders.orders_from_dealers_assigned_to_you': 'Orders from dealers assigned to you will appear here.',
+  'orders.orders_from_dealers_assigned_to_you':
+      'Orders from dealers assigned to you will appear here.',
   'orders.packing': 'Packing',
+  'orders.pay_later_credit': 'Pay Later / Credit',
+  'orders.payment_and_notes': 'Payment & Notes',
+  'orders.payment_method': 'Payment Method',
+  'orders.payment_status': 'Payment Status',
+  'orders.price_summary': 'Price Summary',
   'orders.reject': 'Reject',
   'orders.reject_order': 'Reject Order',
   'orders.rejecting': 'Rejecting...',
   'orders.rejection_reason': 'Reason for rejecting this order',
   'orders.sent_to_admin': '{order} sent to Admin for review.',
+  'orders.subtotal': 'Subtotal',
   'orders.unable_to_forward': 'Unable to Forward',
+  'orders.unable_to_update_availability': 'Unable to Update Availability',
   'orders.unable_to_reject': 'Unable to Reject',
 
   // --- payslips ----------------------------------------------------------------
@@ -338,20 +452,25 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'payslips.gross_salary': 'Gross Salary',
   'payslips.net_paid': 'Net paid',
   'payslips.net_salary': 'Net Salary',
-  'payslips.no_lines_recorded': 'No allowance or deduction lines were recorded for this payslip.',
+  'payslips.no_lines_recorded':
+      'No allowance or deduction lines were recorded for this payslip.',
   'payslips.payslip_breakdown': 'Payslip Breakdown',
   'payslips.payslip_history': 'Payslip History',
-  'payslips.tap_a_payslip_to_see_its': 'Tap a payslip to see its full allowance and deduction breakdown.',
-  'payslips.your_released_payslips_with_net_pay': 'Your released payslips with net pay, incentives and deductions for each month.',
+  'payslips.tap_a_payslip_to_see_its':
+      'Tap a payslip to see its full allowance and deduction breakdown.',
+  'payslips.your_released_payslips_with_net_pay':
+      'Your released payslips with net pay, incentives and deductions for each month.',
 
   // --- performance -------------------------------------------------------------
   'performance.by': 'by {name}',
   'performance.collection': 'Collection',
   'performance.latest': 'Latest',
   'performance.review_history': 'Review History',
-  'performance.row': 'Sales {sales} • Collection {collection} • Visits {visits}',
+  'performance.row':
+      'Sales {sales} • Collection {collection} • Visits {visits}',
   'performance.score': 'Score',
-  'performance.your_kpi_scores_for_sales_collections': 'Your KPI scores for sales, collections and dealer visits, with the reviewer remarks.',
+  'performance.your_kpi_scores_for_sales_collections':
+      'Your KPI scores for sales, collections and dealer visits, with the reviewer remarks.',
 
   // --- products ----------------------------------------------------------------
   'products.dealer_price_catalog': 'Dealer Price Catalog',
@@ -371,15 +490,18 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'reports.assigned_dealers': 'Assigned dealers',
   'reports.awaiting_approval': '{n} awaiting approval',
   'reports.claims_worth': '{n} claims worth {amount}',
-  'reports.dealers_currently_mapped_to_your_territory': 'Dealers currently mapped to your territory',
+  'reports.dealers_currently_mapped_to_your_territory':
+      'Dealers currently mapped to your territory',
   'reports.expense_claims': 'Expense claims',
   'reports.reports': 'Reports',
   'reports.summary': 'Summary',
   'reports.target_achievement': 'Target achievement',
-  'reports.your_field_performance_at_a_glance': 'Your field performance at a glance: dealers, targets, expenses and earnings.',
+  'reports.your_field_performance_at_a_glance':
+      'Your field performance at a glance: dealers, targets, expenses and earnings.',
 
   // --- resignation ---------------------------------------------------------------
-  'resignation.already_pending': 'A resignation request is already pending or approved.',
+  'resignation.already_pending':
+      'A resignation request is already pending or approved.',
   'resignation.last_working_date': 'Last Working Date',
   'resignation.no_request_yet': 'You have not submitted a resignation request.',
   'resignation.reason': 'Reason (optional)',
@@ -389,9 +511,11 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'resignation.select_resignation_date': 'Select resignation date',
   'resignation.settlement_amount': 'Settlement Amount',
   'resignation.settlement_status': 'Settlement Status',
-  'resignation.submit_a_resignation_request_and_track': 'Submit a resignation request and track its approval and full & final settlement.',
+  'resignation.submit_a_resignation_request_and_track':
+      'Submit a resignation request and track its approval and full & final settlement.',
   'resignation.submit_request': 'Submit Request',
-  'resignation.submitted_for_approval': 'Resignation request submitted for approval.',
+  'resignation.submitted_for_approval':
+      'Resignation request submitted for approval.',
 
   // --- salary ------------------------------------------------------------------
   'salary.april': 'April',
@@ -408,12 +532,14 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'salary.salary_slips': 'Salary Slips',
   'salary.september': 'September',
   'salary.this_slip': 'This slip',
-  'salary.your_salary_structure_monthly_earnings_allowances': 'Your salary structure, monthly earnings, allowances and deductions.',
+  'salary.your_salary_structure_monthly_earnings_allowances':
+      'Your salary structure, monthly earnings, allowances and deductions.',
 
   // --- salary_revisions ----------------------------------------------------------
   'salary_revisions.change': '{amount} ({percent}%)',
   'salary_revisions.effective_from': 'Effective {date}',
-  'salary_revisions.history_of_changes_to_your_basic': 'History of changes to your basic salary, with the reason and effective date.',
+  'salary_revisions.history_of_changes_to_your_basic':
+      'History of changes to your basic salary, with the reason and effective date.',
   'salary_revisions.new_basic': 'New {amount}',
   'salary_revisions.salary_revisions': 'Salary Revisions',
 
@@ -434,12 +560,14 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'shifts.tue': 'Tue',
   'shifts.wed': 'Wed',
   'shifts.weekly_off': 'Weekly off: {days}',
-  'shifts.your_working_hours_grace_period_and': 'Your working hours, grace period and weekly offs under the shift you are assigned to.',
+  'shifts.your_working_hours_grace_period_and':
+      'Your working hours, grace period and weekly offs under the shift you are assigned to.',
 
   // --- skills ------------------------------------------------------------------
   'skills.certified_on': 'Certified {date}',
   'skills.skill_records': 'Skill Records',
-  'skills.skills_and_certifications_hr_has_recorded': 'Skills and certifications HR has recorded for you.',
+  'skills.skills_and_certifications_hr_has_recorded':
+      'Skills and certifications HR has recorded for you.',
 
   // --- support -----------------------------------------------------------------
   'support.create_ticket': 'Create Ticket',
@@ -450,13 +578,15 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'support.subject': 'Subject',
   'support.support_failed': 'Support Failed',
   'support.support_sent': 'Support Sent',
-  'support.your_support_ticket_has_been_created': 'Your support ticket has been created.',
+  'support.your_support_ticket_has_been_created':
+      'Your support ticket has been created.',
 
   // --- targets -----------------------------------------------------------------
   'targets.achieved_of': 'Achieved {done} of {goal}',
   'targets.all_periods': 'All periods',
   'targets.commission_percent': 'Commission {n}%',
-  'targets.monthly_and_period_targets_with_achievement': 'Monthly and period targets with achievement, shortfall and the commission rate attached to each.',
+  'targets.monthly_and_period_targets_with_achievement':
+      'Monthly and period targets with achievement, shortfall and the commission rate attached to each.',
   'targets.progress': 'Progress',
   'targets.sales_targets': 'Sales Targets',
   'targets.target': 'Target',
@@ -470,14 +600,16 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'tasks.no_tasks_assigned_yet': 'No tasks assigned yet.',
   'tasks.overdue': 'Overdue',
   'tasks.task_updated': 'Task updated.',
-  'tasks.tasks_assigned_to_you_by_admin': 'Tasks assigned to you by admin, with their due date and priority.',
+  'tasks.tasks_assigned_to_you_by_admin':
+      'Tasks assigned to you by admin, with their due date and priority.',
   'tasks.tasks_title': 'Tasks',
 
   // --- tour_plan ---------------------------------------------------------------
   'tour_plan.planned': 'Planned',
   'tour_plan.planned_routes': 'Planned Routes',
   'tour_plan.routes': 'Routes',
-  'tour_plan.your_planned_routes_the_dealers_on': 'Your planned routes, the dealers on each and the approval state of the plan.',
+  'tour_plan.your_planned_routes_the_dealers_on':
+      'Your planned routes, the dealers on each and the approval state of the plan.',
 
   // --- training ----------------------------------------------------------------
   'training.certificate_issued': 'Certificate issued',
@@ -485,14 +617,26 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'training.download_certificate': 'Download Certificate',
   'training.no_trainings_yet': 'No training enrolments yet.',
   'training.score': 'Score {n}',
-  'training.training_programs_you_are_enrolled': 'Training programs you are enrolled in, with attendance, score and certificate.',
+  'training.training_programs_you_are_enrolled':
+      'Training programs you are enrolled in, with attendance, score and certificate.',
   'training.training_title': 'Training',
 
   // --- visits ------------------------------------------------------------------
-  'visits.daily_visits': 'Daily Visits',
-  'visits.dealer_visits_logged_with_gps_location': 'Dealer visits logged with GPS location, purpose and the remarks you captured on site.',
+  'visits.daily_visits': 'Dealer Visits',
+  'visits.dealer_visits_logged_with_gps_location':
+      'Dealer visits you have logged, with the purpose and remarks you recorded.',
   'visits.gps_tagged': 'GPS tagged',
+  'visits.log_visit': 'Add Visit',
   'visits.logged': 'Logged',
+  'visits.purpose': 'Purpose',
+  'visits.purpose_hint': 'Order follow-up, payment, new product…',
+  'visits.remarks': 'Remarks',
+  'visits.remarks_hint': 'What was discussed',
+  'visits.save_visit': 'Save',
+  'visits.select_the_dealer_you_visited': 'Select the dealer you visited.',
   'visits.today': 'Today',
   'visits.visit_log': 'Visit Log',
+  'visits.visit_logged_for_dealer': 'The dealer visit has been recorded.',
+  'visits.visit_not_saved': 'Visit Not Saved',
+  'visits.visit_saved': 'Visit Saved',
 };

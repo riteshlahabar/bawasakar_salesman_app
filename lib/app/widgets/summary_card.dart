@@ -4,8 +4,16 @@ import '../data/models/summary_card_model.dart';
 import '../theme/app_colors.dart';
 import 'app_decorations.dart';
 
+/// One metric tile: its label on the left, its value on the right, both on a
+/// single line. The coloured icon box this used to lead with was dropped at
+/// the user's request — with eight tiles on the dashboard the icons added
+/// height without adding meaning.
 class SummaryCard extends StatelessWidget {
   const SummaryCard({super.key, required this.item});
+
+  /// Height a grid cell needs for this card, so every grid using it stays in
+  /// step with the layout instead of guessing its own `mainAxisExtent`.
+  static const double gridExtent = 56;
 
   final SummaryCardModel item;
 
@@ -13,42 +21,31 @@ class SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: AppDecorations.softCard(radius: 16),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Row(
         children: [
-          Row(
-            children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: AppDecorations.iconBox(item.color),
-                child: Icon(item.icon, color: item.color, size: 16),
+          Expanded(
+            child: Text(
+              item.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                height: 1.25,
               ),
-              const Spacer(),
-              Flexible(
-                child: Text(
-                  item.value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(width: 8),
           Text(
-            item.title,
+            item.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
+            style: TextStyle(
+              color: item.color,
+              fontSize: 15,
+              fontWeight: FontWeight.w900,
             ),
           ),
         ],

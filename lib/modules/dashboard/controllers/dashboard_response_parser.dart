@@ -52,27 +52,45 @@ class DashboardResponseParser {
   }
 
   /// Reads today's GPS check-in/out state out of `data.today_attendance`,
-  /// so the dashboard's Check In/Out buttons restore correctly after an app
-  /// restart. Any field missing from the payload comes back null/empty.
+  /// so the dashboard's Check In/Out/Break buttons restore correctly after an
+  /// app restart. Any field missing from the payload comes back null/empty.
   static ({
     String checkInAt,
     double checkInLatitude,
     double checkInLongitude,
     String checkOutAt,
-  }) parseTodayAttendance(Map<String, dynamic> data) {
+    bool onBreak,
+    int breakMinutes,
+  })
+  parseTodayAttendance(Map<String, dynamic> data) {
     final raw = data['today_attendance'];
 
     if (raw is! Map) {
-      return (checkInAt: '', checkInLatitude: 0, checkInLongitude: 0, checkOutAt: '');
+      return (
+        checkInAt: '',
+        checkInLatitude: 0,
+        checkInLongitude: 0,
+        checkOutAt: '',
+        onBreak: false,
+        breakMinutes: 0,
+      );
     }
 
     final attendance = Map<String, dynamic>.from(raw);
 
     return (
       checkInAt: attendance['check_in_at']?.toString() ?? '',
-      checkInLatitude: ModuleRowMapper.toDouble(attendance['check_in_latitude']),
-      checkInLongitude: ModuleRowMapper.toDouble(attendance['check_in_longitude']),
+      checkInLatitude: ModuleRowMapper.toDouble(
+        attendance['check_in_latitude'],
+      ),
+      checkInLongitude: ModuleRowMapper.toDouble(
+        attendance['check_in_longitude'],
+      ),
       checkOutAt: attendance['check_out_at']?.toString() ?? '',
+      onBreak: attendance['on_break'] == true,
+      breakMinutes: ModuleRowMapper.toDouble(
+        attendance['break_minutes'],
+      ).round(),
     );
   }
 
@@ -123,7 +141,9 @@ class DashboardResponseParser {
         color: AppColors.info,
         subtitle: monthTarget == null
             ? t('dashboard.no_target_set')
-            : t('dashboard.of_target', {'target': ModuleRowMapper.money(monthTarget)}),
+            : t('dashboard.of_target', {
+                'target': ModuleRowMapper.money(monthTarget),
+              }),
       ),
       SummaryCardModel(
         title: t('dashboard.todays_visits'),

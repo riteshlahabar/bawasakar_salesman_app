@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../../app/routes/app_routes.dart';
 import '../../../../app/theme/app_colors.dart';
-import '../../../../app/widgets/action_tile.dart';
+import '../../../../app/data/models/action_item_model.dart';
 import '../../controllers/main_shell_controller.dart';
 import '../../../../app/localization/t.dart';
 
@@ -17,7 +17,12 @@ class SalesmanDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 228,
+      // `top: false` so the green header paints behind the status bar like
+      // the app bar does, instead of leaving a white strip above it; the
+      // status-bar height is added to the header's own padding instead.
       child: SafeArea(
+        top: false,
         child: Column(
           children: [
             Obx(
@@ -25,7 +30,12 @@ class SalesmanDrawer extends StatelessWidget {
                 onTap: () => controller.openRoute(AppRoutes.profile),
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(18),
+                  padding: EdgeInsets.fromLTRB(
+                    18,
+                    18 + MediaQuery.of(context).padding.top,
+                    18,
+                    18,
+                  ),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [AppColors.primary, AppColors.primaryDark],
@@ -76,15 +86,6 @@ class SalesmanDrawer extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            const SizedBox(height: 6),
-                            Text(
-                              t('main_shell.tap_to_view_profile'),
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 9.5,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -95,13 +96,13 @@ class SalesmanDrawer extends StatelessWidget {
             ),
             Expanded(
               child: ListView.separated(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                 itemCount: controller.drawerItems.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 10),
+                separatorBuilder: (_, _) => const SizedBox(height: 2),
                 itemBuilder: (context, index) {
                   final item = controller.drawerItems[index];
 
-                  return ActionTile(
+                  return _DrawerTile(
                     item: item,
                     onTap: () => controller.openRoute(item.route),
                   );
@@ -116,6 +117,47 @@ class SalesmanDrawer extends StatelessWidget {
                   onPressed: controller.logout,
                   icon: const Icon(Icons.logout),
                   label: Text(t('common.logout')),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A flat drawer row: coloured icon and title only.
+///
+/// Deliberately not [ActionTile] — that one is a raised card with a subtitle
+/// and a trailing arrow, which the Profile screen still wants; the drawer
+/// lists every module, so the same treatment made it long and heavy.
+class _DrawerTile extends StatelessWidget {
+  const _DrawerTile({required this.item, required this.onTap});
+
+  final ActionItemModel item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+        child: Row(
+          children: [
+            Icon(item.icon, color: item.color, size: 21),
+            const SizedBox(width: 13),
+            Expanded(
+              child: Text(
+                item.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

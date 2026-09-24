@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/app_decorations.dart';
@@ -15,7 +16,10 @@ class ResignationView extends GetView<ResignationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t('resignation.resignation_and_exit'))),
+      appBar: AppBar(
+        title: Text(t('resignation.resignation_and_exit')),
+        leading: const DrawerMenuButton(),
+      ),
       body: Obx(() {
         if (controller.isLoading.value && controller.resignations.isEmpty) {
           return const Center(
@@ -23,7 +27,8 @@ class ResignationView extends GetView<ResignationController> {
           );
         }
 
-        if (controller.error.value.isNotEmpty && controller.resignations.isEmpty) {
+        if (controller.error.value.isNotEmpty &&
+            controller.resignations.isEmpty) {
           return EmptyState(
             title: t('common.could_not_load'),
             message: controller.error.value,
@@ -39,15 +44,21 @@ class ResignationView extends GetView<ResignationController> {
             children: [
               SectionHeader(
                 title: t('resignation.resignation_and_exit'),
-                subtitle: t('resignation.submit_a_resignation_request_and_track'),
+                subtitle: t(
+                  'resignation.submit_a_resignation_request_and_track',
+                ),
               ),
               const SizedBox(height: 18),
-              if (controller.current != null) _StatusCard(resignation: controller.current!),
+              if (controller.current != null)
+                _StatusCard(resignation: controller.current!),
               if (controller.current != null) const SizedBox(height: 16),
               if (controller.hasOpenRequest)
                 Text(
                   t('resignation.already_pending'),
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                  ),
                 )
               else
                 const _RequestForm(),
@@ -90,32 +101,61 @@ class _StatusCard extends StatelessWidget {
                   children: [
                     Text(
                       resignation['reference_no']?.toString() ?? '',
-                      style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, fontWeight: FontWeight.w800),
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${t('resignation.resignation_date')}: ${ModuleRowMapper.date(resignation['resignation_date'])}',
-                      style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 11,
+                      ),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(color: color.withValues(alpha: .10), borderRadius: BorderRadius.circular(24)),
-                child: Text(status, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w800)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: .10),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Text(
+                  status,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
               ),
             ],
           ),
           if (resignation['approved_last_working_date'] != null) ...[
             const Divider(height: 24),
-            _kv(t('resignation.last_working_date'), ModuleRowMapper.date(resignation['approved_last_working_date'])),
+            _kv(
+              t('resignation.last_working_date'),
+              ModuleRowMapper.date(resignation['approved_last_working_date']),
+            ),
           ],
           if (status == 'approved' || status == 'completed') ...[
             const SizedBox(height: 8),
-            _kv(t('resignation.settlement_amount'), ModuleRowMapper.money(resignation['settlement_amount'])),
+            _kv(
+              t('resignation.settlement_amount'),
+              ModuleRowMapper.money(resignation['settlement_amount']),
+            ),
             const SizedBox(height: 8),
-            _kv(t('resignation.settlement_status'), resignation['settlement_status']?.toString() ?? ''),
+            _kv(
+              t('resignation.settlement_status'),
+              resignation['settlement_status']?.toString() ?? '',
+            ),
           ],
         ],
       ),
@@ -126,8 +166,18 @@ class _StatusCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 11)),
-        Text(value, style: const TextStyle(color: AppColors.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
+        Text(
+          label,
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 12,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ],
     );
   }
@@ -146,7 +196,11 @@ class _RequestForm extends GetView<ResignationController> {
         children: [
           Text(
             t('resignation.request_resignation'),
-            style: const TextStyle(color: AppColors.textPrimary, fontSize: 14, fontWeight: FontWeight.w900),
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(height: 14),
           Obx(
@@ -163,12 +217,17 @@ class _RequestForm extends GetView<ResignationController> {
               child: InputDecorator(
                 decoration: InputDecoration(
                   labelText: t('resignation.resignation_date'),
-                  prefixIcon: const Icon(Icons.event_outlined, color: AppColors.primary),
+                  prefixIcon: const Icon(
+                    Icons.event_outlined,
+                    color: AppColors.primary,
+                  ),
                 ),
                 child: Text(
                   controller.resignationDate.value == null
                       ? t('resignation.select_resignation_date')
-                      : ModuleRowMapper.date(controller.resignationDate.value!.toIso8601String()),
+                      : ModuleRowMapper.date(
+                          controller.resignationDate.value!.toIso8601String(),
+                        ),
                 ),
               ),
             ),
@@ -185,7 +244,9 @@ class _RequestForm extends GetView<ResignationController> {
             () => SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: controller.isSubmitting.value ? null : controller.submit,
+                onPressed: controller.isSubmitting.value
+                    ? null
+                    : controller.submit,
                 child: Text(t('resignation.submit_request')),
               ),
             ),

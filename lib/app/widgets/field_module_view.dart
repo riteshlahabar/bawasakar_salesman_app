@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
+import 'drawer_menu_button.dart';
 import '../data/models/list_row_model.dart';
 import '../data/models/summary_card_model.dart';
-import '../routes/app_routes.dart';
 import '../theme/app_colors.dart';
 import 'app_decorations.dart';
 import 'module_list_view.dart';
-import 'salesman_bottom_navigation.dart';
 import 'section_header.dart';
 import 'summary_card.dart';
 import '../localization/t.dart';
@@ -27,6 +25,8 @@ class FieldModuleView extends StatelessWidget {
     this.onSecondaryAction,
     this.featured,
     this.recordsTitle = 'common.recent_records',
+    this.showHeader = true,
+    this.topSlot,
   });
 
   final String title;
@@ -42,29 +42,37 @@ class FieldModuleView extends StatelessWidget {
   final Widget? featured;
   final String recordsTitle;
 
+  /// The in-body title/subtitle block. Screens whose app bar already says the
+  /// same thing pass `false` (Attendance does).
+  final bool showHeader;
+
+  /// Sits above the stat tiles, for a filter that decides what they count —
+  /// Attendance's month stepper.
+  final Widget? topSlot;
+
   @override
   Widget build(BuildContext context) {
+    // No bottom bar or FAB here: every route showing this view is wrapped in
+    // NavShell, which owns them. Adding them again stacked two bars.
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(title: Text(title)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(6),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          elevation: 6,
-          onPressed: () => Get.toNamed(AppRoutes.products),
-          child: const Icon(Icons.qr_code_scanner_sharp),
-        ),
-      ),
-      bottomNavigationBar: const SalesmanBottomNavigation(selectedIndex: -1),
+      appBar: AppBar(title: Text(title), leading: const DrawerMenuButton()),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 104),
+        // Always scrollable, even when the content is shorter than the
+        // screen: without this a short list cannot be overscrolled, so the
+        // RefreshIndicator that RemoteModuleView wraps around this view never
+        // fires and pull-to-refresh silently does nothing.
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
-          SectionHeader(title: title, subtitle: subtitle),
+          if (showHeader) SectionHeader(title: title, subtitle: subtitle),
+          if (topSlot != null) ...[
+            SizedBox(height: showHeader ? 14 : 4),
+            topSlot!,
+          ],
           if (stats.isNotEmpty) ...[
-            const SizedBox(height: 16),
+            // A filter above needs a clear gap so the tiles below read as its
+            // result, not as part of the control.
+            SizedBox(height: showHeader || topSlot != null ? 16 : 4),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -73,7 +81,7 @@ class FieldModuleView extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                mainAxisExtent: 84,
+                mainAxisExtent: SummaryCard.gridExtent,
               ),
               itemBuilder: (context, index) => SummaryCard(item: stats[index]),
             ),

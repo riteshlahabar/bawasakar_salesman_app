@@ -32,5 +32,6 @@ class AppLocales {
 
   static String nameOf(String code) => names[code] ?? code.toUpperCase();
 
-  static String englishNameOf(String code) => englishNames[code] ?? code.toUpperCase();
+  static String englishNameOf(String code) =>
+      englishNames[code] ?? code.toUpperCase();
 }

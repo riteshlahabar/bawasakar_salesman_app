@@ -20,13 +20,8 @@ class ProductImage extends StatelessWidget {
   final BoxFit fit;
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
-    final url =
-        _resolveUrl(
-      imageUrl,
-    );
+  Widget build(BuildContext context) {
+    final url = _resolveUrl(imageUrl);
 
     if (url.isEmpty) {
       return _placeholder();
@@ -37,78 +32,51 @@ class ProductImage extends StatelessWidget {
       height: height,
       width: width,
       fit: fit,
-      errorBuilder: (
-        context,
-        error,
-        stackTrace,
-      ) {
+      errorBuilder: (context, error, stackTrace) {
         return _placeholder();
       },
     );
   }
 
-  String _resolveUrl(
-    String? source,
-  ) {
-    var value =
-        source?.trim() ?? '';
+  String _resolveUrl(String? source) {
+    var value = source?.trim() ?? '';
 
-    if (value.isEmpty ||
-        value == 'null') {
+    if (value.isEmpty || value == 'null') {
       return '';
     }
 
-    value =
-        value.replaceAll(
-      '\\',
-      '/',
-    );
+    value = value.replaceAll('\\', '/');
 
-    final apiUri =
-        Uri.tryParse(
-      ApiConfig.baseUrl,
-    );
+    final apiUri = Uri.tryParse(ApiConfig.baseUrl);
 
-    if (apiUri == null ||
-        apiUri.host.isEmpty) {
+    if (apiUri == null || apiUri.host.isEmpty) {
       return value;
     }
 
-    final origin =
-        '${apiUri.scheme}://${apiUri.authority}';
+    final origin = '${apiUri.scheme}://${apiUri.authority}';
 
-    final imageUri =
-        Uri.tryParse(value);
+    final imageUri = Uri.tryParse(value);
 
-    if (imageUri != null &&
-        imageUri.hasScheme &&
-        imageUri.host.isNotEmpty) {
+    if (imageUri != null && imageUri.hasScheme && imageUri.host.isNotEmpty) {
       final isLocal =
-          imageUri.host ==
-                  'localhost' ||
-              imageUri.host ==
-                  '127.0.0.1' ||
-              imageUri.host ==
-                  '10.0.2.2';
+          imageUri.host == 'localhost' ||
+          imageUri.host == '127.0.0.1' ||
+          imageUri.host == '10.0.2.2';
 
       if (isLocal) {
         return '$origin${imageUri.path}';
       }
 
       if (apiUri.scheme == 'https' &&
-          imageUri.host ==
-              apiUri.host &&
-          imageUri.scheme ==
-              'http') {
+          imageUri.host == apiUri.host &&
+          imageUri.scheme == 'http') {
         return '$origin${imageUri.path}';
       }
 
       return value;
     }
 
-    return value.startsWith('/')
-        ? '$origin$value'
-        : '$origin/$value';
+    return value.startsWith('/') ? '$origin$value' : '$origin/$value';
   }
 
   Widget _placeholder() {

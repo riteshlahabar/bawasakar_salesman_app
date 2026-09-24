@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/app_decorations.dart';
@@ -14,17 +15,24 @@ class PayslipDetailView extends GetView<PayslipDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t('payslips.payslip_breakdown'))),
+      appBar: AppBar(
+        title: Text(t('payslips.payslip_breakdown')),
+        leading: const DrawerMenuButton(),
+      ),
       body: Obx(() {
         if (controller.isLoading.value && controller.slip.value == null) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         final slip = controller.slip.value;
         if (slip == null) {
           return EmptyState(
             title: t('common.could_not_load'),
-            message: controller.error.value.isEmpty ? t('common.nothing_here_yet') : controller.error.value,
+            message: controller.error.value.isEmpty
+                ? t('common.nothing_here_yet')
+                : controller.error.value,
             icon: Icons.cloud_off,
           );
         }
@@ -37,13 +45,23 @@ class PayslipDetailView extends GetView<PayslipDetailController> {
               decoration: AppDecorations.softCard(radius: 16),
               child: Column(
                 children: [
-                  _kv(t('payslips.basic_salary'), ModuleRowMapper.money(slip['basic_salary'])),
+                  _kv(
+                    t('payslips.basic_salary'),
+                    ModuleRowMapper.money(slip['basic_salary']),
+                  ),
                   const SizedBox(height: 10),
-                  _kv(t('payslips.gross_salary'), ModuleRowMapper.money(slip['gross_salary'])),
+                  _kv(
+                    t('payslips.gross_salary'),
+                    ModuleRowMapper.money(slip['gross_salary']),
+                  ),
                   const SizedBox(height: 10),
                   const Divider(),
                   const SizedBox(height: 4),
-                  _kv(t('payslips.net_salary'), ModuleRowMapper.money(slip['net_salary']), emphasize: true),
+                  _kv(
+                    t('payslips.net_salary'),
+                    ModuleRowMapper.money(slip['net_salary']),
+                    emphasize: true,
+                  ),
                 ],
               ),
             ),
@@ -91,7 +109,11 @@ class PayslipDetailView extends GetView<PayslipDetailController> {
 }
 
 class _LinesCard extends StatelessWidget {
-  const _LinesCard({required this.title, required this.color, required this.lines});
+  const _LinesCard({
+    required this.title,
+    required this.color,
+    required this.lines,
+  });
 
   final String title;
   final Color color;
@@ -107,13 +129,20 @@ class _LinesCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, fontWeight: FontWeight.w900),
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 13,
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(height: 12),
           if (lines.isEmpty)
             Text(
               t('payslips.no_lines_recorded'),
-              style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 11,
+              ),
             )
           else
             ...lines.map(
@@ -125,12 +154,19 @@ class _LinesCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         line['label']?.toString() ?? '',
-                        style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                     Text(
                       ModuleRowMapper.money(line['amount']),
-                      style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w800),
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ],
                 ),

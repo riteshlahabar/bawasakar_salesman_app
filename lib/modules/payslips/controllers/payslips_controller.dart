@@ -15,8 +15,7 @@ class PayslipsController extends RemoteModuleController {
   PayslipsController(this._api)
     : super(
         title: t('common.payslips'),
-        subtitle:
-            t('payslips.your_released_payslips_with_net_pay'),
+        subtitle: t('payslips.your_released_payslips_with_net_pay'),
       );
 
   final SalesmanFinanceService _api;
@@ -27,8 +26,18 @@ class PayslipsController extends RemoteModuleController {
 
   static List<String> get _months => <String>[
     '',
-    t('common.jan'), t('common.feb'), t('common.mar'), t('common.apr'), t('common.may'), t('common.jun'),
-    t('common.jul'), t('common.aug'), t('common.sep'), t('common.oct'), t('common.nov'), t('common.dec'),
+    t('common.jan'),
+    t('common.feb'),
+    t('common.mar'),
+    t('common.apr'),
+    t('common.may'),
+    t('common.jun'),
+    t('common.jul'),
+    t('common.aug'),
+    t('common.sep'),
+    t('common.oct'),
+    t('common.nov'),
+    t('common.dec'),
   ];
 
   @override

@@ -32,19 +32,25 @@ class DashboardView extends GetView<DashboardController> {
             else
               GridView.builder(
                 shrinkWrap: true,
+                // Must be explicit: a nested scroll view with a null padding
+                // silently adopts MediaQuery's vertical padding, and the
+                // shell's `extendBody: true` Scaffold sets that bottom padding
+                // to the bottom-nav height — which showed up as a large empty
+                // gap between this grid and the Current Orders section below.
+                padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: controller.summaries.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      mainAxisExtent: 84,
-                    ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: SummaryCard.gridExtent,
+                ),
                 itemBuilder: (context, index) {
                   return SummaryCard(item: controller.summaries[index]);
                 },
               ),
+            const SizedBox(height: 22),
             const CurrentOrdersSection(),
           ],
         ),

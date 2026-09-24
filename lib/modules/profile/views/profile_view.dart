@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/data/models/action_item_model.dart';
 import '../../../app/routes/app_routes.dart';
 import '../../../app/theme/app_colors.dart';
@@ -15,7 +16,10 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t('common.my_profile'))),
+      appBar: AppBar(
+        title: Text(t('common.my_profile')),
+        leading: const DrawerMenuButton(),
+      ),
       body: Obx(
         () => ListView(
           padding: const EdgeInsets.all(16),
@@ -32,7 +36,10 @@ class ProfileView extends GetView<ProfileController> {
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.person_rounded, color: Colors.white),
+                    child: const Icon(
+                      Icons.person_rounded,
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -41,12 +48,20 @@ class ProfileView extends GetView<ProfileController> {
                       children: [
                         Text(
                           controller.name,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          controller.employeeCode.isNotEmpty ? controller.employeeCode : controller.mobile,
-                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 12.5),
+                          controller.employeeCode.isNotEmpty
+                              ? controller.employeeCode
+                              : controller.mobile,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 12.5,
+                          ),
                         ),
                       ],
                     ),
@@ -55,10 +70,26 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             const SizedBox(height: 14),
-            _InfoRow(icon: Icons.badge_outlined, label: t('profile.employee_code'), value: controller.employeeCode),
-            _InfoRow(icon: Icons.map_outlined, label: t('profile.territory'), value: controller.territory),
-            _InfoRow(icon: Icons.phone_outlined, label: t('profile.mobile'), value: controller.mobile),
-            _InfoRow(icon: Icons.email_outlined, label: t('common.email'), value: controller.email),
+            _InfoRow(
+              icon: Icons.badge_outlined,
+              label: t('profile.employee_code'),
+              value: controller.employeeCode,
+            ),
+            _InfoRow(
+              icon: Icons.map_outlined,
+              label: t('profile.territory'),
+              value: controller.territory,
+            ),
+            _InfoRow(
+              icon: Icons.phone_outlined,
+              label: t('profile.mobile'),
+              value: controller.mobile,
+            ),
+            _InfoRow(
+              icon: Icons.email_outlined,
+              label: t('common.email'),
+              value: controller.email,
+            ),
             const SizedBox(height: 14),
             ActionTile(
               item: ActionItemModel(
@@ -89,7 +120,11 @@ class ProfileView extends GetView<ProfileController> {
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.icon, required this.label, required this.value});
+  const _InfoRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
 
   final IconData icon;
   final String label;
@@ -111,9 +146,21 @@ class _InfoRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
                 const SizedBox(height: 2),
-                Text(value, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700)),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ],
             ),
           ),

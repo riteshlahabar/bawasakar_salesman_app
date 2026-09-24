@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/data/module_row_mapper.dart';
-import '../../../app/routes/app_routes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/app_decorations.dart';
 import '../../../app/widgets/empty_state.dart';
-import '../../../app/widgets/salesman_bottom_navigation.dart';
 import '../../../app/widgets/section_header.dart';
 import '../controllers/invoices_controller.dart';
 import '../../../app/localization/t.dart';
@@ -17,20 +16,11 @@ class InvoicesView extends GetView<InvoicesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(title: Text(t('invoices.invoices'))),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(6),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          elevation: 6,
-          onPressed: () => Get.toNamed<void>(AppRoutes.products),
-          child: const Icon(Icons.qr_code_scanner_sharp),
-        ),
+      // The bottom bar and FAB belong to NavShell, which wraps this route.
+      appBar: AppBar(
+        title: Text(t('invoices.invoices')),
+        leading: const DrawerMenuButton(),
       ),
-      bottomNavigationBar: const SalesmanBottomNavigation(selectedIndex: -1),
       body: Obx(() {
         if (controller.isLoading.value && controller.invoices.isEmpty) {
           return const Center(
@@ -58,14 +48,16 @@ class InvoicesView extends GetView<InvoicesController> {
           color: AppColors.primary,
           onRefresh: controller.load,
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 104),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
               SectionHeader(
                 title: t('invoices.invoices'),
                 subtitle: t('invoices.your_invoices_for_billed_orders_with'),
               ),
               const SizedBox(height: 18),
-              ...controller.invoices.map((invoice) => _InvoiceCard(invoice: invoice)),
+              ...controller.invoices.map(
+                (invoice) => _InvoiceCard(invoice: invoice),
+              ),
             ],
           ),
         );
@@ -94,7 +86,11 @@ class _InvoiceCard extends GetView<InvoicesController> {
             width: 46,
             height: 46,
             decoration: AppDecorations.iconBox(AppColors.primary),
-            child: const Icon(Icons.receipt_long_outlined, color: AppColors.primary, size: 24),
+            child: const Icon(
+              Icons.receipt_long_outlined,
+              color: AppColors.primary,
+              size: 24,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -105,26 +101,41 @@ class _InvoiceCard extends GetView<InvoicesController> {
                   invoiceNo,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const SizedBox(height: 5),
                 Text(
                   [
                     ModuleRowMapper.date(invoice['invoice_date']),
-                    if ((order['order_no']?.toString() ?? '').isNotEmpty) order['order_no'].toString(),
+                    if ((order['order_no']?.toString() ?? '').isNotEmpty)
+                      order['order_no'].toString(),
                   ].join(' • '),
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 11,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   ModuleRowMapper.money(invoice['grand_total']),
-                  style: const TextStyle(color: AppColors.textPrimary, fontSize: 12, fontWeight: FontWeight.w900),
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ],
             ),
           ),
           IconButton(
-            onPressed: () => controller.downloadPdf(ModuleRowMapper.toInt(invoice['id']), invoiceNo),
+            onPressed: () => controller.downloadPdf(
+              ModuleRowMapper.toInt(invoice['id']),
+              invoiceNo,
+            ),
             icon: const Icon(Icons.download_outlined, color: AppColors.primary),
             tooltip: t('invoices.download_pdf'),
           ),

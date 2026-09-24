@@ -40,7 +40,13 @@ class InvoicesController extends GetxController {
   }
 
   Future<void> downloadPdf(int invoiceId, String invoiceNo) {
-    final name = invoiceNo.isEmpty ? 'invoice-$invoiceId.pdf' : '$invoiceNo.pdf';
-    return _files.open(ApiConfig.invoicePdf(invoiceId), name, mimeType: 'application/pdf');
+    final name = invoiceNo.isEmpty
+        ? 'invoice-$invoiceId.pdf'
+        : '$invoiceNo.pdf';
+    return _files.open(
+      ApiConfig.invoicePdf(invoiceId),
+      name,
+      mimeType: 'application/pdf',
+    );
   }
 }

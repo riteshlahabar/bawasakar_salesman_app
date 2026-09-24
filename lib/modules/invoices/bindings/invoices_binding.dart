@@ -8,7 +8,10 @@ class InvoicesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<InvoicesController>(
-      () => InvoicesController(Get.find<SalesmanFinanceService>(), Get.find<FileOpener>()),
+      () => InvoicesController(
+        Get.find<SalesmanFinanceService>(),
+        Get.find<FileOpener>(),
+      ),
     );
   }
 }

@@ -11,16 +11,25 @@ class SalaryController extends RemoteModuleController {
   SalaryController(this._api)
     : super(
         title: t('common.salary'),
-        subtitle:
-            t('salary.your_salary_structure_monthly_earnings_allowances'),
+        subtitle: t('salary.your_salary_structure_monthly_earnings_allowances'),
       );
 
   final SalesmanFinanceService _api;
 
   static List<String> get _months => <String>[
     '',
-    t('salary.january'), t('salary.february'), t('salary.march'), t('salary.april'), t('common.may'), t('salary.june'),
-    t('salary.july'), t('salary.august'), t('salary.september'), t('salary.october'), t('salary.november'), t('salary.december'),
+    t('salary.january'),
+    t('salary.february'),
+    t('salary.march'),
+    t('salary.april'),
+    t('common.may'),
+    t('salary.june'),
+    t('salary.july'),
+    t('salary.august'),
+    t('salary.september'),
+    t('salary.october'),
+    t('salary.november'),
+    t('salary.december'),
   ];
 
   @override
@@ -33,7 +42,8 @@ class SalaryController extends RemoteModuleController {
       rows: slips
           .map(
             (slip) => ModuleRowMapper.row(
-              title: '${_monthName(slip['salary_month'])} ${slip['salary_year']}',
+              title:
+                  '${_monthName(slip['salary_month'])} ${slip['salary_year']}',
               subtitle:
                   'Basic ${ModuleRowMapper.money(slip['basic_salary'])}'
                   ' • Allowances ${ModuleRowMapper.money(slip['allowances'])}'

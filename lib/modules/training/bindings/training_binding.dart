@@ -8,7 +8,10 @@ class TrainingBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<TrainingController>(
-      () => TrainingController(Get.find<SalesmanHrService>(), Get.find<FileOpener>()),
+      () => TrainingController(
+        Get.find<SalesmanHrService>(),
+        Get.find<FileOpener>(),
+      ),
     );
   }
 }

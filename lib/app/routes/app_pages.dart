@@ -32,6 +32,7 @@ import '../../modules/notifications/bindings/notifications_binding.dart';
 import '../../modules/notifications/views/notifications_view.dart';
 import '../../modules/payslips/bindings/payslip_detail_binding.dart';
 import '../../modules/payslips/bindings/payslips_binding.dart';
+import '../../modules/orders/views/order_detail_view.dart';
 import '../../modules/payslips/views/payslip_detail_view.dart';
 import '../../modules/payslips/views/payslips_view.dart';
 import '../../modules/performance/bindings/performance_binding.dart';
@@ -66,6 +67,7 @@ import '../../modules/training/bindings/training_binding.dart';
 import '../../modules/training/views/training_view.dart';
 import '../../modules/visits/bindings/visits_binding.dart';
 import '../../modules/visits/views/visits_view.dart';
+import '../widgets/nav_shell.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -89,152 +91,159 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.attendance,
-      page: () => const AttendanceView(),
+      page: () => const NavShell(child: AttendanceView()),
       binding: AttendanceBinding(),
     ),
     GetPage(
       name: AppRoutes.visits,
-      page: () => const VisitsView(),
+      page: () => const NavShell(child: VisitsView()),
       binding: VisitsBinding(),
     ),
     GetPage(
       name: AppRoutes.expenses,
-      page: () => const ExpensesView(),
+      page: () => const NavShell(child: ExpensesView()),
       binding: ExpensesBinding(),
     ),
     GetPage(
       name: AppRoutes.leave,
-      page: () => const LeaveView(),
+      page: () => const NavShell(child: LeaveView()),
       binding: LeaveBinding(),
     ),
     GetPage(
       name: AppRoutes.salary,
-      page: () => const SalaryView(),
+      page: () => const NavShell(child: SalaryView()),
       binding: SalaryBinding(),
     ),
     GetPage(
       name: AppRoutes.targets,
-      page: () => const TargetsView(),
+      page: () => const NavShell(child: TargetsView()),
       binding: TargetsBinding(),
     ),
     GetPage(
       name: AppRoutes.tourPlan,
-      page: () => const TourPlanView(),
+      page: () => const NavShell(child: TourPlanView()),
       binding: TourPlanBinding(),
     ),
     GetPage(
       name: AppRoutes.assets,
-      page: () => const AssetsView(),
+      page: () => const NavShell(child: AssetsView()),
       binding: AssetsBinding(),
     ),
     GetPage(
       name: AppRoutes.reports,
-      page: () => const ReportsView(),
+      page: () => const NavShell(child: ReportsView()),
       binding: ReportsBinding(),
     ),
     GetPage(
       name: AppRoutes.notifications,
-      page: () => const NotificationsView(),
+      page: () => const NavShell(child: NotificationsView()),
       binding: NotificationsBinding(),
     ),
     GetPage(
       name: AppRoutes.products,
-      page: () => const ProductsView(),
+      page: () => const NavShell(child: ProductsView()),
       binding: ProductsBinding(),
     ),
     GetPage(
       name: AppRoutes.delivery,
-      page: () => const DeliveryView(),
+      page: () => const NavShell(child: DeliveryView()),
       binding: DeliveryBinding(),
     ),
     GetPage(
       name: AppRoutes.payslips,
-      page: () => const PayslipsView(),
+      page: () => const NavShell(child: PayslipsView()),
       binding: PayslipsBinding(),
     ),
     GetPage(
       name: AppRoutes.advances,
-      page: () => const AdvancesView(),
+      page: () => const NavShell(child: AdvancesView()),
       binding: AdvancesBinding(),
     ),
     GetPage(
       name: AppRoutes.incentives,
-      page: () => const IncentivesView(),
+      page: () => const NavShell(child: IncentivesView()),
       binding: IncentivesBinding(),
     ),
     GetPage(
       name: AppRoutes.performance,
-      page: () => const PerformanceView(),
+      page: () => const NavShell(child: PerformanceView()),
       binding: PerformanceBinding(),
     ),
     GetPage(
       name: AppRoutes.announcements,
-      page: () => const AnnouncementsView(),
+      page: () => const NavShell(child: AnnouncementsView()),
       binding: AnnouncementsBinding(),
     ),
     GetPage(
       name: AppRoutes.documents,
-      page: () => const DocumentsView(),
+      page: () => const NavShell(child: DocumentsView()),
       binding: DocumentsBinding(),
     ),
     GetPage(
       name: AppRoutes.holidays,
-      page: () => const HolidaysView(),
+      page: () => const NavShell(child: HolidaysView()),
       binding: HolidaysBinding(),
     ),
     GetPage(
       name: AppRoutes.shifts,
-      page: () => const ShiftsView(),
+      page: () => const NavShell(child: ShiftsView()),
       binding: ShiftsBinding(),
     ),
     GetPage(
       name: AppRoutes.profile,
-      page: () => const ProfileView(),
+      page: () => const NavShell(child: ProfileView()),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: AppRoutes.support,
-      page: () => const SupportView(),
+      page: () => const NavShell(child: SupportView()),
       binding: SupportBinding(),
     ),
     GetPage(
       name: AppRoutes.language,
-      page: () => const LanguageView(),
+      page: () => const NavShell(child: LanguageView()),
       binding: LanguageBinding(),
     ),
     GetPage(
       name: AppRoutes.payslipDetail,
-      page: () => const PayslipDetailView(),
+      page: () => const NavShell(child: PayslipDetailView()),
       binding: PayslipDetailBinding(),
+    ),
+    // No binding: the screen reads the order from its route argument and
+    // reuses the shell's OrdersController (registered with fenix) for
+    // Forward and Reject.
+    GetPage(
+      name: AppRoutes.orderDetail,
+      page: () => const NavShell(child: OrderDetailView()),
     ),
     GetPage(
       name: AppRoutes.invoices,
-      page: () => const InvoicesView(),
+      page: () => const NavShell(child: InvoicesView()),
       binding: InvoicesBinding(),
     ),
     GetPage(
       name: AppRoutes.salaryRevisions,
-      page: () => const SalaryRevisionsView(),
+      page: () => const NavShell(child: SalaryRevisionsView()),
       binding: SalaryRevisionsBinding(),
     ),
     GetPage(
       name: AppRoutes.tasks,
-      page: () => const TasksView(),
+      page: () => const NavShell(child: TasksView()),
       binding: TasksBinding(),
     ),
     GetPage(
       name: AppRoutes.skills,
-      page: () => const SkillsView(),
+      page: () => const NavShell(child: SkillsView()),
       binding: SkillsBinding(),
     ),
     GetPage(
       name: AppRoutes.training,
-      page: () => const TrainingView(),
+      page: () => const NavShell(child: TrainingView()),
       binding: TrainingBinding(),
     ),
     GetPage(
       name: AppRoutes.resignation,
-      page: () => const ResignationView(),
+      page: () => const NavShell(child: ResignationView()),
       binding: ResignationBinding(),
     ),
   ];

@@ -11,23 +11,20 @@ import '../../dealers/controllers/dealers_controller.dart';
 import '../../orders/controllers/orders_controller.dart';
 import 'main_shell_nav_config.dart';
 
-class MainShellController
-    extends GetxController {
+class MainShellController extends GetxController {
   final SalesmanAuthService _api = Get.find<SalesmanAuthService>();
 
   final AuthStorage _storage = Get.find<AuthStorage>();
 
   final selectedIndex = 0.obs;
 
-  final salesmanName =
-      'Salesman'.obs;
+  final salesmanName = 'Salesman'.obs;
 
   final employeeCode = ''.obs;
 
   final territory = ''.obs;
 
-  List<String> get tabTitles =>
-      MainShellNavConfig.tabTitles;
+  List<String> get tabTitles => MainShellNavConfig.tabTitles;
 
   /// The Home tab shows the salesman's name instead of a generic "Dashboard"
   /// title; every other tab keeps its plain title.
@@ -37,8 +34,7 @@ class MainShellController
     }
 
     if (Get.isRegistered<DashboardController>()) {
-      final dashboardName =
-          Get.find<DashboardController>().salesmanName.value;
+      final dashboardName = Get.find<DashboardController>().salesmanName.value;
 
       if (dashboardName.isNotEmpty) return dashboardName;
     }
@@ -46,124 +42,84 @@ class MainShellController
     return salesmanName.value;
   }
 
-  List<BottomNavigationBarItem> get navItems =>
-      MainShellNavConfig.navItems;
+  List<BottomNavigationBarItem> get navItems => MainShellNavConfig.navItems;
 
-  List<ActionItemModel> get drawerItems =>
-      MainShellNavConfig.drawerItems;
+  List<ActionItemModel> get drawerItems => MainShellNavConfig.drawerItems;
 
   @override
   void onInit() {
     super.onInit();
 
-    final arguments =
-        Get.arguments;
+    final arguments = Get.arguments;
 
-    final tabIndex =
-        arguments is Map
-            ? arguments[
-                'tabIndex']
-            : null;
+    final tabIndex = arguments is Map ? arguments['tabIndex'] : null;
 
-    if (tabIndex is int &&
-        tabIndex >= 0 &&
-        tabIndex <
-            tabTitles.length) {
-      selectedIndex.value =
-          tabIndex;
+    if (tabIndex is int && tabIndex >= 0 && tabIndex < tabTitles.length) {
+      selectedIndex.value = tabIndex;
     }
 
     _loadProfile();
   }
 
   Future<void> _loadProfile() async {
-    final name =
-        _storage.name;
+    final name = _storage.name;
 
-    final code =
-        _storage.employeeCode;
+    final code = _storage.employeeCode;
 
-    final savedTerritory =
-        _storage.territory;
+    final savedTerritory = _storage.territory;
 
     if (name.trim().isNotEmpty) {
-      salesmanName.value =
-          name;
+      salesmanName.value = name;
     }
 
-    employeeCode.value =
-        code;
+    employeeCode.value = code;
 
-    territory.value =
-        savedTerritory;
+    territory.value = savedTerritory;
   }
 
-  void changeTab(
-    int index,
-  ) {
-    selectedIndex.value =
-        index;
+  void changeTab(int index) {
+    selectedIndex.value = index;
 
     switch (index) {
       case 0:
-        if (Get.isRegistered<
-            DashboardController>()) {
-          Get.find<
-                  DashboardController>()
-              .loadDashboard();
+        if (Get.isRegistered<DashboardController>()) {
+          Get.find<DashboardController>().loadDashboard();
         }
         break;
 
       case 1:
-        if (Get.isRegistered<
-            DealersController>()) {
-          Get.find<
-                  DealersController>()
-              .loadDealers();
+        if (Get.isRegistered<DealersController>()) {
+          Get.find<DealersController>().loadDealers();
         }
         break;
 
       case 2:
-        if (Get.isRegistered<
-            OrdersController>()) {
-          Get.find<
-                  OrdersController>()
-              .loadOrders();
+        if (Get.isRegistered<OrdersController>()) {
+          Get.find<OrdersController>().loadOrders();
         }
         break;
 
       case 3:
-        if (Get.isRegistered<
-            CollectionsController>()) {
-          Get.find<
-                  CollectionsController>()
-              .loadDealers();
+        if (Get.isRegistered<CollectionsController>()) {
+          Get.find<CollectionsController>().loadDealers();
         }
         break;
     }
   }
 
-  void openRoute(
-    String route,
-  ) {
+  void openRoute(String route) {
     Get.back<void>();
 
-    Get.toNamed(
-      route,
-    );
+    Get.toNamed(route);
   }
 
   void openQuickAction() {
-    Get.toNamed(
-      AppRoutes.products,
-    );
+    Get.toNamed(AppRoutes.products);
   }
 
   Future<void> logout() async {
     await _api.logout();
 
-    Get.offAllNamed(
-      AppRoutes.login,
-    );
+    Get.offAllNamed(AppRoutes.login);
   }
 }

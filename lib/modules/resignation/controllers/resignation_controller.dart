@@ -21,7 +21,8 @@ class ResignationController extends GetxController {
   final resignationDate = Rxn<DateTime>();
   final reason = TextEditingController();
 
-  Map<String, dynamic>? get current => resignations.isEmpty ? null : resignations.first;
+  Map<String, dynamic>? get current =>
+      resignations.isEmpty ? null : resignations.first;
 
   bool get hasOpenRequest =>
       current != null && ['pending', 'approved'].contains(current!['status']);
@@ -43,7 +44,9 @@ class ResignationController extends GetxController {
     error.value = '';
     try {
       final response = await _api.resignation();
-      resignations.assignAll(ModuleRowMapper.listFrom(response, 'resignations'));
+      resignations.assignAll(
+        ModuleRowMapper.listFrom(response, 'resignations'),
+      );
     } catch (failure) {
       error.value = failure.toString();
       resignations.clear();
@@ -54,20 +57,29 @@ class ResignationController extends GetxController {
 
   Future<void> submit() async {
     if (resignationDate.value == null) {
-      Get.snackbar(t('resignation.resignation_and_exit'), t('resignation.select_resignation_date'));
+      Get.snackbar(
+        t('resignation.resignation_and_exit'),
+        t('resignation.select_resignation_date'),
+      );
       return;
     }
 
     isSubmitting.value = true;
     try {
       await _api.submitResignation({
-        'resignation_date': resignationDate.value!.toIso8601String().substring(0, 10),
+        'resignation_date': resignationDate.value!.toIso8601String().substring(
+          0,
+          10,
+        ),
         if (reason.text.trim().isNotEmpty) 'reason': reason.text.trim(),
       });
       reason.clear();
       resignationDate.value = null;
       await load();
-      Get.snackbar(t('resignation.resignation_and_exit'), t('resignation.submitted_for_approval'));
+      Get.snackbar(
+        t('resignation.resignation_and_exit'),
+        t('resignation.submitted_for_approval'),
+      );
     } catch (failure) {
       Get.snackbar(t('resignation.resignation_and_exit'), failure.toString());
     } finally {

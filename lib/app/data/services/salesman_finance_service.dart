@@ -25,20 +25,21 @@ class SalesmanFinanceService {
     });
   }
 
-  Future<Map<String, dynamic>> expenses() =>
-      _client.getJson(ApiConfig.expenses);
+  Future<Map<String, dynamic>> expenses({int page = 1}) =>
+      _client.getJson(ApiConfig.expenses, query: {'page': page});
 
   Future<Map<String, dynamic>> submitExpense(Map<String, dynamic> payload) =>
       _client.postJson(ApiConfig.expenses, payload);
 
   Future<Map<String, dynamic>> salary() => _client.getJson(ApiConfig.salary);
 
-  Future<Map<String, dynamic>> targets() => _client.getJson(ApiConfig.targets);
+  Future<Map<String, dynamic>> targets({int page = 1}) =>
+      _client.getJson(ApiConfig.targets, query: {'page': page});
 
   Future<Map<String, dynamic>> payslips({String? year}) => _client.getJson(
-        ApiConfig.payslips,
-        query: {if (year != null && year.isNotEmpty) 'year': year},
-      );
+    ApiConfig.payslips,
+    query: {if (year != null && year.isNotEmpty) 'year': year},
+  );
 
   Future<Map<String, dynamic>> payslip(int id) =>
       _client.getJson(ApiConfig.payslip(id));

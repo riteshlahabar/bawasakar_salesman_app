@@ -13,8 +13,7 @@ class ShiftsController extends RemoteModuleController {
   ShiftsController(this._api)
     : super(
         title: t('common.my_shift'),
-        subtitle:
-            t('shifts.your_working_hours_grace_period_and'),
+        subtitle: t('shifts.your_working_hours_grace_period_and'),
       );
 
   final SalesmanHrService _api;
@@ -54,8 +53,13 @@ class ShiftsController extends RemoteModuleController {
         ModuleRowMapper.row(
           title: shift['name']?.toString() ?? t('common.shift'),
           subtitle:
-              t('common.date_range', {'from': _time(shift['starts_at']), 'to': _time(shift['ends_at'])}) +
-              (offDays.isEmpty ? '' : ' • ${t('shifts.weekly_off', {'days': offDays})}'),
+              t('common.date_range', {
+                'from': _time(shift['starts_at']),
+                'to': _time(shift['ends_at']),
+              }) +
+              (offDays.isEmpty
+                  ? ''
+                  : ' • ${t('shifts.weekly_off', {'days': offDays})}'),
           trailing: '',
           icon: Icons.schedule,
           status: 'active',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/localization/app_locales.dart';
 import '../../../app/localization/t.dart';
 import '../../../app/theme/app_colors.dart';
@@ -13,7 +14,10 @@ class LanguageView extends GetView<LanguageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t('menu.language'))),
+      appBar: AppBar(
+        title: Text(t('menu.language')),
+        leading: const DrawerMenuButton(),
+      ),
       body: Obx(
         () => ListView(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
@@ -29,7 +33,10 @@ class LanguageView extends GetView<LanguageController> {
             const SizedBox(height: 4),
             Text(
               t('language.subtitle'),
-              style: const TextStyle(color: AppColors.textSecondary, fontSize: 12.5),
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 12.5,
+              ),
             ),
             const SizedBox(height: 14),
             for (final code in controller.locales)
@@ -42,12 +49,18 @@ class LanguageView extends GetView<LanguageController> {
                   const SizedBox(
                     height: 16,
                     width: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     t('language.updating'),
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 12.5),
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12.5,
+                    ),
                   ),
                 ],
               ),
@@ -76,7 +89,9 @@ class LanguageView extends GetView<LanguageController> {
                   width: 38,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.primary : AppColors.primarySoft,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.primarySoft,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -103,12 +118,20 @@ class LanguageView extends GetView<LanguageController> {
                       ),
                       Text(
                         AppLocales.englishNameOf(code),
-                        style: const TextStyle(color: AppColors.textSecondary, fontSize: 11.5),
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 11.5,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                if (isSelected) const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 22),
+                if (isSelected)
+                  const Icon(
+                    Icons.check_circle_rounded,
+                    color: AppColors.primary,
+                    size: 22,
+                  ),
               ],
             ),
           ),

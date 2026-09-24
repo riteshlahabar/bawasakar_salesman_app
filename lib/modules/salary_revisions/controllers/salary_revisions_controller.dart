@@ -27,15 +27,23 @@ class SalaryRevisionsController extends RemoteModuleController {
 
     return (
       rows: revisions.map((revision) {
-        final changeAmount = ModuleRowMapper.toDouble(revision['change_amount']);
-        final changePercent = ModuleRowMapper.toDouble(revision['change_percent']);
+        final changeAmount = ModuleRowMapper.toDouble(
+          revision['change_amount'],
+        );
+        final changePercent = ModuleRowMapper.toDouble(
+          revision['change_percent'],
+        );
 
         return ModuleRowMapper.row(
           title: revision['reason_label']?.toString() ?? '',
           subtitle: [
-            t('salary_revisions.new_basic', {'amount': ModuleRowMapper.money(revision['new_basic'])}),
+            t('salary_revisions.new_basic', {
+              'amount': ModuleRowMapper.money(revision['new_basic']),
+            }),
             if (revision['effective_from'] != null)
-              t('salary_revisions.effective_from', {'date': ModuleRowMapper.date(revision['effective_from'])}),
+              t('salary_revisions.effective_from', {
+                'date': ModuleRowMapper.date(revision['effective_from']),
+              }),
           ].join(' • '),
           trailing: t('salary_revisions.change', {
             'amount': ModuleRowMapper.money(changeAmount),

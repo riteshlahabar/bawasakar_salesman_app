@@ -23,7 +23,10 @@ class FileOpener {
       final result = await OpenFilex.open(file.path, type: mimeType);
 
       if (result.type == ResultType.done) {
-        _notify(t('common.saved'), '${t('common.saved_as')}: ${file.uri.pathSegments.last}');
+        _notify(
+          t('common.saved'),
+          '${t('common.saved_as')}: ${file.uri.pathSegments.last}',
+        );
         return;
       }
 

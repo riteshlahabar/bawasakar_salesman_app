@@ -16,6 +16,25 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Centred when there is room, scrollable when there is not: the empty
+    // state is sometimes handed very little height — a keyboard opening
+    // behind a bottom sheet leaves it under 90px — and a plain Column
+    // overflows there instead of shrinking.
+    return LayoutBuilder(
+      builder: (context, constraints) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: constraints.maxHeight.isFinite
+                ? constraints.maxHeight
+                : 0,
+          ),
+          child: _content(),
+        ),
+      ),
+    );
+  }
+
+  Widget _content() {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),

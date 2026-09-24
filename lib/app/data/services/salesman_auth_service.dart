@@ -30,8 +30,7 @@ class SalesmanAuthService {
     await _storage.clear();
   }
 
-  Future<Map<String, dynamic>> profile() =>
-      _client.getJson(ApiConfig.profile);
+  Future<Map<String, dynamic>> profile() => _client.getJson(ApiConfig.profile);
 
   Future<Map<String, dynamic>> support({
     required String subject,

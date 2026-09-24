@@ -11,16 +11,25 @@ class IncentivesController extends RemoteModuleController {
   IncentivesController(this._api)
     : super(
         title: t('incentives.incentive_and_commission'),
-        subtitle:
-            t('incentives.what_you_earned_beyond_basic_salary'),
+        subtitle: t('incentives.what_you_earned_beyond_basic_salary'),
       );
 
   final SalesmanFinanceService _api;
 
   static List<String> get _months => <String>[
     '',
-    t('common.jan'), t('common.feb'), t('common.mar'), t('common.apr'), t('common.may'), t('common.jun'),
-    t('common.jul'), t('common.aug'), t('common.sep'), t('common.oct'), t('common.nov'), t('common.dec'),
+    t('common.jan'),
+    t('common.feb'),
+    t('common.mar'),
+    t('common.apr'),
+    t('common.may'),
+    t('common.jun'),
+    t('common.jul'),
+    t('common.aug'),
+    t('common.sep'),
+    t('common.oct'),
+    t('common.nov'),
+    t('common.dec'),
   ];
 
   @override
@@ -37,12 +46,11 @@ class IncentivesController extends RemoteModuleController {
 
         return ModuleRowMapper.row(
           title: '${_monthName(month['salary_month'])} ${month['salary_year']}',
-          subtitle:
-              t('incentives.row', {
-                'incentive': ModuleRowMapper.money(incentive),
-                'commission': ModuleRowMapper.money(commission),
-                'bonus': ModuleRowMapper.money(bonus),
-              }),
+          subtitle: t('incentives.row', {
+            'incentive': ModuleRowMapper.money(incentive),
+            'commission': ModuleRowMapper.money(commission),
+            'bonus': ModuleRowMapper.money(bonus),
+          }),
           trailing: ModuleRowMapper.money(incentive + commission + bonus),
           icon: Icons.emoji_events_outlined,
           // Nothing earned in a month is not a failure, but it should read

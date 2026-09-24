@@ -6,25 +6,21 @@ import '../../../app/data/services/auth_storage.dart';
 import '../../../app/routes/app_routes.dart';
 import '../../../app/localization/t.dart';
 
-class LoginController
-    extends GetxController {
+class LoginController extends GetxController {
   final SalesmanAuthService _api = Get.find<SalesmanAuthService>();
 
   final AuthStorage _storage = Get.find<AuthStorage>();
 
-  final emailController =
-      TextEditingController();
+  final emailController = TextEditingController();
 
-  final passwordController =
-      TextEditingController();
+  final passwordController = TextEditingController();
 
   final isLoading = false.obs;
 
   final obscurePassword = true.obs;
 
   void togglePassword() {
-    obscurePassword.value =
-        !obscurePassword.value;
+    obscurePassword.value = !obscurePassword.value;
   }
 
   Future<void> login() async {
@@ -32,15 +28,11 @@ class LoginController
       return;
     }
 
-    final email =
-        emailController.text.trim();
+    final email = emailController.text.trim();
 
-    final password =
-        passwordController.text;
+    final password = passwordController.text;
 
-    if (!GetUtils.isEmail(
-      email,
-    )) {
+    if (!GetUtils.isEmail(email)) {
       Get.snackbar(
         t('auth.invalid_email'),
         t('auth.enter_a_valid_salesman_email_address'),
@@ -49,91 +41,52 @@ class LoginController
     }
 
     if (password.trim().isEmpty) {
-      Get.snackbar(
-        t('auth.password_required'),
-        t('auth.enter_your_password'),
-      );
+      Get.snackbar(t('auth.password_required'), t('auth.enter_your_password'));
       return;
     }
 
     isLoading.value = true;
 
     try {
-      final response =
-          await _api.login(
-        email: email,
-        password: password,
-      );
+      final response = await _api.login(email: email, password: password);
 
-      final rawData =
-          response['data'];
+      final rawData = response['data'];
 
       if (rawData is! Map) {
-        throw FormatException(
-          t('auth.invalid_login_response'),
-        );
+        throw FormatException(t('auth.invalid_login_response'));
       }
 
-      final data =
-          Map<String, dynamic>.from(
-        rawData,
-      );
+      final data = Map<String, dynamic>.from(rawData);
 
-      final token =
-          data['token']
-                  ?.toString()
-                  .trim() ??
-              '';
+      final token = data['token']?.toString().trim() ?? '';
 
-      final rawUser =
-          data['user'];
+      final rawUser = data['user'];
 
-      if (token.isEmpty ||
-          rawUser is! Map) {
+      if (token.isEmpty || rawUser is! Map) {
         throw FormatException(
           t('auth.login_token_or_salesman_information_missing'),
         );
       }
 
-      final user =
-          Map<String, dynamic>.from(
-        rawUser,
-      );
+      final user = Map<String, dynamic>.from(rawUser);
 
-      await _storage.saveSession(
-        token: token,
-        user: user,
-      );
+      await _storage.saveSession(token: token, user: user);
 
       passwordController.clear();
 
-      Get.offAllNamed(
-        AppRoutes.main,
-      );
+      Get.offAllNamed(AppRoutes.main);
     } catch (error) {
-      Get.snackbar(
-        t('auth.login_failed'),
-        _message(
-          error,
-        ),
-      );
+      Get.snackbar(t('auth.login_failed'), _message(error));
     } finally {
       isLoading.value = false;
     }
   }
 
-  String _message(
-    Object error,
-  ) {
-    var message =
-        error.toString();
+  String _message(Object error) {
+    var message = error.toString();
 
-    if (message.startsWith(
-      'Exception: ',
-    )) {
-      message = message.substring(
-        'Exception: '.length,
-      );
+    if (message.startsWith('Exception: ')) {
+      message = message.substring('Exception: '.length);
     }
 
     return message;

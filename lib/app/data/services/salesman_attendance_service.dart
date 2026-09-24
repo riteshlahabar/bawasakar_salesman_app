@@ -27,12 +27,43 @@ class SalesmanAttendanceService {
     });
   }
 
-  Future<Map<String, dynamic>> attendance({String? month}) => _client.getJson(
-        ApiConfig.attendance,
-        query: <String, dynamic>{
-          if (month != null && month.isNotEmpty) 'month': month,
-        },
-      );
+  /// Starts a break on today's attendance log. GPS is optional here — unlike
+  /// check-in/out, the server does not require it.
+  Future<Map<String, dynamic>> startBreak({
+    double? latitude,
+    double? longitude,
+  }) {
+    return _client.postJson(ApiConfig.startBreak, {
+      'latitude': ?latitude,
+      'longitude': ?longitude,
+    });
+  }
+
+  Future<Map<String, dynamic>> resumeBreak({
+    double? latitude,
+    double? longitude,
+  }) {
+    return _client.postJson(ApiConfig.resumeBreak, {
+      'latitude': ?latitude,
+      'longitude': ?longitude,
+    });
+  }
+
+  /// The attendance sheet. `from`+`to` (`YYYY-MM-DD`) ask for an explicit
+  /// range and win over `month` (`YYYY-MM`) server-side; sending neither gives
+  /// the current month.
+  Future<Map<String, dynamic>> attendance({
+    String? month,
+    String? from,
+    String? to,
+  }) => _client.getJson(
+    ApiConfig.attendance,
+    query: <String, dynamic>{
+      if (month != null && month.isNotEmpty) 'month': month,
+      if (from != null && from.isNotEmpty) 'from': from,
+      if (to != null && to.isNotEmpty) 'to': to,
+    },
+  );
 
   Future<Map<String, dynamic>> visits({int page = 1}) =>
       _client.getJson(ApiConfig.visits, query: {'page': page});

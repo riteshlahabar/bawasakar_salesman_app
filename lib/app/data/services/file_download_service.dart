@@ -47,7 +47,9 @@ class FileDownloadService {
 
       final bytes = await consolidateHttpClientResponseBytes(response);
       final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/${_safeName(_resolveName(fileName, response))}');
+      final file = File(
+        '${directory.path}/${_safeName(_resolveName(fileName, response))}',
+      );
 
       return file.writeAsBytes(bytes, flush: true);
     } on SocketException {
@@ -57,7 +59,8 @@ class FileDownloadService {
     }
   }
 
-  String _safeName(String raw) => raw.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '-');
+  String _safeName(String raw) =>
+      raw.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '-');
 
   /// Swaps in the extension the server actually sent (via
   /// `Content-Disposition: ...filename="x.ext"`) when it differs from the
@@ -69,7 +72,9 @@ class FileDownloadService {
     final match = disposition == null
         ? null
         : RegExp(r'filename="?([^";]+)"?').firstMatch(disposition);
-    final serverExtension = match == null ? null : _extensionOf(match.group(1)!);
+    final serverExtension = match == null
+        ? null
+        : _extensionOf(match.group(1)!);
 
     if (serverExtension == null) return fileName;
 
@@ -85,6 +90,8 @@ class FileDownloadService {
 
   String? _extensionOf(String name) {
     final dot = name.lastIndexOf('.');
-    return dot == -1 || dot == name.length - 1 ? null : name.substring(dot + 1).toLowerCase();
+    return dot == -1 || dot == name.length - 1
+        ? null
+        : name.substring(dot + 1).toLowerCase();
   }
 }

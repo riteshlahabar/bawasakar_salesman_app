@@ -52,19 +52,44 @@ class ModuleRowMapper {
       '₹${toDouble(value).toStringAsFixed(0)}';
 
   /// Trims an ISO timestamp down to the date the UI shows.
+  /// Every date the salesman app shows is written `dd-mm-yyyy`, the way it is
+  /// read here. The API sends ISO `yyyy-mm-dd(THH:...)`, so the parts are
+  /// simply reordered; anything that isn't an ISO date is returned untouched.
+  /// Request payloads keep the ISO form — they never pass through here.
   static String date(Object? value) {
     final text = value?.toString() ?? '';
     if (text.length < 10) return text;
-    return text.substring(0, 10);
+
+    final iso = text.substring(0, 10);
+    if (iso[4] != '-' || iso[7] != '-') return iso;
+
+    return '${iso.substring(8)}-${iso.substring(5, 7)}-${iso.substring(0, 4)}';
+  }
+
+  /// A status as it should be read: `half_day` becomes "Half Day".
+  ///
+  /// The API sends these snake_cased and lowercase; every badge in the app
+  /// goes through here, so no screen has to remember to tidy them itself. An
+  /// already-capitalised or translated value survives unchanged.
+  static String statusLabel(String status) {
+    return status
+        .split(RegExp(r'[_\s]+'))
+        .where((word) => word.isNotEmpty)
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
   }
 
   /// Maps a workflow status onto the palette, so "approved" is green and
   /// "rejected" is red on every screen without each one deciding for itself.
   static Color statusColor(String? status) {
     return switch (status?.toLowerCase()) {
-      'approved' || 'paid' || 'completed' || 'present' || 'active' ||
-      'delivered' || 'published' =>
-        AppColors.success,
+      'approved' ||
+      'paid' ||
+      'completed' ||
+      'present' ||
+      'active' ||
+      'delivered' ||
+      'published' => AppColors.success,
       'rejected' || 'cancelled' || 'absent' || 'overdue' => AppColors.danger,
       'pending' || 'requested' || 'draft' || 'half_day' => AppColors.orange,
       _ => AppColors.info,
@@ -77,6 +102,8 @@ class ModuleRowMapper {
     required String trailing,
     required IconData icon,
     String? status,
+    List<InlineSpan>? subtitleSpans,
+    String? titleTrailing,
   }) {
     return ListRowModel(
       title: title,
@@ -85,6 +112,8 @@ class ModuleRowMapper {
       icon: icon,
       status: status,
       color: statusColor(status),
+      subtitleSpans: subtitleSpans,
+      titleTrailing: titleTrailing,
     );
   }
 

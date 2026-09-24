@@ -11,25 +11,35 @@ class HolidaysController extends RemoteModuleController {
   HolidaysController(this._api)
     : super(
         title: t('holidays.holiday_calendar'),
-        subtitle:
-            t('holidays.national_company_and_festival_holidays_declared'),
+        subtitle: t('holidays.national_company_and_festival_holidays_declared'),
       );
 
   final SalesmanHrService _api;
 
   @override
   Future<ModuleData> fetch() async {
-    final holidays = ModuleRowMapper.listFrom(await _api.holidays(), 'holidays');
+    final holidays = ModuleRowMapper.listFrom(
+      await _api.holidays(),
+      'holidays',
+    );
 
-    final today = DateTime.now().toIso8601String().substring(0, 10);
-    final upcoming = holidays
-        .where((h) => ModuleRowMapper.date(h['holiday_date']).compareTo(today) >= 0)
-        .length;
+    // Compared as dates, not as text: `ModuleRowMapper.date` is for display
+    // and returns `dd-mm-yyyy`, which does not sort lexicographically.
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final upcoming = holidays.where((h) {
+      final date = DateTime.tryParse(h['holiday_date']?.toString() ?? '');
+
+      return date != null && !date.isBefore(today);
+    }).length;
 
     return (
       rows: holidays.map((holiday) {
         final date = ModuleRowMapper.date(holiday['holiday_date']);
-        final isPast = date.compareTo(today) < 0;
+        final parsed = DateTime.tryParse(
+          holiday['holiday_date']?.toString() ?? '',
+        );
+        final isPast = parsed != null && parsed.isBefore(today);
 
         return ModuleRowMapper.row(
           title: holiday['title']?.toString() ?? '',

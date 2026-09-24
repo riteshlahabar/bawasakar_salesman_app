@@ -15,7 +15,10 @@ class PayslipDetailController extends GetxController {
   final error = ''.obs;
 
   List<Map<String, dynamic>> get lines =>
-      (slip.value?['lines'] as List?)?.whereType<Map<String, dynamic>>().toList() ?? const [];
+      (slip.value?['lines'] as List?)
+          ?.whereType<Map<String, dynamic>>()
+          .toList() ??
+      const [];
 
   List<Map<String, dynamic>> get allowances =>
       lines.where((line) => line['kind'] == 'allowance').toList();

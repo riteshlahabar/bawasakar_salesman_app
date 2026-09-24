@@ -11,8 +11,7 @@ class AssetsController extends RemoteModuleController {
   AssetsController(this._api)
     : super(
         title: t('assets.salesman_assets'),
-        subtitle:
-            t('assets.company_assets_issued_to_you_laptop'),
+        subtitle: t('assets.company_assets_issued_to_you_laptop'),
       );
 
   final SalesmanHrService _api;

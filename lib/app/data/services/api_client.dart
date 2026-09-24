@@ -18,8 +18,8 @@ export '../../core/error/api_exception.dart' show ApiException;
 /// [ApiException]. Business rules live in the services above it.
 class ApiClient extends GetConnect {
   ApiClient(this._storage, {SessionExpiryHandler? onExpired})
-      // ignore: prefer_initializing_formals
-      : _onExpired = onExpired;
+    // ignore: prefer_initializing_formals
+    : _onExpired = onExpired;
 
   final AuthStorage _storage;
   final SessionExpiryHandler? _onExpired;
@@ -101,7 +101,8 @@ class ApiClient extends GetConnect {
     }
 
     if (body is Map<String, dynamic>) {
-      final message = body['message']?.toString() ??
+      final message =
+          body['message']?.toString() ??
           body['error']?.toString() ??
           t('common.request_failed');
       throw ApiException(message, status, body);

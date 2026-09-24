@@ -17,6 +17,10 @@ class AppRoutes {
   static const products = '/products';
   static const delivery = '/delivery';
 
+  /// Pushed with the tapped [SalesmanOrderModel] as its route argument —
+  /// the orders list already holds every detail this screen shows.
+  static const orderDetail = '/orders/detail';
+
   // Phase 5 HRMS modules from the Phase 1 specification.
   static const payslips = '/payslips';
   static const payslipDetail = '/payslips/detail';

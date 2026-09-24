@@ -11,8 +11,7 @@ class DeliveryController extends RemoteModuleController {
   DeliveryController(this._api)
     : super(
         title: t('delivery.delivery'),
-        subtitle:
-            t('delivery.dispatches_for_your_dealers_with_courier'),
+        subtitle: t('delivery.dispatches_for_your_dealers_with_courier'),
       );
 
   final SalesmanOrderService _api;
@@ -33,7 +32,8 @@ class DeliveryController extends RemoteModuleController {
       rows: deliveries
           .map(
             (delivery) => ModuleRowMapper.row(
-              title: delivery['dispatch_no']?.toString() ?? t('common.dispatch'),
+              title:
+                  delivery['dispatch_no']?.toString() ?? t('common.dispatch'),
               subtitle: [
                 if ((delivery['courier_name']?.toString() ?? '').isNotEmpty)
                   delivery['courier_name'].toString(),

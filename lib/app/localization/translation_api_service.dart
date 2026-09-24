@@ -33,10 +33,10 @@ class TranslationApiService {
 
   /// Stores the app's English labels on the server so the admin can translate them.
   Future<void> register(Map<String, String> items) async {
-    await _client.postJson(
-      ApiConfig.appTranslationsRegister,
-      {'app': appKey, 'items': items},
-    );
+    await _client.postJson(ApiConfig.appTranslationsRegister, {
+      'app': appKey,
+      'items': items,
+    });
   }
 
   Map<String, String> _stringMap(Object? raw) {

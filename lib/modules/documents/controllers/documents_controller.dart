@@ -16,8 +16,7 @@ class DocumentsController extends RemoteModuleController {
   DocumentsController(this._api)
     : super(
         title: t('common.my_documents'),
-        subtitle:
-            t('documents.identity_bank_and_employment_documents_held'),
+        subtitle: t('documents.identity_bank_and_employment_documents_held'),
       );
 
   final SalesmanHrService _api;
@@ -56,7 +55,9 @@ class DocumentsController extends RemoteModuleController {
             if ((document['remarks']?.toString() ?? '').isNotEmpty)
               document['remarks'].toString(),
           ].join(' • '),
-          trailing: document['has_file'] == true ? t('documents.on_file') : t('documents.missing'),
+          trailing: document['has_file'] == true
+              ? t('documents.on_file')
+              : t('documents.missing'),
           icon: _iconFor(type),
           status: document['status']?.toString(),
         );

@@ -17,8 +17,7 @@ class ReportsController extends RemoteModuleController {
   ReportsController(this._dashboard, this._finance)
     : super(
         title: t('reports.reports'),
-        subtitle:
-            t('reports.your_field_performance_at_a_glance'),
+        subtitle: t('reports.your_field_performance_at_a_glance'),
       );
 
   final SalesmanDashboardService _dashboard;
@@ -59,8 +58,10 @@ class ReportsController extends RemoteModuleController {
       rows: [
         ModuleRowMapper.row(
           title: t('reports.target_achievement'),
-          subtitle:
-              t('reports.achieved_against', {'achieved': ModuleRowMapper.money(achievedTotal), 'target': ModuleRowMapper.money(targetTotal)}),
+          subtitle: t('reports.achieved_against', {
+            'achieved': ModuleRowMapper.money(achievedTotal),
+            'target': ModuleRowMapper.money(targetTotal),
+          }),
           trailing: targetTotal <= 0
               ? '-'
               : '${(achievedTotal / targetTotal * 100).toStringAsFixed(0)}%',
@@ -81,7 +82,9 @@ class ReportsController extends RemoteModuleController {
         ModuleRowMapper.row(
           title: t('reports.assigned_dealers'),
           subtitle: t('reports.dealers_currently_mapped_to_your_territory'),
-          trailing: ModuleRowMapper.toInt(summaryMap['assigned_dealers']).toString(),
+          trailing: ModuleRowMapper.toInt(
+            summaryMap['assigned_dealers'],
+          ).toString(),
           icon: Icons.storefront,
           status: 'active',
         ),
@@ -96,7 +99,9 @@ class ReportsController extends RemoteModuleController {
         ),
         ModuleRowMapper.stat(
           title: t('common.dealers'),
-          value: ModuleRowMapper.toInt(summaryMap['assigned_dealers']).toString(),
+          value: ModuleRowMapper.toInt(
+            summaryMap['assigned_dealers'],
+          ).toString(),
           icon: Icons.groups,
           color: AppColors.info,
           subtitle: t('reports.assigned'),

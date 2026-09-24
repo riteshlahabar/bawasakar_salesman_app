@@ -72,9 +72,7 @@ class CollectionFormCard extends StatelessWidget {
           const SizedBox(height: 7),
           TextField(
             controller: amountController,
-            keyboardType: const TextInputType.numberWithOptions(
-              decimal: true,
-            ),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: InputDecoration(
               hintText: t('collections.enter_amount'),
               prefixText: '₹ ',
@@ -89,13 +87,19 @@ class CollectionFormCard extends StatelessWidget {
           DropdownButtonFormField<String>(
             value: paymentMode,
             items: [
-              DropdownMenuItem(value: 'cash', child: Text(t('collections.cash'))),
+              DropdownMenuItem(
+                value: 'cash',
+                child: Text(t('collections.cash')),
+              ),
               DropdownMenuItem(value: 'upi', child: Text(t('collections.upi'))),
               DropdownMenuItem(
                 value: 'bank_transfer',
                 child: Text(t('collections.bank_transfer')),
               ),
-              DropdownMenuItem(value: 'cheque', child: Text(t('collections.cheque'))),
+              DropdownMenuItem(
+                value: 'cheque',
+                child: Text(t('collections.cheque')),
+              ),
             ],
             onChanged: onPaymentModeChanged,
           ),
@@ -124,7 +128,11 @@ class CollectionFormCard extends StatelessWidget {
                     ),
                   )
                 : const Icon(Icons.payments_outlined),
-            label: Text(isLoading ? t('collections.saving') : t('collections.collect_payment')),
+            label: Text(
+              isLoading
+                  ? t('collections.saving')
+                  : t('collections.collect_payment'),
+            ),
           ),
         ],
       ),

@@ -7,8 +7,7 @@ import '../../../app/data/services/auth_storage.dart';
 import '../../../app/localization/translation_service.dart';
 import '../../../app/routes/app_routes.dart';
 
-class SplashController
-    extends GetxController {
+class SplashController extends GetxController {
   final AuthStorage _storage = Get.find<AuthStorage>();
 
   final SalesmanDashboardService _api = Get.find<SalesmanDashboardService>();
@@ -32,19 +31,12 @@ class SplashController
   }
 
   Future<void> _start() async {
-    await Future<void>.delayed(
-      const Duration(
-        seconds: 5,
-      ),
-    );
+    await Future<void>.delayed(const Duration(seconds: 5));
 
-    final hasToken =
-        _storage.hasToken;
+    final hasToken = _storage.hasToken;
 
     if (!hasToken) {
-      Get.offAllNamed(
-        AppRoutes.login,
-      );
+      Get.offAllNamed(AppRoutes.login);
       return;
     }
 
@@ -52,15 +44,11 @@ class SplashController
     try {
       await _api.dashboard();
 
-      Get.offAllNamed(
-        AppRoutes.main,
-      );
+      Get.offAllNamed(AppRoutes.main);
     } catch (_) {
       await _storage.clear();
 
-      Get.offAllNamed(
-        AppRoutes.login,
-      );
+      Get.offAllNamed(AppRoutes.login);
     }
   }
 }

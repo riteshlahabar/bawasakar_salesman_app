@@ -11,8 +11,9 @@ class AnnouncementsController extends RemoteModuleController {
   AnnouncementsController(this._api)
     : super(
         title: t('common.announcements'),
-        subtitle:
-            t('announcements.company_announcements_circulars_and_notices_published'),
+        subtitle: t(
+          'announcements.company_announcements_circulars_and_notices_published',
+        ),
       );
 
   final SalesmanHrService _api;

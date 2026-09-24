@@ -12,8 +12,7 @@ class AdvancesController extends RemoteModuleController {
   AdvancesController(this._api)
     : super(
         title: t('common.advance_and_loan'),
-        subtitle:
-            t('advances.request_a_salary_advance_or_a'),
+        subtitle: t('advances.request_a_salary_advance_or_a'),
         actionLabel: t('advances.request_advance'),
         actionIcon: Icons.request_quote_outlined,
       );

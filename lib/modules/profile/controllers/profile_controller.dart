@@ -14,7 +14,8 @@ class ProfileController extends GetxController {
   final isLoading = false.obs;
   final profile = <String, dynamic>{}.obs;
 
-  String get name => _storage.name.isNotEmpty ? _storage.name : t('common.salesman');
+  String get name =>
+      _storage.name.isNotEmpty ? _storage.name : t('common.salesman');
   String get mobile => _storage.mobile;
   String get email => _storage.email;
 

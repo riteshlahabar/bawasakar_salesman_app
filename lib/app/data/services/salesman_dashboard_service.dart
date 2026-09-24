@@ -10,10 +10,7 @@ class SalesmanDashboardService {
   Future<Map<String, dynamic>> dashboard() =>
       _client.getJson(ApiConfig.dashboard);
 
-  Future<Map<String, dynamic>> dealers({
-    int page = 1,
-    int perPage = 100,
-  }) {
+  Future<Map<String, dynamic>> dealers({int page = 1, int perPage = 100}) {
     return _client.getJson(
       ApiConfig.dealers,
       query: {'page': page, 'per_page': perPage},

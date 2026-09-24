@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../app/data/clock_time.dart';
 import '../../../../app/localization/t.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/widgets/app_decorations.dart';
 import '../../controllers/dashboard_controller.dart';
 
 /// Check In / Check Out / Break row plus today's check-in address & time,
-/// shown on [DashboardView]. Break/Resume is a local-only toggle — there is
-/// no backend concept of a break, it just flips the button label.
+/// shown on [DashboardView]. Break/Resume writes a real attendance_breaks
+/// row on the server, so admin sees the day's breaks and the time is
+/// deducted from working minutes at check-out.
 class AttendanceQuickActions extends GetView<DashboardController> {
   const AttendanceQuickActions({super.key});
 
@@ -28,9 +30,11 @@ class AttendanceQuickActions extends GetView<DashboardController> {
                   label: t('dashboard.check_in'),
                   icon: Icons.login,
                   color: AppColors.success,
-                  enabled: !controller.hasCheckedInToday &&
+                  enabled:
+                      !controller.hasCheckedInToday &&
                       !controller.isPunching.value,
-                  loading: controller.isPunching.value &&
+                  loading:
+                      controller.isPunching.value &&
                       !controller.hasCheckedInToday,
                   onTap: controller.checkIn,
                 ),
@@ -42,7 +46,8 @@ class AttendanceQuickActions extends GetView<DashboardController> {
                   icon: Icons.logout,
                   color: AppColors.danger,
                   enabled: canCheckOut && !controller.isPunching.value,
-                  loading: controller.isPunching.value &&
+                  loading:
+                      controller.isPunching.value &&
                       controller.hasCheckedInToday,
                   onTap: controller.checkOut,
                 ),
@@ -57,8 +62,8 @@ class AttendanceQuickActions extends GetView<DashboardController> {
                       ? Icons.play_arrow
                       : Icons.pause,
                   color: AppColors.orange,
-                  enabled: canCheckOut,
-                  loading: false,
+                  enabled: canCheckOut && !controller.isBreakBusy.value,
+                  loading: controller.isBreakBusy.value,
                   onTap: controller.toggleBreak,
                 ),
               ),
@@ -101,7 +106,7 @@ class AttendanceQuickActions extends GetView<DashboardController> {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          _time(controller.checkedInAt.value),
+                          clockTime(controller.checkedInAt.value),
                           style: const TextStyle(
                             fontSize: 11,
                             color: AppColors.textSecondary,
@@ -118,13 +123,6 @@ class AttendanceQuickActions extends GetView<DashboardController> {
         ],
       );
     });
-  }
-
-  /// Pulls `HH:mm` out of an ISO timestamp, matching the attendance sheet's
-  /// own formatting convention.
-  String _time(String iso) {
-    if (iso.length < 16) return '--:--';
-    return iso.substring(11, 16);
   }
 }
 

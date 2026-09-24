@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'drawer_menu_button.dart';
 import '../controllers/remote_module_controller.dart';
-import '../routes/app_routes.dart';
 import '../theme/app_colors.dart';
 import 'empty_state.dart';
 import 'field_module_view.dart';
-import 'salesman_bottom_navigation.dart';
 import '../localization/t.dart';
 
 /// Renders any [RemoteModuleController] as a standard module screen.
@@ -21,11 +20,21 @@ class RemoteModuleView extends StatelessWidget {
     this.featured,
     this.recordsTitle = 'common.records',
     this.onPrimaryAction,
+    this.showHeader = true,
+    this.topSlot,
   });
 
   final RemoteModuleController controller;
   final Widget? featured;
   final String recordsTitle;
+
+  /// Passed straight to [FieldModuleView]: `false` drops the in-body
+  /// title/subtitle block for screens whose app bar already carries it.
+  final bool showHeader;
+
+  /// A filter shown above the stats. It is kept in the loading, error and
+  /// empty states too, so changing it never makes the control vanish.
+  final Widget? topSlot;
 
   /// Overrides the controller's own primary action, for screens that open a
   /// form rather than firing a request directly.
@@ -53,11 +62,32 @@ class RemoteModuleView extends StatelessWidget {
       }
 
       if (controller.isEmpty) {
+        // The primary action has to be offered here too, not only once rows
+        // exist — otherwise a module whose list starts empty (Dealer Visits)
+        // shows no way to create the very first record.
         return _chrome(
-          EmptyState(
-            title: t('common.nothing_here_yet'),
-            message: controller.subtitle,
-            icon: Icons.inbox_outlined,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Expanded, not a bare child: EmptyState is a `Center` and
+              // would take the whole column, leaving no room for the button.
+              Expanded(
+                child: EmptyState(
+                  title: t('common.nothing_here_yet'),
+                  message: controller.subtitle,
+                  icon: Icons.inbox_outlined,
+                ),
+              ),
+              if (controller.actionLabel != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                  child: ElevatedButton.icon(
+                    onPressed: onPrimaryAction ?? controller.primaryAction,
+                    icon: Icon(controller.actionIcon ?? Icons.add),
+                    label: Text(controller.actionLabel!),
+                  ),
+                ),
+            ],
           ),
         );
       }
@@ -77,30 +107,33 @@ class RemoteModuleView extends StatelessWidget {
               : (onPrimaryAction ?? controller.primaryAction),
           featured: featured,
           recordsTitle: t(recordsTitle),
+          showHeader: showHeader,
+          topSlot: topSlot,
         ),
       );
     });
   }
 
-  /// Keeps the app bar and bottom navigation in place for the non-list states,
-  /// so a failed load still looks like the same screen.
+  /// Keeps the app bar in place for the non-list states, so a failed load
+  /// still looks like the same screen. The bottom bar and FAB belong to
+  /// NavShell, which wraps every route using this view.
   Widget _chrome(Widget body) {
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(title: Text(controller.title)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(6),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          elevation: 6,
-          onPressed: () => Get.toNamed<void>(AppRoutes.products),
-          child: const Icon(Icons.qr_code_scanner_sharp),
-        ),
+      appBar: AppBar(
+        title: Text(controller.title),
+        leading: const DrawerMenuButton(),
       ),
-      bottomNavigationBar: const SalesmanBottomNavigation(selectedIndex: -1),
-      body: body,
+      body: topSlot == null
+          ? body
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: topSlot!,
+                ),
+                Expanded(child: body),
+              ],
+            ),
     );
   }
 }

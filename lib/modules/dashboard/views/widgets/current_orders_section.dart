@@ -20,14 +20,22 @@ class CurrentOrdersSection extends GetView<OrdersController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final orders = controller.orders.take(_previewCount).toList();
+      // Only orders still waiting on this salesman. Once they approve one it
+      // becomes admin_review and leaves this list — it is still there in full
+      // on the Orders tab.
+      final orders = controller.orders
+          .where((order) => order.status == 'salesman_review')
+          .take(_previewCount)
+          .toList();
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Expanded(child: SectionHeader(title: t('dashboard.current_orders'))),
+              Expanded(
+                child: SectionHeader(title: t('dashboard.current_orders')),
+              ),
               GestureDetector(
                 onTap: () {
                   if (Get.isRegistered<MainShellController>()) {

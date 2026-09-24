@@ -11,15 +11,17 @@ class TourPlanController extends RemoteModuleController {
   TourPlanController(this._api)
     : super(
         title: t('common.tour_plan'),
-        subtitle:
-            t('tour_plan.your_planned_routes_the_dealers_on'),
+        subtitle: t('tour_plan.your_planned_routes_the_dealers_on'),
       );
 
   final SalesmanAttendanceService _api;
 
   @override
   Future<ModuleData> fetch() async {
-    final plans = ModuleRowMapper.listFrom(await _api.tourPlans(), 'tour_plans');
+    final plans = ModuleRowMapper.listFrom(
+      await _api.tourPlans(),
+      'tour_plans',
+    );
 
     final planned = plans.where((p) => p['status'] == 'planned').length;
     final completed = plans.where((p) => p['status'] == 'completed').length;

@@ -12,8 +12,9 @@ class NotificationsController extends RemoteModuleController {
   NotificationsController(this._api)
     : super(
         title: t('common.notifications'),
-        subtitle:
-            t('notifications.order_approvals_dispatch_updates_leave_decisions'),
+        subtitle: t(
+          'notifications.order_approvals_dispatch_updates_leave_decisions',
+        ),
         actionLabel: t('notifications.mark_all_read'),
         actionIcon: Icons.mark_email_read_outlined,
       );

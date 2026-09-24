@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/routes/app_routes.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/empty_state.dart';
 import '../../../app/widgets/module_list_view.dart';
-import '../../../app/widgets/salesman_bottom_navigation.dart';
 import '../../../app/widgets/section_header.dart';
 import '../../../app/widgets/summary_card.dart';
 import '../controllers/payslips_controller.dart';
@@ -21,23 +21,16 @@ class PayslipsView extends GetView<PayslipsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(title: Text(controller.title)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(6),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          elevation: 6,
-          onPressed: () => Get.toNamed<void>(AppRoutes.products),
-          child: const Icon(Icons.qr_code_scanner_sharp),
-        ),
+      // The bottom bar and FAB belong to NavShell, which wraps this route.
+      appBar: AppBar(
+        title: Text(controller.title),
+        leading: const DrawerMenuButton(),
       ),
-      bottomNavigationBar: const SalesmanBottomNavigation(selectedIndex: -1),
       body: Obx(() {
         if (controller.isLoading.value && controller.rows.isEmpty) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         if (controller.error.value.isNotEmpty && controller.rows.isEmpty) {
@@ -60,9 +53,12 @@ class PayslipsView extends GetView<PayslipsController> {
           color: AppColors.primary,
           onRefresh: controller.load,
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 104),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
-              SectionHeader(title: controller.title, subtitle: controller.subtitle),
+              SectionHeader(
+                title: controller.title,
+                subtitle: controller.subtitle,
+              ),
               const SizedBox(height: 16),
               GridView.builder(
                 shrinkWrap: true,
@@ -72,14 +68,18 @@ class PayslipsView extends GetView<PayslipsController> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  mainAxisExtent: 84,
+                  mainAxisExtent: SummaryCard.gridExtent,
                 ),
-                itemBuilder: (context, index) => SummaryCard(item: controller.stats[index]),
+                itemBuilder: (context, index) =>
+                    SummaryCard(item: controller.stats[index]),
               ),
               const SizedBox(height: 18),
               Text(
                 t('payslips.tap_a_payslip_to_see_its'),
-                style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 11,
+                ),
               ),
               const SizedBox(height: 12),
               for (var i = 0; i < controller.rows.length; i++)

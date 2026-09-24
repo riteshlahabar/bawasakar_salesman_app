@@ -13,6 +13,9 @@ class SalaryView extends GetView<SalaryController> {
     return RemoteModuleView(
       controller: controller,
       recordsTitle: t('salary.salary_slips'),
+      // The app bar already says "Salary"; the in-body heading and its
+      // subtitle only repeated it — same as the other module screens.
+      showHeader: false,
     );
   }
 }

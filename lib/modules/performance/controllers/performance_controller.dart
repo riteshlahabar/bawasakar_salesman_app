@@ -14,8 +14,7 @@ class PerformanceController extends RemoteModuleController {
   PerformanceController(this._api)
     : super(
         title: t('common.performance'),
-        subtitle:
-            t('performance.your_kpi_scores_for_sales_collections'),
+        subtitle: t('performance.your_kpi_scores_for_sales_collections'),
       );
 
   final SalesmanHrService _api;
@@ -39,10 +38,13 @@ class PerformanceController extends RemoteModuleController {
           subtitle:
               t('performance.row', {
                 'sales': '${ModuleRowMapper.toDouble(review['sales_score'])}',
-                'collection': '${ModuleRowMapper.toDouble(review['collection_score'])}',
+                'collection':
+                    '${ModuleRowMapper.toDouble(review['collection_score'])}',
                 'visits': '${ModuleRowMapper.toDouble(review['visit_score'])}',
               }) +
-              (reviewerName.isEmpty ? '' : ' • ${t('performance.by', {'name': reviewerName})}'),
+              (reviewerName.isEmpty
+                  ? ''
+                  : ' • ${t('performance.by', {'name': reviewerName})}'),
           trailing: ModuleRowMapper.toDouble(
             review['overall_rating'],
           ).toStringAsFixed(1),

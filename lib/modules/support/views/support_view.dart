@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/widgets/drawer_menu_button.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/widgets/app_decorations.dart';
 import '../../../app/widgets/app_text_field.dart';
@@ -13,7 +14,10 @@ class SupportView extends GetView<SupportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(t('common.help_and_support'))),
+      appBar: AppBar(
+        title: Text(t('common.help_and_support')),
+        leading: const DrawerMenuButton(),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -34,7 +38,10 @@ class SupportView extends GetView<SupportController> {
                   maxLines: 7,
                   decoration: InputDecoration(
                     hintText: t('support.message'),
-                    prefixIcon: Icon(Icons.message_outlined, color: AppColors.primary),
+                    prefixIcon: Icon(
+                      Icons.message_outlined,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -42,8 +49,14 @@ class SupportView extends GetView<SupportController> {
                   () => SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: controller.isLoading.value ? null : controller.submit,
-                      child: Text(controller.isLoading.value ? t('support.sending') : t('support.create_ticket')),
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : controller.submit,
+                      child: Text(
+                        controller.isLoading.value
+                            ? t('support.sending')
+                            : t('support.create_ticket'),
+                      ),
                     ),
                   ),
                 ),

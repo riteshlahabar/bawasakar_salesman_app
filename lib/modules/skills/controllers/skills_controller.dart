@@ -33,7 +33,9 @@ class SkillsController extends RemoteModuleController {
           subtitle: [
             level.isEmpty ? '' : level[0].toUpperCase() + level.substring(1),
             if (skill['certified_on'] != null)
-              t('skills.certified_on', {'date': ModuleRowMapper.date(skill['certified_on'])}),
+              t('skills.certified_on', {
+                'date': ModuleRowMapper.date(skill['certified_on']),
+              }),
             if ((skill['remarks']?.toString() ?? '').isNotEmpty)
               skill['remarks'].toString(),
           ].where((part) => part.isNotEmpty).join(' • '),

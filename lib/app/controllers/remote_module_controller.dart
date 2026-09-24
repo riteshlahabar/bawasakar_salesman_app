@@ -7,10 +7,7 @@ import '../localization/t.dart';
 
 /// What one module screen needs to render: the record rows and the stat tiles
 /// above them.
-typedef ModuleData = ({
-  List<ListRowModel> rows,
-  List<SummaryCardModel> stats,
-});
+typedef ModuleData = ({List<ListRowModel> rows, List<SummaryCardModel> stats});
 
 /// Base for every list-shaped salesman module that reads from the backend.
 ///
