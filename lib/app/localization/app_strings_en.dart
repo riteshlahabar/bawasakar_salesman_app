@@ -396,8 +396,11 @@ const Map<String, String> kAppStringsEn = <String, String>{
   'main_shell.dealer_visits': 'Dealer Visits',
   'main_shell.delivery_tracking': 'Delivery Tracking',
   'main_shell.dispatch_and_delivery': 'Dispatch and delivery',
+  // The key still says "territory" so no other file has to change; territory
+  // itself was dropped on 2026-09-24. The drawer does not draw subtitles, so
+  // this string is currently unused.
   'main_shell.employee_code_territory_and_contact':
-      'Employee code, territory and contact',
+      'Employee code and contact',
   'main_shell.gps_check_in_and_working_hours': 'GPS check in and working hours',
   'main_shell.assigned_tasks': 'Tasks assigned to you',
   'main_shell.basic_salary_change_history': 'Basic salary change history',

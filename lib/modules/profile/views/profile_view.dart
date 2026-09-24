@@ -70,54 +70,45 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             const SizedBox(height: 14),
+            // Every row is drawn even when its value is empty (showing "—"),
+            // because a profile field an admin has not filled in yet is worth
+            // seeing: on live most of these columns are still null, and
+            // hiding them made the screen look like the fields were missing
+            // from the app rather than from the record.
             _InfoRow(
               icon: Icons.badge_outlined,
               label: t('profile.employee_code'),
               value: controller.employeeCode,
+              showWhenEmpty: true,
             ),
-            // Department, Designation, Joining Date and Employment Status are
-            // Employee Profile items in the Phase 1 spec. _InfoRow renders
-            // nothing when its value is empty, so a profile with none of them
-            // filled in looks exactly as it did before.
-            _InfoRow(
-              icon: Icons.apartment_outlined,
-              label: t('profile.department'),
-              value: controller.department,
-            ),
-            _InfoRow(
-              icon: Icons.work_outline,
-              label: t('profile.designation'),
-              value: controller.designation,
-            ),
-            _InfoRow(
-              icon: Icons.map_outlined,
-              label: t('profile.territory'),
-              value: controller.territory,
-            ),
+            // Joining Date and Employment Status are Employee Profile items in
+            // the Phase 1 spec. Department, Designation and Reporting Manager
+            // were removed on 2026-09-24: the spec's whole HRMS list is headed
+            // "HRMS Modules (Admin Panel)", and a reporting hierarchy appears
+            // nowhere in it at all.
             _InfoRow(
               icon: Icons.event_outlined,
               label: t('profile.joining_date'),
               value: controller.joiningDate,
+              showWhenEmpty: true,
             ),
             _InfoRow(
               icon: Icons.verified_user_outlined,
               label: t('profile.employment_status'),
               value: controller.employmentStatus,
-            ),
-            _InfoRow(
-              icon: Icons.supervisor_account_outlined,
-              label: t('profile.reporting_to'),
-              value: controller.reportingManager,
+              showWhenEmpty: true,
             ),
             _InfoRow(
               icon: Icons.phone_outlined,
               label: t('profile.mobile'),
               value: controller.mobile,
+              showWhenEmpty: true,
             ),
             _InfoRow(
               icon: Icons.email_outlined,
               label: t('common.email'),
               value: controller.email,
+              showWhenEmpty: true,
             ),
             const SizedBox(height: 14),
             ActionTile(
@@ -153,15 +144,24 @@ class _InfoRow extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
+    this.showWhenEmpty = false,
   });
 
   final IconData icon;
   final String label;
   final String value;
 
+  /// Draw the row with a dash instead of hiding it when the value is empty.
+  ///
+  /// Hiding is still the default, but on the profile a silently missing row
+  /// reads as a bug: the salesman cannot tell a field that is not part of
+  /// this app from one an admin simply has not filled in yet.
+  final bool showWhenEmpty;
+
   @override
   Widget build(BuildContext context) {
-    if (value.isEmpty) return const SizedBox.shrink();
+    final isEmpty = value.isEmpty;
+    if (isEmpty && !showWhenEmpty) return const SizedBox.shrink();
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -184,10 +184,13 @@ class _InfoRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  value,
-                  style: const TextStyle(
+                  isEmpty ? '—' : value,
+                  style: TextStyle(
                     fontSize: 13.5,
                     fontWeight: FontWeight.w700,
+                    color: isEmpty
+                        ? AppColors.textSecondary
+                        : AppColors.textPrimary,
                   ),
                 ),
               ],

@@ -75,17 +75,6 @@ class SalesmanDrawer extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            if (controller.territory.value.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3),
-                                child: Text(
-                                  controller.territory.value,
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
                           ],
                         ),
                       ),

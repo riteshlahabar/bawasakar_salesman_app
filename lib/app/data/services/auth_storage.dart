@@ -16,6 +16,10 @@ class AuthStorage {
   static const _emailKey = 'salesman_email';
   static const _mobileKey = 'salesman_mobile';
   static const _employeeCodeKey = 'salesman_employee_code';
+
+  /// Territory was dropped on 2026-09-24 — the LGD location picker already
+  /// records where a salesman works. The key is kept in [_keys] only so that
+  /// `clear()` still purges a value an older build of the app stored.
   static const _territoryKey = 'salesman_territory';
 
   static const _keys = <String>[
@@ -44,7 +48,6 @@ class AuthStorage {
   String get email => _cache[_emailKey] ?? '';
   String get mobile => _cache[_mobileKey] ?? '';
   String get employeeCode => _cache[_employeeCodeKey] ?? '';
-  String get territory => _cache[_territoryKey] ?? '';
 
   bool get hasToken => token.isNotEmpty;
 
@@ -62,7 +65,6 @@ class AuthStorage {
     await _put(_emailKey, user['email']?.toString() ?? '');
     await _put(_mobileKey, user['mobile']?.toString() ?? '');
     await _put(_employeeCodeKey, profile['employee_code']?.toString() ?? '');
-    await _put(_territoryKey, profile['territory']?.toString() ?? '');
   }
 
   Future<void> clear() async {

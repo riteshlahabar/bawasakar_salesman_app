@@ -21,16 +21,16 @@ class DashboardResponseParser {
     return Map<String, dynamic>.from(rawData);
   }
 
-  /// Reads name/employee-code/territory out of `data.profile`. Any field
-  /// missing from the payload comes back empty so the caller can fall back
-  /// to locally stored values.
-  static ({String name, String employeeCode, String territory}) parseProfile(
+  /// Reads name and employee code out of `data.profile`. Any field missing
+  /// from the payload comes back empty so the caller can fall back to
+  /// locally stored values.
+  static ({String name, String employeeCode}) parseProfile(
     Map<String, dynamic> data,
   ) {
     final rawProfile = data['profile'];
 
     if (rawProfile is! Map) {
-      return (name: '', employeeCode: '', territory: '');
+      return (name: '', employeeCode: '');
     }
 
     final profile = Map<String, dynamic>.from(rawProfile);
@@ -39,7 +39,7 @@ class DashboardResponseParser {
     final rawSalesmanProfile = profile['salesman_profile'];
 
     if (rawSalesmanProfile is! Map) {
-      return (name: name, employeeCode: '', territory: '');
+      return (name: name, employeeCode: '');
     }
 
     final salesmanProfile = Map<String, dynamic>.from(rawSalesmanProfile);
@@ -47,7 +47,6 @@ class DashboardResponseParser {
     return (
       name: name,
       employeeCode: salesmanProfile['employee_code']?.toString() ?? '',
-      territory: salesmanProfile['territory']?.toString() ?? '',
     );
   }
 

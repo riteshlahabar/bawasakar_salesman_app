@@ -26,8 +26,6 @@ class DashboardController extends GetxController {
 
   final employeeCode = ''.obs;
 
-  final territory = ''.obs;
-
   final assignedDealers = 0.obs;
 
   final pendingOrders = 0.obs;
@@ -126,10 +124,6 @@ class DashboardController extends GetxController {
         employeeCode.value = profile.employeeCode;
       }
 
-      if (profile.territory.isNotEmpty) {
-        territory.value = profile.territory;
-      }
-
       // Save fallback profile data if
       // dashboard relation is absent.
       if (salesmanName.value == 'Sales Executive') {
@@ -142,10 +136,6 @@ class DashboardController extends GetxController {
 
       if (employeeCode.value.isEmpty) {
         employeeCode.value = _storage.employeeCode;
-      }
-
-      if (territory.value.isEmpty) {
-        territory.value = _storage.territory;
       }
 
       final todayAttendance = DashboardResponseParser.parseTodayAttendance(

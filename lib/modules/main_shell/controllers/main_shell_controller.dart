@@ -22,8 +22,6 @@ class MainShellController extends GetxController {
 
   final employeeCode = ''.obs;
 
-  final territory = ''.obs;
-
   List<String> get tabTitles => MainShellNavConfig.tabTitles;
 
   /// The Home tab shows the salesman's name instead of a generic "Dashboard"
@@ -66,15 +64,11 @@ class MainShellController extends GetxController {
 
     final code = _storage.employeeCode;
 
-    final savedTerritory = _storage.territory;
-
     if (name.trim().isNotEmpty) {
       salesmanName.value = name;
     }
 
     employeeCode.value = code;
-
-    territory.value = savedTerritory;
   }
 
   void changeTab(int index) {
