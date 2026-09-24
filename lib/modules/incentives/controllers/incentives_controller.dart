@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/controllers/remote_module_controller.dart';
+import '../../../app/controllers/year_month_filter_mixin.dart';
 import '../../../app/data/module_row_mapper.dart';
 import '../../../app/data/services/salesman_finance_service.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/localization/t.dart';
 
 /// Month-by-month incentive, commission and bonus earnings.
-class IncentivesController extends RemoteModuleController {
+///
+/// Reads the same released `salary_slips` as Salary, but split the other way:
+/// Salary lists basic/allowances/deductions per month, this lists what was
+/// earned on top of them. The Phase 1 spec names Incentives and Commission as
+/// two separate salesman items, so this is not the duplicate that the old
+/// Payslips menu was.
+///
+/// The incentive and commission *rules* stay out of the app on purpose: the
+/// spec lists Incentive Rules and Commission Rules under the admin panel's
+/// HRMS module 11, not with the salesman.
+class IncentivesController extends RemoteModuleController
+    with YearMonthFilterMixin {
   IncentivesController(this._api)
     : super(
         title: t('incentives.incentive_and_commission'),
@@ -16,76 +28,101 @@ class IncentivesController extends RemoteModuleController {
 
   final SalesmanFinanceService _api;
 
-  static List<String> get _months => <String>[
-    '',
-    t('common.jan'),
-    t('common.feb'),
-    t('common.mar'),
-    t('common.apr'),
-    t('common.may'),
-    t('common.jun'),
-    t('common.jul'),
-    t('common.aug'),
-    t('common.sep'),
-    t('common.oct'),
-    t('common.nov'),
-    t('common.dec'),
-  ];
+  /// Every month the selected year returned, before the month chip narrows
+  /// it. Held so changing the month never hits the network.
+  List<Map<String, dynamic>> _yearMonths = const [];
+
+  /// A pull-to-refresh must really refetch — a slip is released by HR, so
+  /// that is the only way this screen learns of a new one. The mixin's
+  /// `selectMonth` calls `super.load()` instead, so a chip change keeps this
+  /// cache warm.
+  @override
+  Future<void> load() {
+    _yearMonths = const [];
+
+    return super.load();
+  }
 
   @override
   Future<ModuleData> fetch() async {
-    final response = await _api.incentives();
-    final months = ModuleRowMapper.listFrom(response, 'months');
-    final totals = ModuleRowMapper.mapFrom(response, 'totals');
+    var all = _yearMonths;
+    var totals = const <String, dynamic>{};
+
+    if (all.isEmpty) {
+      final response = await _api.incentives(year: year.value.toString());
+      all = ModuleRowMapper.listFrom(response, 'months');
+      totals = ModuleRowMapper.mapFrom(response, 'totals');
+      _yearMonths = all;
+    }
+
+    final month = selectedMonth.value;
+    final shown = all.where(isInMonth).toList();
+
+    // The year's own totals are only right when every month is shown; a month
+    // chip has to add up what is actually listed.
+    final incentives = month == null
+        ? ModuleRowMapper.toDouble(totals['incentives'])
+        : _sum(shown, 'incentives');
+    final commission = month == null
+        ? ModuleRowMapper.toDouble(totals['commission'])
+        : _sum(shown, 'commission');
+    final bonus = month == null
+        ? ModuleRowMapper.toDouble(totals['bonus'])
+        : _sum(shown, 'bonus');
 
     return (
-      rows: months.map((month) {
-        final incentive = ModuleRowMapper.toDouble(month['incentives']);
-        final commission = ModuleRowMapper.toDouble(month['commission']);
-        final bonus = ModuleRowMapper.toDouble(month['bonus']);
+      rows: shown.map((record) {
+        final earned =
+            ModuleRowMapper.toDouble(record['incentives']) +
+            ModuleRowMapper.toDouble(record['commission']) +
+            ModuleRowMapper.toDouble(record['bonus']);
 
         return ModuleRowMapper.row(
-          title: '${_monthName(month['salary_month'])} ${month['salary_year']}',
+          title:
+              '${YearMonthFilterMixin.rowMonth(record['salary_month'])}'
+                      ' ${record['salary_year']}'
+                  .trim(),
           subtitle: t('incentives.row', {
-            'incentive': ModuleRowMapper.money(incentive),
-            'commission': ModuleRowMapper.money(commission),
-            'bonus': ModuleRowMapper.money(bonus),
+            'incentive': ModuleRowMapper.money(record['incentives']),
+            'commission': ModuleRowMapper.money(record['commission']),
+            'bonus': ModuleRowMapper.money(record['bonus']),
           }),
-          trailing: ModuleRowMapper.money(incentive + commission + bonus),
+          trailing: ModuleRowMapper.money(earned),
           icon: Icons.emoji_events_outlined,
-          // Nothing earned in a month is not a failure, but it should read
-          // differently from a month that paid out.
-          status: (incentive + commission + bonus) > 0 ? 'paid' : 'pending',
+          // No status badge. Every month listed here is a released slip, so
+          // nothing is pending — the old code marked a month "pending" purely
+          // because it had earned nothing, which read as an unpaid month. A
+          // zero month shows ₹0, which says it honestly.
         );
       }).toList(),
       stats: [
         ModuleRowMapper.stat(
           title: t('common.incentives'),
-          value: ModuleRowMapper.money(totals['incentives']),
+          value: ModuleRowMapper.money(incentives),
           icon: Icons.emoji_events,
           color: AppColors.primary,
-          subtitle: t('common.this_year'),
+          subtitle: windowLabel,
         ),
         ModuleRowMapper.stat(
           title: t('incentives.commission'),
-          value: ModuleRowMapper.money(totals['commission']),
+          value: ModuleRowMapper.money(commission),
           icon: Icons.percent,
           color: AppColors.success,
-          subtitle: t('common.this_year'),
+          subtitle: windowLabel,
         ),
         ModuleRowMapper.stat(
           title: t('incentives.bonus'),
-          value: ModuleRowMapper.money(totals['bonus']),
+          value: ModuleRowMapper.money(bonus),
           icon: Icons.card_giftcard,
           color: AppColors.info,
-          subtitle: t('common.this_year'),
+          subtitle: windowLabel,
         ),
       ],
     );
   }
 
-  String _monthName(Object? month) {
-    final index = ModuleRowMapper.toInt(month);
-    return index >= 1 && index <= 12 ? _months[index] : '';
-  }
+  double _sum(List<Map<String, dynamic>> rows, String key) => rows.fold(
+    0,
+    (total, row) => total + ModuleRowMapper.toDouble(row[key]),
+  );
 }

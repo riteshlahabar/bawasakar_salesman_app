@@ -32,9 +32,17 @@ class PerformanceController extends RemoteModuleController {
             ? reviewer['name']?.toString() ?? ''
             : '';
 
+        final kpiLine = _kpiLine(review['kpis']);
+
         return ModuleRowMapper.row(
           title:
               '${ModuleRowMapper.date(review['period_start'])} to ${ModuleRowMapper.date(review['period_end'])}',
+          // The reviewer's name moves onto the title line so the subtitle's
+          // two lines can be the scores and the KPIs — ModuleRow caps the
+          // subtitle at 2 lines, so a third thing there would be clipped.
+          titleTrailing: reviewerName.isEmpty
+              ? null
+              : t('performance.by', {'name': reviewerName}),
           subtitle:
               t('performance.row', {
                 'sales': '${ModuleRowMapper.toDouble(review['sales_score'])}',
@@ -42,9 +50,7 @@ class PerformanceController extends RemoteModuleController {
                     '${ModuleRowMapper.toDouble(review['collection_score'])}',
                 'visits': '${ModuleRowMapper.toDouble(review['visit_score'])}',
               }) +
-              (reviewerName.isEmpty
-                  ? ''
-                  : ' • ${t('performance.by', {'name': reviewerName})}'),
+              (kpiLine.isEmpty ? '' : '\n$kpiLine'),
           trailing: ModuleRowMapper.toDouble(
             review['overall_rating'],
           ).toStringAsFixed(1),
@@ -91,5 +97,30 @@ class PerformanceController extends RemoteModuleController {
         ),
       ],
     );
+  }
+
+  /// The review's KPI rows as one line — "New Dealers: 7 of 10 • Repeat
+  /// Orders: 62%".
+  ///
+  /// `performance_reviews.kpis` is a label/value table (the `KeyValueRows`
+  /// cast), filled from the admin review form. It is the Phase 1 spec's "KPI"
+  /// item under Performance Management; the column existed from the start but
+  /// had no admin field and no display until 2026-09-24, so it reads empty on
+  /// every review recorded before then.
+  String _kpiLine(Object? kpis) {
+    if (kpis is! List) return '';
+
+    return kpis
+        .whereType<Map>()
+        .map((kpi) {
+          final label = kpi['label']?.toString().trim() ?? '';
+          final value = kpi['value']?.toString().trim() ?? '';
+
+          if (label.isEmpty) return value;
+
+          return value.isEmpty ? label : '$label: $value';
+        })
+        .where((line) => line.isNotEmpty)
+        .join(' • ');
   }
 }

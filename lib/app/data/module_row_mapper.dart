@@ -104,6 +104,7 @@ class ModuleRowMapper {
     String? status,
     List<InlineSpan>? subtitleSpans,
     String? titleTrailing,
+    VoidCallback? onTap,
   }) {
     return ListRowModel(
       title: title,
@@ -114,6 +115,7 @@ class ModuleRowMapper {
       color: statusColor(status),
       subtitleSpans: subtitleSpans,
       titleTrailing: titleTrailing,
+      onTap: onTap,
     );
   }
 

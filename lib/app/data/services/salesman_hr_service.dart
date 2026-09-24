@@ -17,7 +17,23 @@ class SalesmanHrService {
   Future<Map<String, dynamic>> leaveBalance() =>
       _client.getJson(ApiConfig.leaveBalance);
 
-  Future<Map<String, dynamic>> assets() => _client.getJson(ApiConfig.assets);
+  Future<Map<String, dynamic>> assets({int page = 1}) =>
+      _client.getJson(ApiConfig.assets, query: {'page': page});
+
+  /// What the salesman can say about an asset they hold: `lost`, `damaged`
+  /// or `return_request`. Only the first two move the asset's status — a
+  /// return is confirmed by the admin.
+  Future<Map<String, dynamic>> reportAsset({
+    required int assetId,
+    required String issue,
+    String? remarks,
+  }) {
+    return _client.postJson('${ApiConfig.assets}/$assetId/report', {
+      'issue': issue,
+      if (remarks != null && remarks.trim().isNotEmpty)
+        'remarks': remarks.trim(),
+    });
+  }
 
   Future<Map<String, dynamic>> holidays({String? year}) => _client.getJson(
     ApiConfig.holidays,

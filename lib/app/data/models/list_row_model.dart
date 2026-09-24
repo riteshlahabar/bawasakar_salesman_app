@@ -10,6 +10,7 @@ class ListRowModel {
     this.color,
     this.subtitleSpans,
     this.titleTrailing,
+    this.onTap,
   });
 
   final String title;
@@ -28,4 +29,8 @@ class ListRowModel {
   /// date, which belongs beside the dealer rather than in the right-hand
   /// column where the time sits.
   final String? titleTrailing;
+
+  /// What tapping the row does. Null on every module whose rows are only a
+  /// record to read, which is most of them.
+  final VoidCallback? onTap;
 }

@@ -86,6 +86,23 @@ class SalesmanAttendanceService {
     });
   }
 
-  Future<Map<String, dynamic>> tourPlans() =>
-      _client.getJson(ApiConfig.tourPlans);
+  Future<Map<String, dynamic>> tourPlans({int page = 1}) =>
+      _client.getJson(ApiConfig.tourPlans, query: {'page': page});
+
+  /// A plan the salesman writes for themselves. The server always files it
+  /// as `planned` — approving one stays an admin decision.
+  Future<Map<String, dynamic>> saveTourPlan({
+    required String planDate,
+    required String routeName,
+    required List<int> dealerIds,
+  }) {
+    return _client.postJson(ApiConfig.tourPlans, {
+      'plan_date': planDate,
+      'route_name': routeName.trim(),
+      'dealer_ids': dealerIds,
+    });
+  }
+
+  Future<Map<String, dynamic>> completeTourPlan(int planId) =>
+      _client.postJson('${ApiConfig.tourPlans}/$planId/complete', {});
 }

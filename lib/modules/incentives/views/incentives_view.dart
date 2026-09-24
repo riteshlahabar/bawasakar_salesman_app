@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../app/widgets/remote_module_view.dart';
+import '../../../app/widgets/year_month_filter_bar.dart';
 import '../controllers/incentives_controller.dart';
 import '../../../app/localization/t.dart';
 
@@ -13,6 +14,13 @@ class IncentivesView extends GetView<IncentivesController> {
     return RemoteModuleView(
       controller: controller,
       recordsTitle: t('incentives.monthly_earnings'),
+      // The app bar already says "Incentive & Commission"; the in-body
+      // heading and its subtitle only repeated it — same as the other module
+      // screens.
+      showHeader: false,
+      // The same Year/Month control as Salary, since both read a monthly
+      // salary slip. Above the tiles because it decides what they count.
+      topSlot: Obx(() => YearMonthFilterBar(controller: controller)),
     );
   }
 }

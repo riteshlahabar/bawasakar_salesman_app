@@ -110,7 +110,10 @@ class ProductsView extends GetView<ProductsController> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: .66,
+                  // The card carries pack size, case rate, the struck MRP and
+                  // a stock pill under the image, so it needs more height than
+                  // the old name-and-price tile did.
+                  childAspectRatio: .60,
                 ),
                 itemBuilder: (_, index) {
                   return ProductCard(product: products[index]);

@@ -75,10 +75,39 @@ class ProfileView extends GetView<ProfileController> {
               label: t('profile.employee_code'),
               value: controller.employeeCode,
             ),
+            // Department, Designation, Joining Date and Employment Status are
+            // Employee Profile items in the Phase 1 spec. _InfoRow renders
+            // nothing when its value is empty, so a profile with none of them
+            // filled in looks exactly as it did before.
+            _InfoRow(
+              icon: Icons.apartment_outlined,
+              label: t('profile.department'),
+              value: controller.department,
+            ),
+            _InfoRow(
+              icon: Icons.work_outline,
+              label: t('profile.designation'),
+              value: controller.designation,
+            ),
             _InfoRow(
               icon: Icons.map_outlined,
               label: t('profile.territory'),
               value: controller.territory,
+            ),
+            _InfoRow(
+              icon: Icons.event_outlined,
+              label: t('profile.joining_date'),
+              value: controller.joiningDate,
+            ),
+            _InfoRow(
+              icon: Icons.verified_user_outlined,
+              label: t('profile.employment_status'),
+              value: controller.employmentStatus,
+            ),
+            _InfoRow(
+              icon: Icons.supervisor_account_outlined,
+              label: t('profile.reporting_to'),
+              value: controller.reportingManager,
             ),
             _InfoRow(
               icon: Icons.phone_outlined,

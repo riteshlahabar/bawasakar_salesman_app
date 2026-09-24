@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../controllers/date_filter_mixin.dart';
 import '../localization/t.dart';
 import '../theme/app_colors.dart';
+import 'filter_chip_button.dart';
 
 /// The window picker shared by the filtered module screens: today (optional),
 /// this month, another month, or a custom From–To range whose two ends have
@@ -53,7 +54,7 @@ class DateFilterBar extends StatelessWidget {
             children: [
               if (showToday) ...[
                 Expanded(
-                  child: _FilterChip(
+                  child: FilterChipButton(
                     label: controller.todayLabel,
                     selected: mode == DateFilterMode.today,
                     onTap: controller.showToday,
@@ -65,7 +66,7 @@ class DateFilterBar extends StatelessWidget {
               // showing — the current one until another is picked — and
               // tapping it is how the month is changed.
               Expanded(
-                child: _FilterChip(
+                child: FilterChipButton(
                   label: controller.monthLabel,
                   selected: mode == DateFilterMode.month,
                   onTap: () => _pickMonth(context),
@@ -77,7 +78,7 @@ class DateFilterBar extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _FilterChip(
+                child: FilterChipButton(
                   label: controller.fromLabel.isEmpty
                       ? t('attendance.from_date')
                       : controller.fromLabel,
@@ -87,7 +88,7 @@ class DateFilterBar extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _FilterChip(
+                child: FilterChipButton(
                   label: controller.toLabel.isEmpty
                       ? t('attendance.to_date')
                       : controller.toLabel,
@@ -168,46 +169,3 @@ class DateFilterBar extends StatelessWidget {
   }
 }
 
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary : AppColors.card,
-      borderRadius: BorderRadius.circular(10),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: onTap,
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: selected ? AppColors.primary : AppColors.border,
-            ),
-          ),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: selected ? Colors.white : AppColors.textPrimary,
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

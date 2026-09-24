@@ -46,8 +46,8 @@ class SalesmanOrderService {
     });
   }
 
-  Future<Map<String, dynamic>> deliveries() =>
-      _client.getJson(ApiConfig.deliveries);
+  Future<Map<String, dynamic>> deliveries({int page = 1}) =>
+      _client.getJson(ApiConfig.deliveries, query: {'page': page});
 
   /// Catalog categories for the dealer price list — the same endpoint and
   /// audience the dealer app's catalog rail uses.

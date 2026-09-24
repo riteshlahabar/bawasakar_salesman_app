@@ -91,13 +91,17 @@ class MainShellNavConfig {
       route: AppRoutes.tourPlan,
       color: AppColors.success,
     ),
-    ActionItemModel(
-      title: t('common.assets'),
-      subtitle: t('main_shell.company_issued_assets'),
-      icon: Icons.inventory_2_outlined,
-      route: AppRoutes.assets,
-      color: AppColors.orange,
-    ),
+    // Admin-only per the Phase 1 spec — Asset Management is HRMS module #15
+    // under "HRMS Modules (Admin Panel)" and is not in the salesman-facing
+    // HRMS list. Screen, route and API are all still in place; re-enable this
+    // entry to bring it back.
+    // ActionItemModel(
+    //   title: t('common.assets'),
+    //   subtitle: t('main_shell.company_issued_assets'),
+    //   icon: Icons.inventory_2_outlined,
+    //   route: AppRoutes.assets,
+    //   color: AppColors.orange,
+    // ),
     ActionItemModel(
       title: t('common.products'),
       subtitle: t('main_shell.dealer_price_catalog'),
@@ -112,13 +116,16 @@ class MainShellNavConfig {
       route: AppRoutes.delivery,
       color: AppColors.info,
     ),
-    ActionItemModel(
-      title: t('common.payslips'),
-      subtitle: t('main_shell.released_monthly_payslips'),
-      icon: Icons.description_outlined,
-      route: AppRoutes.payslips,
-      color: AppColors.primary,
-    ),
+    // Commented out 2026-09-24 — merged into Salary, which now reads the same
+    // /salesman/payslips endpoint and owns the tappable breakdown screen.
+    // Two menus listed the same SalarySlip rows; this was the duplicate.
+    // ActionItemModel(
+    //   title: t('common.payslips'),
+    //   subtitle: t('main_shell.released_monthly_payslips'),
+    //   icon: Icons.description_outlined,
+    //   route: AppRoutes.payslips,
+    //   color: AppColors.primary,
+    // ),
     ActionItemModel(
       title: t('common.advance_and_loan'),
       subtitle: t('main_shell.request_and_track_recovery'),
@@ -147,13 +154,18 @@ class MainShellNavConfig {
       route: AppRoutes.announcements,
       color: AppColors.primary,
     ),
-    ActionItemModel(
-      title: t('common.my_documents'),
-      subtitle: t('main_shell.identity_and_employment_papers'),
-      icon: Icons.folder_shared_outlined,
-      route: AppRoutes.documents,
-      color: AppColors.accent,
-    ),
+    // Commented out 2026-09-24 at the user's request — kept in the admin panel
+    // only (HRMS module #18, Document Management). Note this one differs from
+    // the other six: the Phase 1 spec does list "Documents" in its
+    // salesman-facing HRMS list, so this is a deliberate product decision
+    // rather than a spec correction.
+    // ActionItemModel(
+    //   title: t('common.my_documents'),
+    //   subtitle: t('main_shell.identity_and_employment_papers'),
+    //   icon: Icons.folder_shared_outlined,
+    //   route: AppRoutes.documents,
+    //   color: AppColors.accent,
+    // ),
     ActionItemModel(
       title: t('main_shell.holidays'),
       subtitle: t('main_shell.company_holiday_calendar'),
@@ -161,13 +173,15 @@ class MainShellNavConfig {
       route: AppRoutes.holidays,
       color: AppColors.success,
     ),
-    ActionItemModel(
-      title: t('common.my_shift'),
-      subtitle: t('main_shell.working_hours_and_weekly_off'),
-      icon: Icons.schedule_outlined,
-      route: AppRoutes.shifts,
-      color: AppColors.info,
-    ),
+    // Admin-only per the Phase 1 spec — Shift Management is HRMS module #3
+    // under "HRMS Modules (Admin Panel)".
+    // ActionItemModel(
+    //   title: t('common.my_shift'),
+    //   subtitle: t('main_shell.working_hours_and_weekly_off'),
+    //   icon: Icons.schedule_outlined,
+    //   route: AppRoutes.shifts,
+    //   color: AppColors.info,
+    // ),
     ActionItemModel(
       title: t('common.my_profile'),
       subtitle: t('main_shell.employee_code_territory_and_contact'),
@@ -189,13 +203,15 @@ class MainShellNavConfig {
       route: AppRoutes.invoices,
       color: AppColors.primary,
     ),
-    ActionItemModel(
-      title: t('salary_revisions.salary_revisions'),
-      subtitle: t('main_shell.basic_salary_change_history'),
-      icon: Icons.trending_up_outlined,
-      route: AppRoutes.salaryRevisions,
-      color: AppColors.primaryDark,
-    ),
+    // Admin-only per the Phase 1 spec — "Salary Revision" is a line item of
+    // HRMS module #6 (Salary Management) under "HRMS Modules (Admin Panel)".
+    // ActionItemModel(
+    //   title: t('salary_revisions.salary_revisions'),
+    //   subtitle: t('main_shell.basic_salary_change_history'),
+    //   icon: Icons.trending_up_outlined,
+    //   route: AppRoutes.salaryRevisions,
+    //   color: AppColors.primaryDark,
+    // ),
     ActionItemModel(
       title: t('tasks.tasks_title'),
       subtitle: t('main_shell.assigned_tasks'),
@@ -203,27 +219,30 @@ class MainShellNavConfig {
       route: AppRoutes.tasks,
       color: AppColors.orange,
     ),
-    ActionItemModel(
-      title: t('skills.skill_records'),
-      subtitle: t('main_shell.skills_and_certifications'),
-      icon: Icons.workspace_premium_outlined,
-      route: AppRoutes.skills,
-      color: AppColors.success,
-    ),
-    ActionItemModel(
-      title: t('training.training_title'),
-      subtitle: t('main_shell.training_programs_and_certificates'),
-      icon: Icons.school_outlined,
-      route: AppRoutes.training,
-      color: AppColors.info,
-    ),
-    ActionItemModel(
-      title: t('resignation.resignation_and_exit'),
-      subtitle: t('main_shell.resignation_and_full_final_settlement'),
-      icon: Icons.logout_outlined,
-      route: AppRoutes.resignation,
-      color: AppColors.danger,
-    ),
+    // Admin-only per the Phase 1 spec — Skill Records and Training are both
+    // line items of HRMS module #16 (Training Management), and Resignation &
+    // Exit is HRMS module #19, all under "HRMS Modules (Admin Panel)".
+    // ActionItemModel(
+    //   title: t('skills.skill_records'),
+    //   subtitle: t('main_shell.skills_and_certifications'),
+    //   icon: Icons.workspace_premium_outlined,
+    //   route: AppRoutes.skills,
+    //   color: AppColors.success,
+    // ),
+    // ActionItemModel(
+    //   title: t('training.training_title'),
+    //   subtitle: t('main_shell.training_programs_and_certificates'),
+    //   icon: Icons.school_outlined,
+    //   route: AppRoutes.training,
+    //   color: AppColors.info,
+    // ),
+    // ActionItemModel(
+    //   title: t('resignation.resignation_and_exit'),
+    //   subtitle: t('main_shell.resignation_and_full_final_settlement'),
+    //   icon: Icons.logout_outlined,
+    //   route: AppRoutes.resignation,
+    //   color: AppColors.danger,
+    // ),
     ActionItemModel(
       title: t('menu.language'),
       subtitle: t('menu.language_subtitle'),

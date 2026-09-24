@@ -2,18 +2,19 @@ import 'package:get/get.dart';
 
 import '../../modules/advances/bindings/advances_binding.dart';
 import '../../modules/advances/views/advances_view.dart';
+import '../../modules/advances/views/advance_detail_view.dart';
 import '../../modules/announcements/bindings/announcements_binding.dart';
 import '../../modules/announcements/views/announcements_view.dart';
-import '../../modules/assets/bindings/assets_binding.dart';
-import '../../modules/assets/views/assets_view.dart';
+// import '../../modules/assets/bindings/assets_binding.dart';
+// import '../../modules/assets/views/assets_view.dart';
 import '../../modules/attendance/bindings/attendance_binding.dart';
 import '../../modules/attendance/views/attendance_view.dart';
 import '../../modules/auth/bindings/login_binding.dart';
 import '../../modules/auth/views/login_view.dart';
 import '../../modules/delivery/bindings/delivery_binding.dart';
 import '../../modules/delivery/views/delivery_view.dart';
-import '../../modules/documents/bindings/documents_binding.dart';
-import '../../modules/documents/views/documents_view.dart';
+// import '../../modules/documents/bindings/documents_binding.dart';
+// import '../../modules/documents/views/documents_view.dart';
 import '../../modules/expenses/bindings/expenses_binding.dart';
 import '../../modules/expenses/views/expenses_view.dart';
 import '../../modules/holidays/bindings/holidays_binding.dart';
@@ -31,28 +32,30 @@ import '../../modules/main_shell/views/main_shell_view.dart';
 import '../../modules/notifications/bindings/notifications_binding.dart';
 import '../../modules/notifications/views/notifications_view.dart';
 import '../../modules/payslips/bindings/payslip_detail_binding.dart';
-import '../../modules/payslips/bindings/payslips_binding.dart';
+// import '../../modules/payslips/bindings/payslips_binding.dart';
 import '../../modules/orders/views/order_detail_view.dart';
 import '../../modules/payslips/views/payslip_detail_view.dart';
-import '../../modules/payslips/views/payslips_view.dart';
+// import '../../modules/payslips/views/payslips_view.dart';
 import '../../modules/performance/bindings/performance_binding.dart';
 import '../../modules/performance/views/performance_view.dart';
+import '../../modules/product_detail/bindings/product_detail_binding.dart';
+import '../../modules/product_detail/views/product_detail_view.dart';
 import '../../modules/products/bindings/products_binding.dart';
 import '../../modules/products/views/products_view.dart';
 import '../../modules/profile/bindings/profile_binding.dart';
 import '../../modules/profile/views/profile_view.dart';
 import '../../modules/reports/bindings/reports_binding.dart';
 import '../../modules/reports/views/reports_view.dart';
-import '../../modules/resignation/bindings/resignation_binding.dart';
-import '../../modules/resignation/views/resignation_view.dart';
+// import '../../modules/resignation/bindings/resignation_binding.dart';
+// import '../../modules/resignation/views/resignation_view.dart';
 import '../../modules/salary/bindings/salary_binding.dart';
 import '../../modules/salary/views/salary_view.dart';
-import '../../modules/salary_revisions/bindings/salary_revisions_binding.dart';
-import '../../modules/salary_revisions/views/salary_revisions_view.dart';
-import '../../modules/shifts/bindings/shifts_binding.dart';
-import '../../modules/shifts/views/shifts_view.dart';
-import '../../modules/skills/bindings/skills_binding.dart';
-import '../../modules/skills/views/skills_view.dart';
+// import '../../modules/salary_revisions/bindings/salary_revisions_binding.dart';
+// import '../../modules/salary_revisions/views/salary_revisions_view.dart';
+// import '../../modules/shifts/bindings/shifts_binding.dart';
+// import '../../modules/shifts/views/shifts_view.dart';
+// import '../../modules/skills/bindings/skills_binding.dart';
+// import '../../modules/skills/views/skills_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
 import '../../modules/support/bindings/support_binding.dart';
@@ -63,8 +66,8 @@ import '../../modules/tasks/bindings/tasks_binding.dart';
 import '../../modules/tasks/views/tasks_view.dart';
 import '../../modules/tour_plan/bindings/tour_plan_binding.dart';
 import '../../modules/tour_plan/views/tour_plan_view.dart';
-import '../../modules/training/bindings/training_binding.dart';
-import '../../modules/training/views/training_view.dart';
+// import '../../modules/training/bindings/training_binding.dart';
+// import '../../modules/training/views/training_view.dart';
 import '../../modules/visits/bindings/visits_binding.dart';
 import '../../modules/visits/views/visits_view.dart';
 import '../widgets/nav_shell.dart';
@@ -124,11 +127,14 @@ class AppPages {
       page: () => const NavShell(child: TourPlanView()),
       binding: TourPlanBinding(),
     ),
-    GetPage(
-      name: AppRoutes.assets,
-      page: () => const NavShell(child: AssetsView()),
-      binding: AssetsBinding(),
-    ),
+    // Admin-only HRMS module in the Phase 1 spec — see the note in
+    // app_routes.dart. Screen and binding are untouched under
+    // lib/modules/assets/.
+    // GetPage(
+    //   name: AppRoutes.assets,
+    //   page: () => const NavShell(child: AssetsView()),
+    //   binding: AssetsBinding(),
+    // ),
     GetPage(
       name: AppRoutes.reports,
       page: () => const NavShell(child: ReportsView()),
@@ -145,19 +151,30 @@ class AppPages {
       binding: ProductsBinding(),
     ),
     GetPage(
+      name: AppRoutes.productDetail,
+      page: () => const NavShell(child: ProductDetailView()),
+      binding: ProductDetailBinding(),
+    ),
+    GetPage(
       name: AppRoutes.delivery,
       page: () => const NavShell(child: DeliveryView()),
       binding: DeliveryBinding(),
     ),
-    GetPage(
-      name: AppRoutes.payslips,
-      page: () => const NavShell(child: PayslipsView()),
-      binding: PayslipsBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.payslips,
+    //   page: () => const NavShell(child: PayslipsView()),
+    //   binding: PayslipsBinding(),
+    // ),
     GetPage(
       name: AppRoutes.advances,
       page: () => const NavShell(child: AdvancesView()),
       binding: AdvancesBinding(),
+    ),
+    // No binding: the record travels as the route argument, EMI schedule
+    // included, so the screen makes no call of its own.
+    GetPage(
+      name: AppRoutes.advanceDetail,
+      page: () => const NavShell(child: AdvanceDetailView()),
     ),
     GetPage(
       name: AppRoutes.incentives,
@@ -174,21 +191,21 @@ class AppPages {
       page: () => const NavShell(child: AnnouncementsView()),
       binding: AnnouncementsBinding(),
     ),
-    GetPage(
-      name: AppRoutes.documents,
-      page: () => const NavShell(child: DocumentsView()),
-      binding: DocumentsBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.documents,
+    //   page: () => const NavShell(child: DocumentsView()),
+    //   binding: DocumentsBinding(),
+    // ),
     GetPage(
       name: AppRoutes.holidays,
       page: () => const NavShell(child: HolidaysView()),
       binding: HolidaysBinding(),
     ),
-    GetPage(
-      name: AppRoutes.shifts,
-      page: () => const NavShell(child: ShiftsView()),
-      binding: ShiftsBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.shifts,
+    //   page: () => const NavShell(child: ShiftsView()),
+    //   binding: ShiftsBinding(),
+    // ),
     GetPage(
       name: AppRoutes.profile,
       page: () => const NavShell(child: ProfileView()),
@@ -221,30 +238,30 @@ class AppPages {
       page: () => const NavShell(child: InvoicesView()),
       binding: InvoicesBinding(),
     ),
-    GetPage(
-      name: AppRoutes.salaryRevisions,
-      page: () => const NavShell(child: SalaryRevisionsView()),
-      binding: SalaryRevisionsBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.salaryRevisions,
+    //   page: () => const NavShell(child: SalaryRevisionsView()),
+    //   binding: SalaryRevisionsBinding(),
+    // ),
     GetPage(
       name: AppRoutes.tasks,
       page: () => const NavShell(child: TasksView()),
       binding: TasksBinding(),
     ),
-    GetPage(
-      name: AppRoutes.skills,
-      page: () => const NavShell(child: SkillsView()),
-      binding: SkillsBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.training,
-      page: () => const NavShell(child: TrainingView()),
-      binding: TrainingBinding(),
-    ),
-    GetPage(
-      name: AppRoutes.resignation,
-      page: () => const NavShell(child: ResignationView()),
-      binding: ResignationBinding(),
-    ),
+    // GetPage(
+    //   name: AppRoutes.skills,
+    //   page: () => const NavShell(child: SkillsView()),
+    //   binding: SkillsBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.training,
+    //   page: () => const NavShell(child: TrainingView()),
+    //   binding: TrainingBinding(),
+    // ),
+    // GetPage(
+    //   name: AppRoutes.resignation,
+    //   page: () => const NavShell(child: ResignationView()),
+    //   binding: ResignationBinding(),
+    // ),
   ];
 }

@@ -77,7 +77,7 @@ class ModuleRow extends StatelessWidget {
     final inlineStatus =
         row.status != null && row.trailing.isEmpty && !stackRight;
 
-    return Container(
+    final card = Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: AppDecorations.softCard(radius: 16),
       padding: const EdgeInsets.all(16),
@@ -195,6 +195,17 @@ class ModuleRow extends StatelessWidget {
           ],
         ],
       ),
+    );
+
+    if (row.onTap == null) return card;
+
+    // A GestureDetector, not an InkWell: the card paints its own opaque
+    // background, so a ripple would be drawn behind it and never seen — the
+    // same trap as a ListTile inside AppCard.
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: row.onTap,
+      child: card,
     );
   }
 }
